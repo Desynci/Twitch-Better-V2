@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.1.7
+@version        3.1.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1200,14 +1200,14 @@
 			// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
 	.fOtgyk, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB { transition: .3s }
-	.iOIbVE.iOIbVE, .chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .jwWicM, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
+	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .jwWicM, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
 	.gxYeIp, .bZLSuF, .gGttfb, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button,
 	.dOkkBt, .iwMIba, .imYKMv, .bmaSLQ, .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient,
- 	.iJmEhj, [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]), .media-row__image-play-overlay, .eoyBQj,
-    .hblncz, .jojgZI, .Oagqd, .ePlDqi { transition: .15s }
+ 	.iJmEhj, [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]), .media-row__image-play-overlay, 
+    .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.imYKMv, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after { transition: .1s }
@@ -1335,7 +1335,7 @@
 			// verification badge animation
 		.channel-info-content .dMBVIY {
 			.ijyopa .tw-svg { transition: transform .35s; }
-			a:hover+.ijyopa .tw-svg { transform: rotate(0.07turn) scale(1.1); }
+			a:hover+.ijyopa .tw-svg { transform: rotate(0.02turn) scale(1.1); }
 		}
 	    
 		.tw-progress-bar .dqeKsq { animation: spin-hue 3s infinite linear; background: #00db84 !important; }
@@ -1429,7 +1429,6 @@
 			[class="Layout-sc-1xcs6mc-0 bMcAyM"] { background: #18181B !important; padding: 3px !important; padding-left: 5px !important; }
 			.hVLlmi { animation: search .4s, blur-15-decrease 0.8s .1s both; will-change: transform; background: #00000094 !important; }
             .tw-tray-item--highlighted.imYKMv:hover { background-color: var(--color-background-interactable-hover); }
-            .imYKMv { transition: none; }
 		}
 		
 		[data-a-target="player-settings-button"] .tw-svg { transition: .3s; }
