@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.2.1
+@version        3.2.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -376,7 +376,7 @@
 			&:hover {
 				background-color: (player-controls=="yt-light") ? light-bg : dark-bg;
 				
-				[class="Layout-sc-1xcs6mc-0 dEKQxZ"], .iPkwTD {
+				[class="Layout-sc-1xcs6mc-0 dEKQxZ"], [data-a-target="player-mute-unmute-button"] {
 					background-color: transparent;
 				}
 				
@@ -387,16 +387,16 @@
 				transition: transform .25s;
 			}
 			
-			.iPkwTD:hover::after { // mute unmute button
+			[data-a-target="player-mute-unmute-button"]:hover::after { // mute unmute button
 				transform: scale(1);
 				opacity: 1;
 			}
 			
-			.iPkwTD:active::after {
+			[data-a-target="player-mute-unmute-button"]:active::after {
 				background-color: bg-inset-on-active;
 			}
 			
-			.iPkwTD::after {
+			[data-a-target="player-mute-unmute-button"]::after {
 				content: "";
 				position: absolute;
 				inset: 2.5px;
@@ -1648,7 +1648,6 @@
 	if (new-pause) {
 		.extensions-dock__layout, .player-controls__left-control-group > div:not(.iDMNUO), .muted-segments-alert__scroll-wrapper, .theatre-social-panel, .stream-info-card, .disclosure-tool, [aria-label="Chat Happening Now Overlay"], .player-overlay-background--darkness-3, .video-player__overlay .cojdHE:has([data-a-target="player-overlay-video-stats"]) { z-index: 3; }
 		.player-controls .kIqpCX { z-index: 2; position: relative; }
-		//[data-a-target="player-mute-unmute-button"], .volume-slider__slider-container { margin-left: 1px; }
 		.player-controls__left-control-group { flex-grow: 0 !important; }
 
 		.player-controls {
@@ -1659,9 +1658,9 @@
 			}
 		}
 		
-		.iPkwTD[data-a-player-state] { transition: margin-left .4s .1s, opacity .4s .1s; will-change: margin-left; }
+		button[data-a-target="player-play-pause-button"] { transition: margin-left .4s .1s, opacity .4s .1s; will-change: margin-left; }
 		
-		.iPkwTD[data-a-player-state="playing"] {
+		button[data-a-target="player-play-pause-button"][data-a-player-state="playing"] {
 			position: absolute !important;
 			color: transparent !important;
 			height: 100% !important;
@@ -1673,7 +1672,7 @@
 			outline: none;
 		}
 
-		.iPkwTD[data-a-player-state="paused"] {
+		button[data-a-target="player-play-pause-button"][data-a-player-state="paused"] {
 			> .lnTwMD { position: absolute; color: white !important; opacity: 1; }
 		}
 		
