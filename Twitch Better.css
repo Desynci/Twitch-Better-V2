@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.1.8
+@version        3.2.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -54,6 +54,7 @@
     ' ': "holder-3"
 }
 @var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
+@var checkbox sidebar-counter "Add active channels counter" 1
 @var checkbox sidebar-hover-only "Show only on hover" 1
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
 @var checkbox only-following "Clear categories" 0
@@ -94,15 +95,17 @@
 	'→ Discord #1': "discord linear-gradient(to right, #369876, #71ff9e, #369876) #369876",
 	'→ Discord #2*': "discord linear-gradient(to right, #ffa300, #ffea00, #ffa300) #ffa300",
 	'→ Discord #3': "discord linear-gradient(to right, #a9c9ff, #ffbbec, #ffc3a0, #a9c9ff) #ffc3a0",
-    '→ 7TV #1': "7tv linear-gradient(90deg, #fff700 0%, #ffc400 20%, #ff8438 40%, #ff1f77 60%, #f0b 80%, #e0f 100%) #FF455F (drop-shadow(#e0f 0px 0px 0.1px))",
-    '→ 7TV #2': "7tv url(\"https://cdn.7tv.app/paint/01KC2M1QNZ1Q1E47KPM14VSERH/layer/01KC2MMGYA4K0XE948FKRM307F/1x.webp\") #ec7600 (drop-shadow(rgb(236, 118, 0) 0px 0px 1.5px))",
-    '→ 7TV #3': "7tv repeating-linear-gradient(90deg, #feb820 0%, #ffc014 23%, #8c01fe 53%, #8c01fe 0%, #0fc 100%) #8c01fe (drop-shadow(#56caf0 0px 0px 1px))",
-    '→ 7TV #4': "7tv url(\"https://cdn.7tv.app/paint/01J5V7WVKR0007BA288WXC38TK/layer/01JAMR3CE2TDB8GKKV1YPNMAYG/1x.webp\") #4D5AF1 (drop-shadow(#e739fe 0px 0px 0.1px) drop-shadow(#620075 1px 1px 0.1px))",
-    '→ 7TV #5': "7tv url(\"https://cdn.7tv.app/paint/01JM8F9NQPFQEF9GQMT5RB9BAG/layer/01JM8G5NZJN36FF9137NCVGV2R/1x.webp\") #D90694 (drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#8d00ff 0px 0px 3px))",
-    '→ 7TV #6': "7tv url(\"https://cdn.7tv.app/paint/01JPRTCB0EVDD1FERZGQY4MWBA/layer/01KFCQSQGRZGS9FGJWXSQZPNK4/1x.webp\") #2E5252 (drop-shadow(#56caf0 0px 0px 1px))",
-    '→ 7TV #7': "7tv linear-gradient(90deg, #f70066 0%, #a200c6 100%) #f70066 (drop-shadow(#ff0059 0px 0px 5px))",
-    '→ 7TV #8': "7tv radial-gradient(#fbff00 27%, #e0f 47%, #5a00e0 56%) #e0f (drop-shadow(#b727b9 -1px 2px 1px))",
-    '→ 7TV #9': "7tv url(\"https://cdn.7tv.app/paint/01K7CGQFRSHJCFDJQSN27QY3WF/layer/01K7CHQH380ZFE913AA4XZX7NX/1x.webp\") #AD6A03 (drop-shadow(#000 0px 0px 1px))",
+    '→ 7TV Citrus': "7tv linear-gradient(90deg, #fff700 0%, #ffc400 20%, #ff8438 40%, #ff1f77 60%, #f0b 80%, #e0f 100%) #FF455F (drop-shadow(#e0f 0px 0px 0.1px))",
+    '→ 7TV Evelone': "7tv url(\"https://cdn.7tv.app/paint/01KC2M1QNZ1Q1E47KPM14VSERH/layer/01KC2MMGYA4K0XE948FKRM307F/1x.webp\") #ec7600 (drop-shadow(rgb(236, 118, 0) 0px 0px 1.5px))",
+    '→ 7TV Banger': "7tv repeating-linear-gradient(90deg, #feb820 0%, #ffc014 23%, #8c01fe 53%, #8c01fe 0%, #0fc 100%) #8c01fe (drop-shadow(#56caf0 0px 0px 1px))",
+    '→ 7TV Edgerunner': "7tv url(\"https://cdn.7tv.app/paint/01J5V7WVKR0007BA288WXC38TK/layer/01JAMR3CE2TDB8GKKV1YPNMAYG/1x.webp\") #4D5AF1 (drop-shadow(#e739fe 0px 0px 0.1px) drop-shadow(#620075 1px 1px 0.1px))",
+    '→ 7TV ftk789': "7tv url(\"https://cdn.7tv.app/paint/01JM8F9NQPFQEF9GQMT5RB9BAG/layer/01JM8G5NZJN36FF9137NCVGV2R/1x.webp\") #D90694 (drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#f00 0px 0px 0.5px) drop-shadow(#8d00ff 0px 0px 3px))",
+    '→ 7TV Latex': "7tv url(\"https://cdn.7tv.app/paint/01JPRTCB0EVDD1FERZGQY4MWBA/layer/01KFCQSQGRZGS9FGJWXSQZPNK4/1x.webp\") #2E5252 (drop-shadow(#56caf0 0px 0px 1px))",
+    '→ 7TV Raspberry': "7tv linear-gradient(90deg, #f70066 0%, #a200c6 100%) #f70066 (drop-shadow(#ff0059 0px 0px 5px))",
+    '→ 7TV Cichlid': "7tv radial-gradient(#fbff00 27%, #e0f 47%, #5a00e0 56%) #e0f (drop-shadow(#b727b9 -1px 2px 1px))",
+    '→ 7TV Grass': "7tv url(\"https://cdn.7tv.app/paint/01JFQV4G27ND0S36CW9GKQ1B61/layer/01JFT792WRS0SAC9K5WNH2XC04/1x.webp\") #49B01C (none)",
+    '→ 7TV Domos': "7tv url(\"https://cdn.7tv.app/paint/01JEDE45FTB7XTQGRFXP0BA2PT/layer/01JF06XNCYM98WZAGNT0D51SQ3/1x.webp\") #FBD268 (none)",
+    '→ 7TV Paradise': "7tv url(\"https://cdn.7tv.app/paint/01K6ZYWT597ZQ7TEDRT26R5BNM/layer/01K8W5RJAQ183DG7Y1D450VVTF/1x.webp\") #9900FE (none)",
 }
 @var select custom-badge "Badge changer:" {
 	'None*': "disabled",
@@ -177,10 +180,10 @@
 	.whispers-threads-box__header, .whispers-threads-box__header+.gxOWjV, .jmERFg { border-bottom: none !important; }
 	.side-nav { background: #18181b !important; }
 	.kpgZBi { border-radius: 12px !important; }
-	.chat-wysiwyg-input-box, .jwWicM { box-shadow: inset 0 0 0 var(--input-border-width-small) #636363f2; }
+	.chat-wysiwyg-input-box, .fFIkct { box-shadow: inset 0 0 0 var(--input-border-width-small) #636363f2; }
 	.chat-input-tray__open { background: #232327b0 !important; }
 	[data-a-target="share-button"] { display: none; }
-    [data-a-target="unfollow-button"] .kxAWvZ { margin-inline-end: 0 !important; }
+    [data-a-target="unfollow-button"] .kxAWvZ { margin-inline: 4px !important; }
     .cLEglz, .kzBqxU, .jJdyrt { visibility: visible !important; opacity: 0; }
 	
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf {
@@ -195,31 +198,6 @@
 	
 		// Fix strange animation bug on closing popup
 	.ReactModal__Overlay--after-open:has(.tw-transition[aria-hidden="true"]) { display: none; }
-	
-	.side-nav__scrollable_content { scrollbar-width: none; }
-	.side-nav--expanded {
-		.side-nav-section:nth-of-type(2) {
-			counter-reset: active-channels-counter;
-			
-			[data-test-selector="followed-channel"]:not(.side-nav-card__link--offline) {
-				counter-increment: active-channels-counter;
-			}
-			
-			&::after {
-				content: counter(active-channels-counter);
-				display: block;
-				font-family: var(--font-display);
-    			font-size: 18px;
-    			color: var(--color-hinted-grey-9);
-   				font-variant-position: super;
-				position: absolute;
-				right: 43px;
-				top: 40px;
-			}
-		}
-	}
-	.side-nav--expanded:hover { counter-reset: active-channels-counter; }
-	if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: active-channels-counter; } }
 	
 	.chat-line__message-body--highlighted {
 		background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
@@ -843,12 +821,16 @@
 	if (remove-bits) {
 		@css {
 			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
-			.community-points-summary:has(.liFGiB button) .cUmVME, button[data-a-target="top-nav-get-bits-button"] { display: none !important; }
-			.chat-input__textarea [data-a-target="bits-button"] { display: none; }
-			[data-a-target="top-nav-get-bits-button"], .reward-center__content__with-bits-rewards {
+			.community-points-summary:has(.liFGiB button) .cUmVME { display: none !important; }
+			.chat-input__textarea [data-a-target="bits-button"], button[data-a-target="top-nav-get-bits-button"] { display: none; }
+			.reward-center__content__with-bits-rewards {
 				.gGttfb:not([aria-label]) { display: none; }
 				.kFLrqZ { margin-inline-end: 0 !important; }
 			}
+            
+            .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > .ihSefD > .iDMNUO > [class="Layout-sc-1xcs6mc-0"] > .fHdBNk > .kOoFSj {
+                > .tw-new-item-indicator__container { display: none; }
+            }
 		}
 	}
 	
@@ -860,16 +842,24 @@
 	}
 	
 	if (remove-turbo) {
-		@css { .top-nav__menu [class="Layout-sc-1xcs6mc-0"] > [class="InjectLayout-sc-1i43xsx-0 iDMNUO"] {
-				button[class="ScCoreButton-sc-ocjdkq-0 gGttfb"],
-				button[class="ScCoreButton-sc-ocjdkq-0 iPkwTD ScButtonIcon-sc-9yap0r-0 dcNXJO"]:not([data-a-target]),
-				button[class="ScCoreButton-sc-ocjdkq-0 iPkwTD ScButtonIcon-sc-9yap0r-0 dcNXJO"]:not([data-a-target])+.tw-new-item-indicator__container,
-				button[class="ScCoreButton-sc-ocjdkq-0 gGttfb"]+.tw-new-item-indicator__container { 
-                    display: none; 
+        @css {
+            .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO > .kOoFSj {
+                .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0.dcNXJO { /* small button */
+                    display: none;
+                    
+                    &+.tw-new-item-indicator__container { display: none; }
                 }
-			}
-		}
-	}
+                
+                > button[class="ScCoreButton-sc-ocjdkq-0 yezmM"] { /* large button */
+                    display: none;
+                    
+                    &+.tw-new-item-indicator__container { display: none; }
+                }
+            }
+	    }
+        
+        .top-nav__menu .bZYcrx > div.hdaUxc:last-of-type { margin-left: -8px; }
+    }
 	
 	if (remove-gift) {
 		[data-a-target="gift-button"] { display: none; }
@@ -881,6 +871,35 @@
 	
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
 	
+    if (sidebar-counter) {
+        .side-nav__scrollable_content { scrollbar-width: none; }
+        
+        .side-nav--expanded {
+            .side-nav-section:nth-of-type(2) {
+                counter-reset: active-channels-counter;
+                
+                [data-test-selector="followed-channel"]:not(.side-nav-card__link--offline) {
+                    counter-increment: active-channels-counter;
+                }
+                
+                &::after {
+                    content: counter(active-channels-counter);
+                    display: block;
+                    font-family: var(--font-display);
+                    font-size: 18px;
+                    color: var(--color-hinted-grey-9);
+                    font-variant-position: super;
+                    position: absolute;
+                    right: 43px;
+                    top: 40px;
+                }
+            }
+	    }
+        
+        .side-nav--expanded:hover { counter-reset: active-channels-counter; }
+        if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: active-channels-counter; } }
+    }
+    
 	if (sidebar-hover-only) {
 		@css { .foAhuv [data-popper-placement="bottom"]:is([style$="translate3d(10.4px, 70.4px, 0px);"], [style$="translate3d(10.0333px, 70.2333px, 0px);"]) { /* channels list sorting popup */
 			transform: translate3d(var(--sidebar-size), 70.4px, 0px) !important;
@@ -967,7 +986,7 @@
 					transform: translate(-50%, -50%);
 					width: 96%;
 					border-radius: var(--border-radius-medium) !important;
-					animation: gradient-rotate 4s linear infinite; 
+					animation: angle-gradient 4s linear infinite; 
 					background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8); 
 				}
 			}
@@ -1200,7 +1219,7 @@
 			// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
 	.fOtgyk, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB { transition: .3s }
-	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .jwWicM, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
+	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
@@ -1345,10 +1364,12 @@
 		.streamer-card__balloon {
 			.kXaRRs { animation: streamer-card .6s !important; }
 			.jvDEkm { animation: spin-hue-180 .8s; }
-			[data-a-target="follow-button"] { animation: follow-button .55s .25s backwards; }
-			[data-a-target="unfollow-button"] { animation: follow-placeholder .65s reverse cubic-bezier(0.76, 0, 0.24, 1); }
+			[data-a-target="follow-button"] { animation: follow-button .65s .15s backwards; }
+			[data-a-target="unfollow-button"] { animation: unfollow-button .55s .15s backwards; }
 			[class="ScPlaceholderFill-sc-wb1w3c-2 eJtHtF"] { animation: follow-placeholder .3s .1s forwards; }
 			[data-popper-placement] { overflow: hidden; }
+            .tw-halo { border: none; &::before { margin: 0; } }
+            .tw-halo:hover::before { transform: scale(1.015); }
 		}
 		
 		.chat-input-tray__open, .chat-settings__popover .chat-badge {
@@ -1662,135 +1683,125 @@
 		} }
 	}
 
-@css {
-	@keyframes logo { 0% { clip-path: inset(0 61% 0 0); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
-	8% { clip-path: inset(0 61% 0 0); transform: none; color: #b1b1bf; opacity: 0.8; }
-	20%, 30% { clip-path: inset(0 25% 0 0); transform: none; color: transparent; opacity: 1; }
-	42%, 78% { clip-path: inset(0 0 0 83%); transform: translateX(-135px); color: #b1b1bf; opacity: 1; }
-	90% { clip-path: inset(0 25% 0 0); transform: none; color: #efeff1; opacity: 0.5; }
-	to { clip-path: inset(0 25% 0 0); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
-    
-    @keyframes indicator { 0% { opacity: 0.7; transform: scale(0.8); }
-	to { opacity: 0; transform: scale(1.5); } }
+    @css {
+        @keyframes logo { 0% { clip-path: inset(0 61% 0 0); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
+        8% { clip-path: inset(0 61% 0 0); transform: none; color: #b1b1bf; opacity: 0.8; }
+        20%, 30% { clip-path: inset(0 25% 0 0); transform: none; color: transparent; opacity: 1; }
+        42%, 78% { clip-path: inset(0 0 0 83%); transform: translateX(-135px); color: #b1b1bf; opacity: 1; }
+        90% { clip-path: inset(0 25% 0 0); transform: none; color: #efeff1; opacity: 0.5; }
+        to { clip-path: inset(0 25% 0 0); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
 
-	@keyframes reveal-badge { 50% { opacity: 0; content: unset; }
-	to { content: unset; } }
+        @keyframes indicator { 0% { opacity: 0.7; transform: scale(0.8); }
+        to { opacity: 0; transform: scale(1.5); } }
 
-	@keyframes reveal-badge-carousel { 0% { opacity: 0; transform: scale(0.5); content: unset; }
-	to { content: unset; } }
+        @keyframes reveal-badge { 50% { opacity: 0; content: unset; }
+        to { content: unset; } }
 
-	@keyframes pop-small { from { transform: translateY(15px); } }
+        @keyframes reveal-badge-carousel { 0% { opacity: 0; transform: scale(0.5); content: unset; }
+        to { content: unset; } }
 
-	@keyframes user-menu { 0% { clip-path: inset(0 0 100% 0); transform: scaleY(0); transform-origin: top; }
-	to { clip-path: inset(-5% -5% -5% -5%); transform-origin: top; } }
+        @keyframes pop-small { from { transform: translateY(15px); } }
 
-	@keyframes roll-down { 0% { clip-path: inset(0 0 100% 0); }
-	to { clip-path: inset(-5% -5% -5% -5%); } }
+        @keyframes user-menu { 0% { clip-path: inset(0 0 100% 0); transform: scaleY(0); transform-origin: top; }
+        to { clip-path: inset(-5% -5% -5% -5%); transform-origin: top; } }
 
-	@keyframes user-element { from { transform: translateX(-40%); } }
+        @keyframes roll-down { 0% { clip-path: inset(0 0 100% 0); }
+        to { clip-path: inset(-5% -5% -5% -5%); } }
 
-	@keyframes side-nav { from { transform: translateX(-50%); } }
+        @keyframes user-element { from { transform: translateX(-40%); } }
 
-	@keyframes search { 0% { clip-path: inset(0 0 100% 0); transform: translateY(-25%); }
-	to { clip-path: inset(-10% -10% -10% -10%); } }
+        @keyframes side-nav { from { transform: translateX(-50%); } }
 
-	@keyframes swipe { 0% { clip-path: inset(0 100% 0 0); }
-	to { clip-path: inset(-5% -5% -5% -5%); } }
+        @keyframes search { 0% { clip-path: inset(0 0 100% 0); transform: translateY(-25%); }
+        to { clip-path: inset(-10% -10% -10% -10%); } }
 
-	@keyframes top-nav-menu { 0% { clip-path: inset(0 0 100% 0);  }
-	to { clip-path: inset(-5% -5% -5% -5%); } }
+        @keyframes swipe { 0% { clip-path: inset(0 100% 0 0); }
+        to { clip-path: inset(-5% -5% -5% -5%); } }
 
-	@keyframes streamer-card { 0% { transform: translateY(20%); opacity: 0; filter: grayscale(1); pointer-events: none; }
-	to { pointer-events: none; } }
+        @keyframes top-nav-menu { 0% { clip-path: inset(0 0 100% 0);  }
+        to { clip-path: inset(-5% -5% -5% -5%); } }
 
-	@keyframes content-in { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
-	
-	@keyframes content-in-checkbox { from { transform: translate3d(var(--checkbox-fill-transform-x), -50%, 0) scale(0.3); } 
-	to { transform: translate3d(var(--checkbox-fill-transform-x), -50%, 0); } }
-	
-	@keyframes seekbar-thumb { 0% { transform: scale(0.3) scaleY(1) translateX(-50%); opacity: 0; filter: grayscale(1); transform-origin: left; }
-	to { transform: scale(1) scaleY(0.7) translateX(-50%); transform-origin: left; } }
+        @keyframes streamer-card { 0% { transform: translateY(20%); opacity: 0; filter: grayscale(1); pointer-events: none; }
+        to { pointer-events: none; } }
 
-	@keyframes emotes { 0% { transform: scale(0.3); opacity: 0; }
-	to { transform: scale(1); } }
+        @keyframes content-in { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
 
-	@keyframes community-highlight { from { transform: translateY(-100%); opacity: 0.1; } }
+        @keyframes content-in-checkbox { from { transform: translate3d(var(--checkbox-fill-transform-x), -50%, 0) scale(0.3); } 
+        to { transform: translate3d(var(--checkbox-fill-transform-x), -50%, 0); } }
 
-	@keyframes notification { from { transform: translateY(-150%); opacity: 0.1; } }
+        @keyframes seekbar-thumb { 0% { transform: scale(0.3) scaleY(1) translateX(-50%); opacity: 0; filter: grayscale(1); transform-origin: left; }
+        to { transform: scale(1) scaleY(0.7) translateX(-50%); transform-origin: left; } }
 
-	@keyframes messages { from { transform: translateY(100%); opacity: 0; } }
+        @keyframes emotes { 0% { transform: scale(0.3); opacity: 0; }
+        to { transform: scale(1); } }
 
-	@keyframes messages-right { from { transform: translateX(50%); opacity: 0; } }
+        @keyframes community-highlight { from { transform: translateY(-100%); opacity: 0.1; } }
 
-	@keyframes chat-custom { from { transform: translateY(40%); opacity: 0; } }
+        @keyframes notification { from { transform: translateY(-150%); opacity: 0.1; } }
 
-	@keyframes custom-element { from { transform: translateY(-100%); opacity: 0; } }
+        @keyframes messages { from { transform: translateY(100%); opacity: 0; } }
 
-	@keyframes opacity-in { from { opacity: 0; } }
+        @keyframes messages-right { from { transform: translateX(50%); opacity: 0; } }
 
-	@keyframes opacity-cycle { 50% { opacity: 0.7; } }
+        @keyframes chat-custom { from { transform: translateY(40%); opacity: 0; } }
 
-	@keyframes opacity-off { to { opacity: 0; } }
+        @keyframes custom-element { from { transform: translateY(-100%); opacity: 0; } }
 
-	@keyframes rewards-list { from { transform: translateY(100%); } }
+        @keyframes opacity-in { from { opacity: 0; } }
 
-	@keyframes emote-picker { from { transform: translateY(10%); opacity: 0.5; } }
+        @keyframes opacity-cycle { 50% { opacity: 0.7; } }
 
-	@keyframes chat-tray { from { transform: translateY(50%); opacity: 0; } }
+        @keyframes opacity-off { to { opacity: 0; } }
 
-	@keyframes chat-badge { 0% { transform: translateY(50%); opacity: 0; pointer-events: none; }
-	to { pointer-events: none; } }
+        @keyframes rewards-list { from { transform: translateY(100%); } }
 
-	@keyframes pause-svg { from { transform: translateY(-100%); } }
+        @keyframes emote-picker { from { transform: translateY(10%); opacity: 0.5; } }
 
-	@keyframes follow-button { from { transform: translateY(100%); opacity: 0; } }
+        @keyframes chat-tray { from { transform: translateY(50%); opacity: 0; } }
 
-    @keyframes follow-placeholder { 0% { pointer-events: none; }
-    to { transform: scale(0.5); opacity: 0; pointer-events: none; } }
+        @keyframes chat-badge { 0% { transform: translateY(50%); opacity: 0; pointer-events: none; }
+        to { pointer-events: none; } }
 
-	@keyframes spin-hue { to { filter: hue-rotate(360deg); } }
+        @keyframes pause-svg { from { transform: translateY(-100%); } }
 
-	@keyframes spin-hue-180 { 0% { filter: hue-rotate(180deg); }
-	to { filter: hue-rotate(360deg); } }
+        @keyframes follow-button { from { transform: translateY(100%); opacity: 0; } }
 
-	@keyframes overflow-control { to { overflow: hidden; } }
+        @keyframes unfollow-button { from { transform: scale(0.6); opacity: 0; pointer-events: none; }
+        to { pointer-events: none; } }
 
-	@keyframes hide-button { from { transform: translateX(-50%); opacity: 0; } }
+        @keyframes follow-placeholder { 0% { pointer-events: none; }
+        to { transform: scale(0.5); opacity: 0; pointer-events: none; } }
 
-	@keyframes settings-menu { from { transform: translateX(-15%); opacity: 0.5; } }
+        @keyframes spin-hue { to { filter: hue-rotate(360deg); } }
 
-	@keyframes blur-15 { to { backdrop-filter: blur(15px); } }
+        @keyframes spin-hue-180 { 0% { filter: hue-rotate(180deg); }
+        to { filter: hue-rotate(360deg); } }
 
-	@keyframes blur-15-decrease { 0% { backdrop-filter: blur(70px); } 
-	to { backdrop-filter: blur(15px); } }
+        @keyframes overflow-control { to { overflow: hidden; } }
 
-	@keyframes blur-55 { to { backdrop-filter: blur(55px); } }
+        @keyframes hide-button { from { transform: translateX(-50%); opacity: 0; } }
 
-	@keyframes settings-blur { to { backdrop-filter: blur(55px) saturate(180%); } }
+        @keyframes settings-menu { from { transform: translateX(-15%); opacity: 0.5; } }
 
-	@keyframes gradient-custom { 0% { background-position: 200%; }
-	to { background-position: -200%; } }
+        @keyframes blur-15 { to { backdrop-filter: blur(15px); } }
 
-	@keyframes gradient-discord { 0% { background-position: 0; }
-	to { background-position: 100px; } }
+        @keyframes blur-15-decrease { 0% { backdrop-filter: blur(70px); } 
+        to { backdrop-filter: blur(15px); } }
 
-	@keyframes gradient-rotate { to { --angle: 360deg; } }
+        @keyframes blur-55 { to { backdrop-filter: blur(55px); } }
 
-	@property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-}
+        @keyframes settings-blur { to { backdrop-filter: blur(55px) saturate(180%); } }
 
-/*@property --color-1 {
-	syntax: "<color>";
-	initial-value: #a8bbff;
-	inherits: false;
-}
+        @keyframes gradient-custom { 0% { background-position: 200%; }
+        to { background-position: -200%; } }
 
-@property --color-2 {
-	syntax: "<color>";
-	initial-value: #de76f0;
-	inherits: false;
-}*/
+        @keyframes gradient-discord { 0% { background-position: 0; }
+        to { background-position: 100px; } }
 
+        @keyframes angle-gradient { to { --angle: 360deg; } }
+
+        @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    }
 }
 @-moz-document regexp("https?:\/\/www\.twitch\.tv\/[^\/]+\/clip\/.*") {
 	if (new-pause) {
