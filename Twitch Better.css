@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.2.6
+@version        3.2.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -821,8 +821,8 @@
 	
 	if (remove-bits) {
 		@css {
-			.community-points-summary { [class="Layout-sc-1xcs6mc-0 cUmVME"], [data-test-selector="bits-balance-string"] { display: none !important; } }
-			.community-points-summary:has(.liFGiB button) .cUmVME { display: none !important; }
+			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
+			.community-points-summary:has(.hqIgGz) .cUmVME { display: none !important; }
 			.chat-input__textarea [data-a-target="bits-button"], button[data-a-target="top-nav-get-bits-button"] { display: none; }
 			.reward-center__content__with-bits-rewards {
 				.fHdBNk > .kFLrqZ { display: none; }
@@ -1224,12 +1224,12 @@
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
 	.gxYeIp, .bZLSuF, .gGttfb, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button,
-	.dOkkBt, .iwMIba, .imYKMv, .bmaSLQ, .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient,
+	.dOkkBt, .iwMIba, .blixHj, .bmaSLQ, .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient,
  	.iJmEhj, [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]), .media-row__image-play-overlay, 
-    .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE { transition: .15s }
+    .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.imYKMv, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after { transition: .1s }
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"] { transition: .05s linear }
@@ -1312,7 +1312,7 @@
 			animation: settings-menu .225s;
 		}
 		
-		{$player-settings} .CayVJ.imYKMv:first-of-type { // close icon animation
+		{$player-settings} .CayVJ.blixHj:first-of-type { // close icon animation
 			.tw-drop-down-menu-item-figure { transition: .15s; }
 			&:active { .tw-drop-down-menu-item-figure { color: red; } }
 		}
@@ -1321,7 +1321,7 @@
 		{$player-settings} {
 			.cWChvM > div { transition: .2s }
 			
-			.imYKMv[role="menuitem"]:hover {
+			.blixHj[role="menuitem"]:hover {
 				.cWChvM > div { transform: translateX(-3px) }
 			}
 		}
@@ -1449,7 +1449,7 @@
 			.tw-combo-input__input > div { z-index: 1; position: relative; }
 			[class="Layout-sc-1xcs6mc-0 bMcAyM"] { background: #18181B !important; padding: 3px !important; padding-left: 5px !important; }
 			.hVLlmi { animation: search .4s, blur-15-decrease 0.8s .1s both; will-change: transform; background: #00000094 !important; }
-            .tw-tray-item--highlighted.imYKMv:hover { background-color: var(--color-background-interactable-hover); }
+            .tw-tray-item--highlighted.blixHj { background-color: var(--color-background-interactable-hover); }
 		}
 		
 		[data-a-target="player-settings-button"] .tw-svg { transition: .3s; }
