@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.2.4
+@version        3.2.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -807,7 +807,7 @@
 	}
 	
 	if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
-	if (remove-ads) { .stream-display-ad__wrapper { display: none !important; } }
+	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .pbocV > [class="Layout-sc-1xcs6mc-0 fRzsnK"]:nth-of-type(3) { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
 	if (remove-banners) { .kXYDBY[class*="giftExpirationCallout"] { display: none !important; } }
 	if (remove-hype-train) { .hype-train__banner, .side-nav-card [class="Layout-sc-1xcs6mc-0 hMzOYz"], .online-side-nav-channel-tooltip__body .ipRTld .hMzOYz { display: none !important; } }
