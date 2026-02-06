@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.2.5
+@version        3.2.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -185,6 +185,7 @@
 	[data-a-target="share-button"] { display: none; }
     [data-a-target="unfollow-button"] .kxAWvZ { margin-inline: 4px !important; }
     .cLEglz, .kzBqxU, .jJdyrt { visibility: visible !important; opacity: 0; }
+    .dtLYnZ[aria-labelledby="channel-points-reward-center-header"] { margin-block-end: 38px; }
 	
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf {
 		&::after { background-color: #9d5cff; }
@@ -620,7 +621,7 @@
 			background: #131315b0 !important;
 		}
 		
-		.community-points-summary .fOtgyk {
+		.community-points-summary .hqIgGz {
 			background-color: #00c274;
 			
 			&:hover { background-color: #00f090; }
@@ -733,7 +734,7 @@
 	.seekbar-interaction-area:hover { .seekbar-bar { transform: scaleY(1.5); } }
 	
 	if (use-glow) {
-		.community-points-summary .fOtgyk {
+		.community-points-summary .hqIgGz {
 			__points-color = (dark-chat) ? #00800096 : #00a70085;
 			__points-color-hover = (dark-chat) ? #008000cc : #00c70085;
 			
@@ -820,12 +821,11 @@
 	
 	if (remove-bits) {
 		@css {
-			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
+			.community-points-summary { [class="Layout-sc-1xcs6mc-0 cUmVME"], [data-test-selector="bits-balance-string"] { display: none !important; } }
 			.community-points-summary:has(.liFGiB button) .cUmVME { display: none !important; }
 			.chat-input__textarea [data-a-target="bits-button"], button[data-a-target="top-nav-get-bits-button"] { display: none; }
 			.reward-center__content__with-bits-rewards {
-				.gGttfb:not([aria-label]) { display: none; }
-				.kFLrqZ { margin-inline-end: 0 !important; }
+				.fHdBNk > .kFLrqZ { display: none; }
 			}
             
             .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > .ihSefD > .iDMNUO > [class="Layout-sc-1xcs6mc-0"] > .fHdBNk > .kOoFSj {
@@ -1218,7 +1218,7 @@
 	
 			// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
-	.fOtgyk, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB { transition: .3s }
+	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB { transition: .3s }
 	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
