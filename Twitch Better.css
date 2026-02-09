@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.2.7
+@version        3.3.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -54,7 +54,7 @@
     ' ': "holder-3"
 }
 @var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
-@var checkbox sidebar-counter "Add active channels counter" 1
+@var checkbox sidebar-counter "Add channels counter" 1
 @var checkbox sidebar-hover-only "Show only on hover" 1
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
 @var checkbox only-following "Clear categories" 0
@@ -186,6 +186,7 @@
     [data-a-target="unfollow-button"] .kxAWvZ { margin-inline: 4px !important; }
     .cLEglz, .kzBqxU, .jJdyrt { visibility: visible !important; opacity: 0; }
     .dtLYnZ[aria-labelledby="channel-points-reward-center-header"] { margin-block-end: 38px; }
+    .side-nav__scrollable_content { scrollbar-width: none; }
 	
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf {
 		&::after { background-color: #9d5cff; }
@@ -822,7 +823,7 @@
 	if (remove-bits) {
 		@css {
 			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
-			.community-points-summary:has(.hqIgGz) .cUmVME { display: none !important; }
+			.community-points-summary:has(.kOLJxV button) .cUmVME { display: none !important; }
 			.chat-input__textarea [data-a-target="bits-button"], button[data-a-target="top-nav-get-bits-button"] { display: none; }
 			.reward-center__content__with-bits-rewards {
 				.fHdBNk > .kFLrqZ { display: none; }
@@ -872,8 +873,6 @@
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
 	
     if (sidebar-counter) {
-        .side-nav__scrollable_content { scrollbar-width: none; }
-        
         .side-nav--expanded {
             .side-nav-section:nth-of-type(2) {
                 counter-reset: active-channels-counter;
@@ -1229,7 +1228,7 @@
     .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after, .euTJEC { transition: .1s }
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"] { transition: .05s linear }
@@ -1522,6 +1521,8 @@
 		.emote-card__banner {
 			animation: blur-15 .25s .65s both;
 			background: #3b3b441a !important;
+            transition: background 4.5s;
+            @css { @starting-style { background: #141418f5 !important; } }
 		}
 		
 		.onsite-notifications-toast-manager .tw-animation {
