@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.0
+@version        3.3.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -292,7 +292,7 @@
 		
 		bg-inset-on-hover = rgba(255, 255, 255, .15);
 		bg-inset-on-active = rgba(255, 255, 255, .2);
-		bg-inset-volume = rgba(255, 255, 255, .1);
+		bg-inset-volume = rgba(255, 255, 255, .12);
 		
 		button-size = 32px + 8px;
 		icon-size-left-panel = 2rem + 0.4rem;
@@ -535,7 +535,7 @@
 					height: button-size;
 				}
 				
-				&[aria-disabled="true"][aria-haspopup][class="ScCoreButton-sc-ocjdkq-0 gGttfb"]:disabled { // disabled clip button
+				&[aria-label].yezmM:disabled { // disabled clip button
 					background-color: #000 !important;
 					border-top-right-radius: 0;
 					border-bottom-right-radius: 0;
@@ -1202,16 +1202,16 @@
 			width: 100%;
 			height: 2px;
 			background-color: transparent;
-			transform: scaleY(0);
-			transition: transform .25s, background-color .3s;
+			transform: scaleX(80%);
+			transition: transform 1s, background-color .3s;
 			will-change: transform;
 			border-radius: 5px;
 		}
 		
 		&:hover::after {
-			transform: scaleY(1);
+			transform: scaleX(1);
 			background-color: #A776F0;
-			transition: transform .2s, background-color .2s;
+			transition: transform .3s, background-color .2s;
 		}
 	}
 	
@@ -1222,10 +1222,11 @@
 	
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
-	.gxYeIp, .bZLSuF, .gGttfb, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button,
-	.dOkkBt, .iwMIba, .blixHj, .bmaSLQ, .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient,
- 	.iJmEhj, [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]), .media-row__image-play-overlay, 
-    .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA { transition: .15s }
+	.gxYeIp, .bZLSuF, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button, .dOkkBt, .iwMIba, .blixHj, .bmaSLQ,
+    .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
+    [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
+    .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, 
+    .jwwIFW { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after, .euTJEC { transition: .1s }
