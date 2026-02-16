@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.1
+@version        3.3.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -111,7 +111,8 @@
 	'None*': "disabled",
 	'→ Hornet': "'https://static-cdn.jtvnw.net/badges/v1/4dc7b047-8c59-4522-97f2-24fb63147f56/2'",
 	'→ Ruby Heart': "'https://static-cdn.jtvnw.net/badges/v1/ca0aa8ce-b2a8-4582-a5de-4d5b6915dc47/2'",
-	'→ Golden Heart': "'https://static-cdn.jtvnw.net/badges/v1/52c90eac-b7ec-4e24-b500-8fceecfe91e8/2'",
+    '→ Golden Heart': "'https://static-cdn.jtvnw.net/badges/v1/1687873b-cf38-412c-aad3-f9a4ce17f8b6/2'",
+	'→ Golden Heart \'24': "'https://static-cdn.jtvnw.net/badges/v1/52c90eac-b7ec-4e24-b500-8fceecfe91e8/2'",
 	'→ Top gifter': "'https://static-cdn.jtvnw.net/badges/v1/21656088-7da2-4467-acd2-55220e1f45ad/2'",
 	'→ Hypetrain': "'https://static-cdn.jtvnw.net/badges/v1/9c8d038a-3a29-45ea-96d4-5031fb1a7a81/2'",
 	'→ Twitch Staff': "'https://static-cdn.jtvnw.net/badges/v1/e48bfab8-6697-4c5b-84df-e64fb0150701/2'",
@@ -265,6 +266,7 @@
 			background-clip: text;
 			transition: .45s, clip-path .4s;
 			transition-property: opacity, clip-path, word-spacing, color;
+            contain: content;
 				/* state after animation */
 			clip-path: inset(0 25% 0 0);
 			opacity: 0.5;
@@ -1217,7 +1219,7 @@
 	
 			// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
-	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB { transition: .3s }
+	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc { transition: .3s }
 	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
@@ -1229,7 +1231,7 @@
     .jwwIFW { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .fKHFsE::before, .fWQStf, .fWQStf::after, .euTJEC { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .euTJEC { transition: .1s }
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"] { transition: .05s linear }
@@ -1311,6 +1313,10 @@
 		{$player-settings} > div, .chat-settings__content > div {
 			animation: settings-menu .225s;
 		}
+        
+        .dSOCKl + {$player-settings} > div[class]:first-of-type { // disable animation for the close button 
+            animation: none;
+        }
 		
 		{$player-settings} .CayVJ.blixHj:first-of-type { // close icon animation
 			.tw-drop-down-menu-item-figure { transition: .15s; }
@@ -1520,7 +1526,7 @@
 		}
 		
 		.emote-card__banner {
-			animation: blur-15 .25s .65s both;
+			animation: blur-15 .5s .65s both;
 			background: #3b3b441a !important;
             transition: background 4.5s;
             @css { @starting-style { background: #141418f5 !important; } }
@@ -1765,8 +1771,9 @@
 
         @keyframes pause-svg { from { transform: translateY(-100%); } }
 
-        @keyframes follow-button { from { transform: translateY(100%); opacity: 0; } }
-
+         @keyframes follow-button { from { transform: translateY(100%); opacity: 0; pointer-events: none; }
+        to { pointer-events: none; } }
+        
         @keyframes unfollow-button { from { transform: scale(0.6); opacity: 0; pointer-events: none; }
         to { pointer-events: none; } }
 
