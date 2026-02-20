@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.3
+@version        3.3.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1070,6 +1070,8 @@
                 }
             }
             
+            [data-test-selector="user-menu-dropdown__display-name"] { background-size: 50% auto; }
+            
             .metadata-layout__support .dMBVIY a[href$={nick} i]:hover::after { background-color: nick-gradient[2] !important; }
             
             button[data-a-target="user-menu-toggle"][aria-expanded="true"] {
@@ -1228,10 +1230,10 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
     .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, 
-    .jwwIFW { transition: .15s }
+    .jwwIFW, .euTJEC { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .euTJEC { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after { transition: .1s }
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"] { transition: .05s linear }
@@ -1810,17 +1812,6 @@
 
         @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
     }
-}
-@-moz-document regexp("https?:\/\/www\.twitch\.tv\/[^\/]+\/clip\/.*") {
-	if (new-pause) {
-		.player-controls {
-			[data-a-target="player-play-pause-button"][data-a-player-state="playing"] {
-				position: absolute !important;
-				height: 10000% !important;
-				width: 1000% !important;
-			}
-		}
-	}
 }
 @-moz-document url("https://clips.twitch.tv/create") {
 	.clips-root__main {
