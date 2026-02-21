@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.7
+@version        3.3.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -136,7 +136,8 @@
 	'→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
 	'→ BCB Red': "'https://static-cdn.jtvnw.net/badges/v1/ef1e96e8-a0f9-40b6-87af-2977d3c004bb/2'",
 	'→ Darkest Dungeon': "'https://static-cdn.jtvnw.net/badges/v1/52a98ddd-cc79-46a8-9fe3-30f8c719bc2d/2'",
-	'→ Battlefield': "'https://static-cdn.jtvnw.net/badges/v1/d7750af0-caca-47c5-b207-1af9be69ce1b/2'",
+	'→ Diablo': "'https://static-cdn.jtvnw.net/badges/v1/2f98d79a-c78c-4c61-ac9e-7bc544d44619/2'",
+    '→ Battlefield': "'https://static-cdn.jtvnw.net/badges/v1/d7750af0-caca-47c5-b207-1af9be69ce1b/2'",
 	'→ WOT HO\'26': "'https://static-cdn.jtvnw.net/badges/v1/fe0814c3-87f9-40cb-95b5-d1e7453f289d/2'",
 	'→ Hunt Crosses': "'https://static-cdn.jtvnw.net/badges/v1/b1e77273-2fc0-4d36-873a-67a7c1647efe/2'",
 	'→ Arc Raiders': "'https://static-cdn.jtvnw.net/badges/v1/d4aa495f-a0e4-4ab4-b3eb-7c2ea573b03f/2'",
@@ -177,6 +178,7 @@
 	.seekbar-thumb { background-color: thumb_color !important; }
 	.channel-root--home .channel-info-content { width: unset; }
 	.side-nav--expanded { width: sidebar-size; }
+    .converter-preview-player-controls--gradient .tw-transition .bMRWRT { width: 80% !important; }
 	.reward-icon__animated, .predictions-list-item__body, .extensions-dock-card__image { will-change: transform; }
 	.finNtM a, .offline-recommendations-video-card:hover { text-decoration: none; }
 	.chat-scrollable-area__message-container--paused { padding-bottom: 1rem; }
@@ -721,7 +723,7 @@
 		}
 		
 		a[data-a-target="stream-game-link"] {
-			color: #a366ff; &:visited { color: #a366ff }
+			color: #a366ff !important;
 		}
 		
 		.tw-tag {
@@ -782,7 +784,7 @@
 				animation: custom-chat-button[1] .6s;
 				transition: filter .5s, opacity 0.3s;
 			}
-				// poor workaround to make animation work on settings change
+				// workaround to make animation work on settings change
 			@css { @keyframes content-in1 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
 			@keyframes content-in2 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
 			@keyframes content-in3 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
@@ -867,11 +869,11 @@
     }
 	
 	if (remove-gift) {
-		[data-a-target="gift-button"] { display: none; }
+		#live-channel-stream-information [data-a-target="gift-button"] { display: none; }
 	}
 	
 	if (remove-subscription) {
-		[data-a-target="subscribe-button"] { display: none !important; }
+		#live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; }
 	}
 	
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
@@ -1231,7 +1233,7 @@
 	.gxYeIp, .bZLSuF, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button, .dOkkBt, .iwMIba, .blixHj, .bmaSLQ,
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
-    .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, 
+    .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA,
     .jwwIFW, .euTJEC { transition: .15s }
 	
 		// -- 0.1s -- //
@@ -1317,10 +1319,6 @@
 		{$player-settings} > div, .chat-settings__content > div {
 			animation: settings-menu .225s;
 		}
-        
-        .dSOCKl + {$player-settings} > div[class]:first-of-type { // disable animation for the close button 
-            animation: none;
-        }
 		
 		{$player-settings} .CayVJ.blixHj:first-of-type { // close icon animation
 			.tw-drop-down-menu-item-figure { transition: .15s; }
@@ -1400,7 +1398,7 @@
     		margin-inline-end: 0;
     		right: 200%;
 			
-			@css { 
+			@css {
 				.chat-identity-menu__content {
 					.hyBNWd,
 					[data-test-selector="global-badges-test-selector"],
@@ -1475,7 +1473,7 @@
 	}
 	
 	if (apply-blur) {
-			// -- @CSS to prevent unoptimized preprocessor code output -- //
+			// -- @CSS literal -- //
 		@css { [data-popper-placement], .support-panel-container, .clip-editor-popup, .dJwphs.chat-input-tray__open, [aria-labelledby="active-settings-menu-header"] > div {
 			background: #00000094 !important;
 			animation: blur-55 0.9s forwards;
@@ -1519,7 +1517,7 @@
 			}
 		} }
 		
-		// -- //
+		    // -- END of @CSS -- //
 		
 		{$player-settings} > div.goosYB:first-of-type {
 			backdrop-filter: blur(15px);
@@ -1653,9 +1651,9 @@
 		.fJgKVb, .NjUUT, .kjWTWh { background-color: transparent !important; }
 	}
 	
-		.volume-slider__slider-container { clip-path: inset(0 100% 0 0); transition: clip-path .2s, opacity .2s; will-change: clip-path; }
-		.volume-slider__slider-container[aria-hidden="false"] { clip-path: inset(0 -6% 0 0); }
-		.volume-slider__slider-container[aria-hidden="true"] { .ScRangeFillValue-sc-q01wc3-3 { background-color: transparent; } }
+	.volume-slider__slider-container { clip-path: inset(0 100% 0 0); transition: clip-path .2s, opacity .2s; will-change: clip-path; }
+	.volume-slider__slider-container[aria-hidden="false"] { clip-path: inset(0 -6% 0 0); }
+	.volume-slider__slider-container[aria-hidden="true"] { .ScRangeFillValue-sc-q01wc3-3 { background-color: transparent; } }
 	
 	if (new-pause) {
 		.extensions-dock__layout, .player-controls__left-control-group > div:not(.iDMNUO), .muted-segments-alert__scroll-wrapper, .theatre-social-panel, .stream-info-card, .disclosure-tool, [aria-label="Chat Happening Now Overlay"], .player-overlay-background--darkness-3, .video-player__overlay .cojdHE { z-index: 3; }
@@ -1805,7 +1803,7 @@
 
         @keyframes pause-svg { from { transform: translateY(-100%); } }
 
-         @keyframes follow-button { from { transform: translateY(100%); opacity: 0; pointer-events: none; }
+        @keyframes follow-button { from { transform: translateY(100%); opacity: 0; pointer-events: none; }
         to { pointer-events: none; } }
         
         @keyframes unfollow-button { from { transform: scale(0.6); opacity: 0; pointer-events: none; }
