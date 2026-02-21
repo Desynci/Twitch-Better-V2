@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.4
+@version        3.3.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -74,6 +74,8 @@
 @var checkbox remove-subscription "Subscription button" 0
 @var checkbox remove-bits "Bits buttons" 0
 @var checkbox remove-powerups "Rewards list power ups" 0
+@var checkbox enable-banwords "Remove chat messages with listed banwords:" 0
+@var text __ban-words "List:" "'banana, cat, chair'"
 
 @var select highlight "— 🌌 Message highlight —" {
     'ON*': "enabled",
@@ -1530,8 +1532,8 @@
 		.emote-card__banner {
 			animation: blur-15 .5s .65s both;
 			background: #3b3b441a !important;
-            transition: background 4.5s;
-            @css { @starting-style { background: #141418f5 !important; } }
+            transition: background 5s;
+            @css { @starting-style { background: #141418ad !important; } }
 		}
 		
 		.onsite-notifications-toast-manager .tw-animation {
@@ -1691,6 +1693,36 @@
 			color: #ff9898;
 		} }
 	}
+    
+    if (enable-banwords) {
+        // function from Twitch.tv Compact Left Panel by pabli
+        // credits: https://userstyles.world/style/3045
+        filter(a) {
+            a = split(',', replace('^\s+|\s+(?=,)|(?<=,)\s+|\s+$', '', a))
+            b = ()
+            for n in a {
+                if n != '' {
+                    push(b, n)
+                }
+            }
+            return b
+        }
+        
+        if (__ban-words != 'banana, cat, chair') {
+            t = ()
+            
+            __ban-words = filter(__ban-words)
+            for n in __ban-words {
+                push(t,'[aria-label*="'+ n +'" i]')
+            }
+            
+            t = join("\,", t)
+            
+            .chat-line__message:is({t}) {
+                display none !important;
+            }
+        }
+    }
     
     @css {
         @keyframes logo { 0% { clip-path: inset(0 61% 0 0); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
