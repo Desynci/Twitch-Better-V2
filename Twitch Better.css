@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.4.0
+@version        3.4.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1431,7 +1431,7 @@
 		.scrollable-area.emote-picker__nav-content { animation: opacity-in .6s .15s backwards !important }
 		
 		[data-popper-placement][data-popper-placement="right-start"] { transition: .4s; animation: opacity-in .3s .3s backwards !important; @css { @starting-style { opacity: 0 !important; } } }
-		@css { [data-popper-placement="bottom-start"]:has(> * > * > * > .top-nav__overflow-menu) {
+		@css { [data-popper-placement="bottom-start"]:has(.top-nav__overflow-menu) {
 			animation: top-nav-menu 1s, blur-55 1s forwards !important;
 			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; contain: paint layout; }
 		} }
@@ -1496,7 +1496,7 @@
 			animation: settings-blur 0.9s forwards;
 		}
 		
-		[data-popper-placement]:not([data-popper-placement="right-start"]):has(> div > div > .dduVcl) {
+		[data-popper-placement]:not([data-popper-placement="right-start"]):has(.dduVcl) {
 			background: #18181bb0 !important;
 			border-radius: var(--border-radius-large);
 			animation: blur-15 0.4s forwards;
