@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.3.8
+@version        3.4.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -204,7 +204,7 @@
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
 	
 		// Fix strange animation bug on closing popup
-	.ReactModal__Overlay--after-open:has(.tw-transition[aria-hidden="true"]) { display: none; }
+	.react-modal__overlay:has(.tw-transition[aria-hidden="true"]) { display: none; }
 	
 	.chat-line__message-body--highlighted {
 		background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
@@ -247,7 +247,7 @@
 	
 	button[data-a-target="chat-badge"], .dvtAVE > .chat-badge {
 		transition: .2s;
-		transform: scaleZ(1);
+        will-change: transform;
 		
 		&:hover { transform: scale(1.2) }
 	}
@@ -709,6 +709,7 @@
                 top: 28px;
 				display: block;
 				position: relative;
+                filter: drop-shadow(0px 0px 5px #ff3a3a);
 				animation: indicator 2s infinite;
 			}
 		}
@@ -915,9 +916,12 @@
 			z-index: 10000;
 			top: 0;
  			box-shadow: var(--shadow-elevation-2) !important;
-			will-change: transform, filter;
 			transform: translateX(-98%);
             opacity: 0;
+            
+            @supports(-moz-appearance: none) { // apply only for firefox, otherwise it's blurry in chromium
+                will-change: transform, filter;
+            }
             
 			&:hover {
 				transform: none; 
@@ -1427,15 +1431,15 @@
 		.scrollable-area.emote-picker__nav-content { animation: opacity-in .6s .15s backwards !important }
 		
 		[data-popper-placement][data-popper-placement="right-start"] { transition: .4s; animation: opacity-in .3s .3s backwards !important; @css { @starting-style { opacity: 0 !important; } } }
-		@css { [data-popper-placement]:has(.top-nav__overflow-menu) {
+		@css { [data-popper-placement="bottom-start"]:has(> * > * > * > .top-nav__overflow-menu) {
 			animation: top-nav-menu 1s, blur-55 1s forwards !important;
-			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; }
+			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; contain: paint layout; }
 		} }
 		[data-popper-placement] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.6); } } }
 		
 		.user-menu-dropdown__main-menu {
 			animation: user-menu .6s; will-change: transform, clip-path;
-			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; will-change: transform; } }
+			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; will-change: transform; contain: paint layout; } }
 			for row in (1..19) { [class="Layout-sc-1xcs6mc-0"] > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.5); } }
 			for row in (2..6) { .kvjacc > div:nth-of-type({row}) { animation-delay: 40ms*(row/1.5)+750ms; } }
 		}
@@ -1461,7 +1465,7 @@
 		}
 		
 		[data-a-target="player-settings-button"] .tw-svg { transition: .3s; }
-		.player-controls__right-control-group:has(.resize-detector) { [data-a-target="player-settings-button"] .tw-svg { transform: rotate(0.15turn) } }
+		.player-controls__right-control-group:has(> .resize-detector) { [data-a-target="player-settings-button"] .tw-svg { transform: rotate(0.15turn) } }
 		
 		.default-panel {
 			&>a>img { transition: .3s; transform: scale(1); }
@@ -1492,7 +1496,7 @@
 			animation: settings-blur 0.9s forwards;
 		}
 		
-		[data-popper-placement]:not([data-popper-placement="right-start"]):has(.dduVcl) {
+		[data-popper-placement]:not([data-popper-placement="right-start"]):has(> div > div > .dduVcl) {
 			background: #18181bb0 !important;
 			border-radius: var(--border-radius-large);
 			animation: blur-15 0.4s forwards;
@@ -1661,7 +1665,7 @@
 		.player-controls__left-control-group { flex-grow: 0 !important; }
         
 		.player-controls {
-			[class="InjectLayout-sc-1i43xsx-0 iDMNUO"]:has([data-a-player-state="playing"]) {
+			[class="InjectLayout-sc-1i43xsx-0 iDMNUO"]:has(> div > button[data-a-player-state="playing"]) {
 				position: absolute !important;
 				height: 10000% !important;
 				width: 1000% !important;
@@ -1747,7 +1751,7 @@
         @keyframes roll-down { 0% { clip-path: inset(0 0 100% 0); }
         to { clip-path: inset(-5% -5% -5% -5%); } }
 
-        @keyframes user-element { from { transform: translateX(-40%); } }
+        @keyframes user-element { from { transform: translateX(-40%); filter: blur(1px); } }
 
         @keyframes side-nav { from { transform: translateX(-50%); } }
 
