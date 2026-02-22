@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.4.3
+@version        3.4.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -896,11 +896,17 @@
                     color: var(--color-hinted-grey-9);
                     font-variant-position: super;
                     position: absolute;
-                    right: 43px;
+                    right: 40px;
                     top: 40px;
                 }
             }
 	    }
+        
+        html[lang="ru-RU"] {
+            .side-nav--expanded .side-nav-section:nth-of-type(2)::after {
+                right: 43px;
+            }
+        }
         
         .side-nav--expanded:hover { counter-reset: active-channels-counter; }
         if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: active-channels-counter; } }
@@ -918,7 +924,7 @@
                 .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
             }
         }
-		
+        
 		.side-nav {
 			position: fixed;
 			z-index: 10000;
@@ -1441,9 +1447,9 @@
 		[data-popper-placement][data-popper-placement="right-start"] { transition: .4s; animation: opacity-in .3s .3s backwards !important; @css { @starting-style { opacity: 0 !important; } } }
 		@css { [data-popper-placement="bottom-start"]:has(.top-nav__overflow-menu) {
 			animation: top-nav-menu 1s, blur-55 1s forwards !important;
-			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; }
+			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: panel-element .3s backwards; }
 		} }
-		[data-popper-placement="bottom-start"] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.6); } } }
+		[data-popper-placement="bottom-start"] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.4); } } }
 		
 		.user-menu-dropdown__main-menu {
 			animation: user-menu .6s; will-change: transform, clip-path;
@@ -1758,6 +1764,8 @@
 
         @keyframes roll-down { 0% { clip-path: inset(0 0 100% 0); }
         to { clip-path: inset(-5% -5% -5% -5%); } }
+
+        @keyframes panel-element { from { transform: translateX(-40%); } }
 
         @keyframes user-element { from { transform: translateX(-40%); filter: blur(1px); } }
 
