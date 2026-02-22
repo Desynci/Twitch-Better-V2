@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.4.1
+@version        3.4.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -907,9 +907,17 @@
     }
     
 	if (sidebar-hover-only) {
-		@css { .foAhuv [data-popper-placement="bottom"]:is([style$="translate3d(10.4px, 70.4px, 0px);"], [style$="translate3d(10.0333px, 70.2333px, 0px);"]) { /* channels list sorting popup */
-			transform: translate3d(var(--sidebar-size), 70.4px, 0px) !important;
-		} }
+		@css {
+            .tw-dialog-layer div[data-popper-placement="bottom"][style*="translate3d(10"][style*=", 70"] { /* channels list sorting popup */
+			    transform: translate3d(var(--sidebar-size), 70.4px, 0px) !important;
+            }
+            
+            .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(175"][style*=", 50"] { /* collapse popup */
+                transform: translate3d(247px, 11px, 0px) !important;
+                
+                .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
+            }
+        }
 		
 		.side-nav {
 			position: fixed;
@@ -1238,7 +1246,7 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
     .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA,
-    .jwwIFW, .euTJEC { transition: .15s }
+    .jwwIFW, .euTJEC, .fbfimN { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after { transition: .1s }
@@ -1433,13 +1441,13 @@
 		[data-popper-placement][data-popper-placement="right-start"] { transition: .4s; animation: opacity-in .3s .3s backwards !important; @css { @starting-style { opacity: 0 !important; } } }
 		@css { [data-popper-placement="bottom-start"]:has(.top-nav__overflow-menu) {
 			animation: top-nav-menu 1s, blur-55 1s forwards !important;
-			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; contain: paint layout; }
+			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: user-element .3s backwards; }
 		} }
-		[data-popper-placement] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.6); } } }
+		[data-popper-placement="bottom-start"] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.6); } } }
 		
 		.user-menu-dropdown__main-menu {
 			animation: user-menu .6s; will-change: transform, clip-path;
-			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; will-change: transform; contain: paint layout; } }
+			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; will-change: transform; } }
 			for row in (1..19) { [class="Layout-sc-1xcs6mc-0"] > div:nth-of-type({row}) { animation-delay: 60ms*(row/1.5); } }
 			for row in (2..6) { .kvjacc > div:nth-of-type({row}) { animation-delay: 40ms*(row/1.5)+750ms; } }
 		}
@@ -1478,7 +1486,7 @@
 	
 	if (apply-blur) {
 			// -- @CSS literal -- //
-		@css { [data-popper-placement], .support-panel-container, .clip-editor-popup, .dJwphs.chat-input-tray__open, [aria-labelledby="active-settings-menu-header"] > div {
+		@css { :not([role="tooltip"]) > [data-popper-placement], .support-panel-container, .clip-editor-popup, .dJwphs.chat-input-tray__open, [aria-labelledby="active-settings-menu-header"] > div {
 			background: #00000094 !important;
 			animation: blur-55 0.9s forwards;
 			border-radius: var(--border-radius-large);
@@ -1566,6 +1574,15 @@
 			background: #18181bb0 !important;
 			border-color: #53535f47 !important;
 		}
+        
+        :not([role="tooltip"]) > [data-popper-placement] {
+			background: #18181bb0 !important;
+			
+			.fNeqge, .whispers-threads-box__header {
+				background: blurred-menu-header !important;
+				box-shadow: none !important;
+			}
+		}
 		
 		@css { [data-popper-placement][data-popper-placement="right-start"] { /* sidepanel stream tooltip poopup */
 			backdrop-filter: none !important; background: none !important;
@@ -1576,15 +1593,6 @@
 			.jtfmFN { font-size: 1.35rem; }
 			.focus-visible { outline: none; }
 		} }
-		
-		[data-popper-placement] {
-			background: #18181bb0 !important;
-			
-			.fNeqge, .whispers-threads-box__header {
-				background: blurred-menu-header !important;
-				box-shadow: none !important;
-			}
-		}
 		
 		{$player-settings} > .igZqfU:first-of-type button {
 			background: rgba(23, 23, 23, .4);
