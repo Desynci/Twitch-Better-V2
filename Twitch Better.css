@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.2
+@version        3.5.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1266,7 +1266,7 @@
     .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, .cpQXQS { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"], .ckwgLc, .fQWTss { transition: .05s linear }
@@ -1572,10 +1572,10 @@
                 backdrop-filter: blur(15px) saturate(180%);
             }
             
-            .kjWTWh {
+            .kjWTWh, .HPVMB, .jChGcU {
                 background: hsla(240, 6%, 15%, .72) !important;
                 border: 1px solid #4f4f4f69;
-			    border-radius: var(--border-radius-large);
+			    border-radius: var(--border-radius-large) !important;
             }
         } }
 		
