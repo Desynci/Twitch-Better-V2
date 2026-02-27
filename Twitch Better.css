@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.0
+@version        3.5.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -185,7 +185,7 @@
 	.whispers-threads-box__header, .whispers-threads-box__header+.gxOWjV, .jmERFg { border-bottom: none !important; }
 	.side-nav { background: #18181b !important; }
 	.kpgZBi { border-radius: 12px !important; }
-	.chat-wysiwyg-input-box, .fFIkct { box-shadow: inset 0 0 0 var(--input-border-width-small) #636363f2; }
+	.chat-wysiwyg-input-box, .fFIkct, .ixHVAF { box-shadow: inset 0 0 0 var(--input-border-width-small) #636363f2; }
 	.chat-input-tray__open { background: #232327b0 !important; }
 	[data-a-target="share-button"] { display: none; }
     [data-a-target="unfollow-button"] .kxAWvZ { margin-inline: 4px !important; }
@@ -1252,7 +1252,7 @@
     [data-a-target="stream-title"] .tw-link { transition: filter .2s; &:hover { filter: brightness(1.2); } }
     .streamer-card__balloon .ihBVuT .cfjChX { overflow: visible !important; }
 	
-			// -- 0.5s, 0.3s, 0.2s -- //
+		// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
 	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc, [data-a-target="follow-button"], [data-a-target="unfollow-button"] { transition: .3s }
 	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt,  { transition: .2s }
@@ -1263,13 +1263,13 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
     .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA,
-    .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm { transition: .15s }
+    .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, .cpQXQS { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after { transition: .1s }
 	
 		// -- 0.05s -- //
-	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"], .ckwgLc { transition: .05s linear }
+	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"], .ckwgLc, .fQWTss { transition: .05s linear }
     
         // -- !important -- //
     .rewardsLearnMoreExpandedViewDark--EoAxN { transition: .3s !important }
@@ -1349,7 +1349,7 @@
             animation: carousel 1.8s .25s backwards cubic-bezier(0.76, 0, 0.24, 1);
         }
         [data-test-selector="featured-content-carousel-placeholder"] {
-            animation: follow-placeholder .35s forwards;
+            animation: follow-placeholder .25s forwards;
         }
 		
 		{$player-settings} > div, .chat-settings__content > div {
@@ -1434,6 +1434,10 @@
 			animation: chat-tray .3s;
 		}
         
+        .modal-wrapper__content > div {
+            animation: overlays .7s; 
+        }
+        
 		{$chat-customization} {
 			animation: chat-custom .5s;
 			margin-block-end: 0;
@@ -1477,9 +1481,13 @@
 		
 		.user-menu-dropdown__main-menu {
 			animation: user-menu .6s; will-change: transform, clip-path;
-			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; will-change: transform; } }
+			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: panel-element .3s backwards; will-change: transform; } }
 			for row in (1..19) { [class="Layout-sc-1xcs6mc-0"] > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.5)); } }
 			for row in (2..6) { .kvjacc > div:nth-of-type({row}) { animation-delay: round(40ms*(row/1.5)+750ms); } }
+            
+            @supports(-moz-appearance: none) { // override and use animation with blur only in firefox, lags in chromium
+                [class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; } }
+            }
 		}
         
 		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease; } }
@@ -1555,7 +1563,21 @@
 			.dduVcl, .iGvYpN {
 				background: none !important;
 			}
-		} }
+		}
+        
+        .modal__backdrop {
+            animation: backdrop .7s forwards;
+            
+            .modal-wrapper__content > div {
+                backdrop-filter: blur(15px) saturate(180%);
+            }
+            
+            .kjWTWh {
+                background: hsla(240, 6%, 15%, .72) !important;
+                border: 1px solid #4f4f4f69;
+			    border-radius: var(--border-radius-large);
+            }
+        } }
 		
 		    // -- END of @CSS -- //
 		
@@ -1785,6 +1807,12 @@
 
         @keyframes user-menu { 0% { clip-path: inset(0 0 100% 0); transform: scaleY(0); transform-origin: top; }
         to { clip-path: inset(-5% -5% -5% -5%); transform-origin: top; } }
+
+        @keyframes overlays { 0% { transform: scale(50%); opacity: 0; }
+        60% { opacity: 1; } }
+
+        @keyframes backdrop { 0% { background: transparent; }
+        to { background: rgba(0, 0, 0, .35); } }
 
         @keyframes carousel { from { transform: translateY(-130%); } }
 
