@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.3
+@version        3.5.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -492,23 +492,23 @@
 				else if (player-controls=="yt-dark") { background-color: dark-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #33333369; }
 			}
 			
-			> div:not(.cofMAX, .resize-detector) {
+			> div:not(.cofMAX, .resize-detector, .kYtUcc) {
 				transition: background-color .15s;
 				position: relative;
 				
 				background-color: (player-controls=="yt-light") ? light-bg : dark-bg;
 			}
 			
-			> div:not(.cofMAX, .resize-detector):hover::after {
+			> div:not(.cofMAX, .resize-detector, .kYtUcc):hover::after {
 				transform: scale(1);
 				opacity: 1;
 			}
 			
-			> div:not(.cofMAX, .resize-detector):active::after {
+			> div:not(.cofMAX, .resize-detector, .kYtUcc):active::after {
 				background-color: bg-inset-on-active;
 			}
 			
-			> div:not(.cofMAX, .resize-detector)::after {
+			> div:not(.cofMAX, .resize-detector, .kYtUcc)::after {
 				content: "";
 				position: absolute;
 				inset: 2.5px;
@@ -519,6 +519,12 @@
 				opacity: 0;
 				background-color: bg-inset-on-hover;
 			}
+            
+            .low-latency-notification button {
+                &:hover { background-color: var(--color-background-button-text-hover) !important; }
+                height: var(--button-size-small) !important;
+                width: var(--button-size-small) !important;
+            }
 			
 			// -- -- //
             
@@ -773,7 +779,7 @@
 			color: transparent !important;
 			
 			&:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }
-			&:hover::before { filter: saturate(5); opacity: 0.8; }
+			&:hover::before { filter: saturate(3); opacity: 0.8; }
 			
 			&[disabled] {
 				&::before, &::after { filter: brightness(0.6) }
@@ -823,7 +829,7 @@
 	}
 	
 	if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
-	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime, .top-nav__menu .pbocV > [class="Layout-sc-1xcs6mc-0 fRzsnK"]:nth-of-type(3) { display: none !important; } }
+	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
 	if (remove-banners) { .kXYDBY[class*="giftExpirationCallout"] { display: none !important; } }
 	if (remove-hype-train) { .hypeTrainBanner--OojpY, .side-nav-card [class="Layout-sc-1xcs6mc-0 hMzOYz"], .online-side-nav-channel-tooltip__body .ipRTld .hMzOYz { display: none !important; } }
@@ -1485,6 +1491,12 @@
 			for row in (1..19) { [class="Layout-sc-1xcs6mc-0"] > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.5)); } }
 			for row in (2..6) { .kvjacc > div:nth-of-type({row}) { animation-delay: round(40ms*(row/1.5)+750ms); } }
             
+            &> div > div { 
+                max-width: 285px;
+                
+                .dtSdDz { overflow: hidden; text-overflow: ellipsis; }
+            }
+            
             @supports(-moz-appearance: none) { // override and use animation with blur only in firefox, lags in chromium
                 [class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; } }
             }
@@ -1696,11 +1708,11 @@
 		
 		.community-highlight {
 			background: #18181bb0 !important;
-			backdrop-filter: blur(10px);
+			backdrop-filter: blur(10px) saturate(180%);
 			transition: backdrop-filter .4s;
 			
 			&:hover {
-				backdrop-filter: blur(6px);
+				backdrop-filter: blur(6px) saturate(180%);
 			}
 		}
 		
