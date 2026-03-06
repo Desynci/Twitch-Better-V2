@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.6
+@version        3.5.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -671,12 +671,6 @@
 	}
 	
 	if (new-design) {
-		#front-page-main-content .find-me {
-			padding: 15px 15px 0px 15px;
-			background: rgba(24, 24, 27, .4);
-    		border-radius: 10px;
-		}
-		
         .metadata-layout__support [data-target="channel-header-right"] .tw-new-item-indicator__container {
             display: none;
         }
@@ -684,6 +678,14 @@
 		.guest-star-live-card-border {
 			background: crimson;
 		}
+        
+        .featured-content-carousel :is(.video-player__container, .video-player, [data-test-selector="featured-item-image"]) {
+            border-radius: 11px;
+        }
+        
+        [data-test-selector="featured-item-image"] {
+            width: auto !important;
+        }
 		
 		.guest-star-live-card-clip-edge {
 			clip-path: inset(1px);
@@ -865,7 +867,7 @@
 	
 	if (remove-turbo) {
         @css {
-            .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO > .kOoFSj {
+            .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO {
                 .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0.dcNXJO { /* small button */
                     display: none;
                     
@@ -928,7 +930,7 @@
     
 	if (sidebar-hover-only) {
 		@css {
-            .tw-dialog-layer div[data-popper-placement="bottom"][style*="translate3d(10"][style*=", 70"] { /* channels list sorting popup */
+            .tw-dialog-layer div[data-popper-placement="bottom"][style*=", 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) { /* channels list sorting popup */
 			    transform: translate3d(var(--sidebar-size), 70.4px, 0px) !important;
             }
             
@@ -1356,7 +1358,7 @@
             animation: carousel 1.8s .25s backwards cubic-bezier(0.76, 0, 0.24, 1);
         }
         [data-test-selector="featured-content-carousel-placeholder"] {
-            animation: follow-placeholder .25s forwards;
+            animation: carousel-placeholder .45s forwards;
         }
 		
 		{$player-settings} > div, .chat-settings__content > div {
@@ -1403,10 +1405,10 @@
 		}
 	    
 			// verification badge animation
-        verif-badge-container = ()
-        push(verif-badge-container, '.channel-info-content .dMBVIY')
-        push(verif-badge-container, '.streamer-card__balloon .ihBVuT .gEnGqX')
-        $verif-badge-container = join(', ', verif-badge-container)
+        verif-badge-container = ();
+        push(verif-badge-container, '.channel-info-content .dMBVIY');
+        push(verif-badge-container, '.streamer-card__balloon .ihBVuT .gEnGqX');
+        $verif-badge-container = join(', ', verif-badge-container);
 
         {$verif-badge-container} {
             .ijyopa .tw-svg, .eqFpjC .tw-svg { transition: transform .35s; }
@@ -1419,7 +1421,9 @@
 		.reward-icon--large { transition: .25s; filter: hue-rotate(0); &:hover { filter: hue-rotate(0.1turn); } }
 	    
 		.streamer-card__balloon {
-            [data-popper-placement] { if (apply-blur) { animation: blur-15 0.9s forwards, opacity-in 0.3s !important; } else { animation: opacity-in 0.3s !important; } overflow: hidden; }
+            is-blur = ();
+            is-blur = (apply-blur) ? "blur-15 0.9s forwards," : "";
+            [data-popper-placement] { animation: unquote(is-blur) opacity-in 0.3s !important; overflow: hidden; }
 			.kXaRRs { animation: streamer-card .6s !important; }
 			.jvDEkm { animation: spin-hue-180 .8s; }
 			[data-a-target="follow-button"] { animation: follow-button .65s .15s backwards; }
@@ -1540,7 +1544,7 @@
 			animation: blur-55 0.9s forwards;
 			border-radius: var(--border-radius-large);
 			
-			.support-panel, .hMGodn, .bAWxnr, .kCsLVM {
+			.support-panel, .hMGodn, .bAWxnr, .kCsLVM, .jEiyzW {
 				background: none !important;
 			}
 			
@@ -1838,6 +1842,8 @@
         to { background: rgba(0, 0, 0, .35); } }
 
         @keyframes carousel { from { transform: translateY(-130%); } }
+        
+        @keyframes carousel-placeholder { to { transform: scale(0); opacity: 0; } }
 
         @keyframes roll-down { 0% { clip-path: inset(0 0 100% 0); }
         to { clip-path: inset(-5% -5% -5% -5%); } }
