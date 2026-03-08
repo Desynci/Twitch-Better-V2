@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.8
+@version        3.5.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -271,9 +271,9 @@
 			font-weight: 600;
 			letter-spacing: -0.18px;
 			white-space: nowrap;
+            animation: gradient-custom 5s 2.5s linear infinite, opacity-in-logo 4s 5s backwards;
 			background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
 			background-size: 200% 200%;
-			animation: gradient-custom 5s 2.5s linear infinite, logo 11s 4s backwards;
 			background-clip: text;
 			transition: .45s, clip-path .4s;
 			transition-property: opacity, clip-path, word-spacing, color;
@@ -288,6 +288,7 @@
 				font-size: var(--font-size-3);
 				bottom: 6px;
 				left: 51px;
+                animation: gradient-custom 5s 2.5s linear infinite, logo 11s 4s backwards;
 			}
 		}
 		
@@ -685,6 +686,10 @@
         
         [data-test-selector="featured-item-image"] {
             width: auto !important;
+        }
+        
+        .channel-root__player .home-carousel-info--suspended {
+            width: 32rem !important; 
         }
 		
 		.guest-star-live-card-clip-edge {
@@ -1572,7 +1577,7 @@
 			}
 		}
 		
-		[aria-describedby="channel-points-reward-center-body"], .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl {
+		[aria-describedby="channel-points-reward-center-body"], .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl, .channel-root__player .home-carousel-info {
 			background: #18181bb0 !important;
 			border-radius: var(--border-radius-large);
 			animation: blur-15 0.4s forwards;
@@ -1890,6 +1895,9 @@
         @keyframes custom-element { from { transform: translateY(-100%); opacity: 0; } }
 
         @keyframes opacity-in { from { opacity: 0; } }
+            
+        @keyframes opacity-in-logo { 0% { opacity: 0; }
+        to { opacity: 0.5; } }
 
         @keyframes opacity-cycle { 50% { opacity: 0.7; } }
 
