@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.4
+@version        3.6.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1903,31 +1903,40 @@
         
         if (__ban-words != 'banana, cat, chair') {
             t = ()
+            t2 = ()
             
             __ban-words = filter(__ban-words)
             for n in __ban-words {
                 push(t,'[aria-label*="'+ n +'" i]')
+                push(t2,'[title*="'+ n +'" i]')
             }
             
             t = join("\,", t)
+            t2 = join("\,", t2)
+            
+            .chat-line__message .iQDCwh p:is({t2}) { // message answer line
+                visibility: hidden;
+                pointer-events: none;
+                
+                &::before {
+                    content: "*Censored message*";
+                    visibility: visible;
+                    font-style: italic;
+                }
+            }
             
             if (remove-mode=="silent") {
                 .chat-line__message:is({t}) {
                     display: none;
-                    
-                    [data-a-target="chat-line-message-body"] {
-                        filter: none !important;
-                    }
                 }
             }
             
             else if (remove-mode=="twitch") {
                 .chat-line__message:is({t}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
-                    filter: none !important;
                     
                     &::before {
-                        content: "message deleted by a Twitch Better blacklist...";
+                        content: "message deleted by the Twitch Better blacklist.";
                         visibility: visible;
                         color: var(--color-text-alt-2);
                         font-style: italic;
