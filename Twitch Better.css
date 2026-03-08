@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.5.9
+@version        3.6.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -207,7 +207,7 @@
 		// Notification tweaks
 	.onsite-notification-toast__action.dhbGUE { display: none !important; }
 	.onsite-notification-toast__action-wrapper { width: unset; border-left: none !important; }
-	.onsite-notifications-toast-manager .tw-animation { animation: notification .9s cubic-bezier(0.76, 0, 0.24, 1) !important; }
+	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.2s cubic-bezier(0.76, 0, 0.24, 1) !important; }
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
 	
 		// Fix strange animation bug on closing popup
@@ -271,7 +271,7 @@
 			font-weight: 600;
 			letter-spacing: -0.18px;
 			white-space: nowrap;
-            animation: gradient-custom 5s 2.5s linear infinite, opacity-in-logo 4s 5s backwards;
+            animation: gradient-custom 5s 2.5s linear infinite, opacity-in-logo 2s 5s backwards;
 			background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
 			background-size: 200% 200%;
 			background-clip: text;
@@ -292,10 +292,10 @@
 			}
 		}
 		
-		.top-nav .itDlPz [data-test-selector="toggle-balloon-wrapper__mouse-enter-detector"] {
+		@css { .top-nav .itDlPz [data-test-selector="toggle-balloon-wrapper__mouse-enter-detector"] {
 			&:hover::after { word-spacing: 3.5px; transition: .65s, clip-path .4s; }
 			&:active::after { clip-path: inset(0 0 0 0); word-spacing: 0; color: transparent; opacity: 1; transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1) }
-		}
+        } }
 	}
 	
 	if (player-controls!="default") {
@@ -689,7 +689,7 @@
         }
         
         .channel-root__player .home-carousel-info--suspended {
-            width: 32rem !important; 
+            width: 32rem !important;
         }
 		
 		.guest-star-live-card-clip-edge {
@@ -1239,7 +1239,7 @@
 	}
 	
         // channel link underline animation
-	.metadata-layout__support .dMBVIY a[href], .streamer-card__balloon .gAaTpx {
+	.metadata-layout__support .dMBVIY a[href], .streamer-card__balloon .gAaTpx, .home-header-sticky h1.tw-title {
 		text-decoration: none !important;
 		position: relative;
 		
@@ -1263,6 +1263,12 @@
 			transition: transform .3s, background-color .2s;
 		}
 	}
+    
+    .home-header-sticky {
+        h1.tw-title { bottom: 2px; }
+        a[href] { text-decoration: none !important; }
+    }
+    
     [data-a-target="stream-title"] .tw-link { transition: filter .2s; &:hover { filter: brightness(1.2); } }
     .streamer-card__balloon .ihBVuT .cfjChX { overflow: visible !important; }
 	
@@ -1275,9 +1281,9 @@
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
 	.gxYeIp, .bZLSuF, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button, .dOkkBt, .iwMIba, .blixHj, .bmaSLQ,
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
-    [data-a-target="tw-progress-bar-animation"]:not([class="ScProgressBarFill-sc-1aarjxm-1 caosbx InjectLayout-sc-1i43xsx-0 cireTk"]),
-    .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA,
-    .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, .cpQXQS { transition: .15s }
+    [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
+    .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
+    .cpQXQS { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
@@ -1288,6 +1294,8 @@
         // -- !important -- //
     .rewardsLearnMoreExpandedViewDark--EoAxN { transition: .3s !important }
 	.rewardsLearnMoreHeadersDark--HAOZi { transition: .15s !important }
+        
+    [data-test-selector="chat-private-callout-queue__callout-container"] [data-a-target="tw-progress-bar-animation"] { transition: none; }
 	
 		// -- ANIMATIONS
 	if (animations=="enabled") {
@@ -1413,13 +1421,15 @@
         verif-badge-container = ();
         push(verif-badge-container, '.channel-info-content .dMBVIY');
         push(verif-badge-container, '.streamer-card__balloon .ihBVuT .gEnGqX');
+        push(verif-badge-container, '.home-header-sticky a');
         $verif-badge-container = join(', ', verif-badge-container);
 
         {$verif-badge-container} {
             .ijyopa .tw-svg, .eqFpjC .tw-svg { transition: transform .35s; }
-            a, h1 { &:hover+.eqFpjC .tw-svg, &:hover+.ijyopa .tw-svg { transform: rotate(0.02turn) scale(1.1); } }
+            .gsIgyh .tw-svg { transition: transform .22s; }
+            a, h1 { &:hover+.eqFpjC .tw-svg, &:hover+.ijyopa .tw-svg, &:hover+.gsIgyh .tw-svg { transform: rotate(0.02turn) scale(1.1); } }
 		}
-        .streamer-card__balloon .eqFpjC .tw-svg { will-change: transform; }
+        .streamer-card__balloon .eqFpjC .tw-svg, .home-header-sticky .gsIgyh .tw-svg { will-change: transform; }
         
 		.tw-progress-bar .dqeKsq { animation: spin-hue 3s infinite linear; background: #00db84 !important; }
 		[data-a-target="tw-progress-bar-animation"] { --color-background-progress-status-success: #d57de1 !important; }
@@ -1653,6 +1663,8 @@
 			.fNeqge, .whispers-threads-box__header {
 				background: blurred-menu-header !important;
 				box-shadow: none !important;
+                border-top-left-radius: var(--border-radius-large) !important;
+                border-top-right-radius: var(--border-radius-large) !important;
 			}
 		}
 		
