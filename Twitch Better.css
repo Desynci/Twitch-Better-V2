@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.2
+@version        3.6.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -109,8 +109,6 @@
 @var checkbox remove-subscription "Subscription button" 0
 @var checkbox remove-bits "Bits buttons" 0
 @var checkbox remove-powerups "Rewards list power ups" 0
-@var checkbox enable-banwords "Remove chat messages with listed banwords:" 0
-@var text __ban-words "List:" "'banana, cat, chair'"
 
 @var select highlight "— 🌌 Message highlight —" {
     'ON*': "enabled",
@@ -195,6 +193,16 @@
 	'[Custom image]': "custom"
 }
 @var text __custom-badge-url "→ [custom image] URL in quotes:" "'Example.com/img.png'"
+@var select holder-5 "— 🤬 Chat filtering —" {
+    ' ': "holder-5"
+}
+@var checkbox enable-banwords "Hide chat messages with listed banwords:" 0
+@var text __ban-words "→ List:" "'banana, cat, chair'"
+@var select remove-mode "Remove mode:" {
+    'Full (silent)': "full",
+    'Default (Twitch-like)': "twitch",
+    'Blur (show on hover)': "blur"
+}
 
 ==/UserStyle== */
 
@@ -886,8 +894,8 @@
             .tw-avatar::after {
 				content: '';
 				position: absolute;
-                top: -3.6px;
-                left: -3.6px;
+                top: -3.2px;
+                left: -3px;
                 height: 120%;
                 width: 120%;
                 background: url(use-avatar-frame[0]);
@@ -905,6 +913,22 @@
         .channel-info-content a[href$={nick} i] .tw-avatar::after {
             top: -5.6px;
             left: -6.4px;
+        }
+        
+        button[data-a-target="user-menu-toggle"] {
+            box-shadow: none !important;
+            will-change: transform;
+            transition: .38s;
+            
+            &:hover {
+                filter: brightness(1.2);
+            }
+            
+            &[aria-expanded="true"] {
+                transform: scale(1.05);
+                filter: brightness(1.2);
+                transition: .25s;
+            }
         }
     }
 	
@@ -1585,6 +1609,7 @@
             
             &> div > div { 
                 max-width: 285px;
+                min-width: 255px;
                 
                 .dtSdDz { overflow: hidden; text-overflow: ellipsis; }
             }
@@ -1886,8 +1911,32 @@
             
             t = join("\,", t)
             
-            .chat-line__message:is({t}) {
-                display none !important;
+            if (remove-mode=="silent") {
+                .chat-line__message:is({t}) {
+                    display: none;
+                    
+                    [data-a-target="chat-line-message-body"] {
+                        filter: none !important;
+                    }
+                }
+            }
+            
+            else if (remove-mode=="twitch") {
+                .chat-line__message:is({t}) [data-a-target="chat-line-message-body"] {
+                    visibility: hidden;
+                    filter: none !important;
+                    
+                    &::before {
+                        content: "message deleted by a Twitch Better blacklist...";
+                        visibility: visible;
+                        color: var(--color-text-alt-2);
+                        font-style: italic;
+                    }
+                    
+                    > * {
+                        display: none;
+                    }
+                }
             }
         }
     }
