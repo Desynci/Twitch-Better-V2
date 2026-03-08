@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.5
+@version        3.6.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -1887,6 +1887,20 @@
 		} }
 	}
     
+        // preprocessor is bugged so this check must be there, 
+        // either way it will throw an error
+    if (remove-mode=="blur" && enable-banwords && __ban-words != 'banana, cat, chair') {
+        .chat-line__message:is({t}) [data-a-target="chat-line-message-body"], .chat-line__message .iQDCwh p:is({t2}) span:last-of-type {
+            filter: blur(3px);
+            transition: filter .25s .1s;
+            
+            &:hover {
+                filter: none;
+                transition: filter .25s;
+            }
+        }
+    }
+    
     if (enable-banwords) {
         // functions from Twitch.tv Compact Left Panel by pabli
         // credits: https://userstyles.world/style/3045
@@ -1914,14 +1928,16 @@
             t = join("\,", t)
             t2 = join("\,", t2)
             
-            .chat-line__message .iQDCwh p:is({t2}) { // message answer line
-                visibility: hidden;
-                pointer-events: none;
-                
-                &::before {
-                    content: "*Censored message*";
-                    visibility: visible;
-                    font-style: italic;
+            if (remove-mode!="blur") { // message answer line
+                .chat-line__message .iQDCwh p:is({t2}) span:last-of-type { 
+                    visibility: hidden;
+                    pointer-events: none;
+
+                    &::before {
+                        content: "*censored message*";
+                        visibility: visible;
+                        font-style: italic;
+                    }
                 }
             }
             
