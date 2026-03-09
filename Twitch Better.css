@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.7
+@version        3.6.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -45,23 +45,27 @@
     '→ Mirage': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d99f670de3fcee669660fe262e896ea.png'",
     '→ Mirage Cream': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1e929fcc6a6a5193d17f016d4c97746e.png'",
     '→ Mirage Void': "'https://cdn.discordapp.com/avatar-decoration-presets/a_f7dcc7b9b55715880755e24ff440f241.png'",
+    '→ Mirage Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a0ff7f9be49be57356dd3cf0d9c02605.png'",
     '→ Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_26f13552ff23d9d5b3204d1934245764.png'",
     '→ Twilight Blue': "'https://cdn.discordapp.com/avatar-decoration-presets/a_77d421d4d94b180107904a5285050b1e.png'",
     '→ Twilight Purple': "'https://cdn.discordapp.com/avatar-decoration-presets/a_60454ed2a46ab66c748fdd13adef7a0a.png'",
     '→ Twilight Amethyst': "'https://cdn.discordapp.com/avatar-decoration-presets/a_17e170cd07a325877152cc0ae31c3219.png'",
     '→ Nebula Blueberry': "'https://cdn.discordapp.com/avatar-decoration-presets/a_671c4fcfb8d06e05fec00b061c720f7d.png'",
-    '→ Nebula Strawberry': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc061a688308084bf118d312264f5ced.png'",
+    '→ Nebula Strawberry': "'https://cdn.discordapp.com/avatar-decoration-presets/a_b35cffbe28968c2f1e02179013e32159.png'",
     '→ Comets Pink': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc8b4ab348e5194ecff454095ea2df38.png'",
     '→ Comets Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc061a688308084bf118d312264f5ced.png'",
     '→ Star Whales': "'https://cdn.discordapp.com/avatar-decoration-presets/a_fb1fab5c0a30f0a89a7cd5fad873c6f0.png'",
     '→ Star Aura': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6283377ab3c9b70accb1d24c06a2054a.png'",
+    '→ Alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
     '→ Striking Light Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
     '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
-    '→ Air Castles': "'https://cdn.discordapp.com/avatar-decoration-presets/a_c7cb6d519c977e7bb063325b7f2c06b3.png'",
+    '→ Air Castles': "'https://cdn.discordapp.com/avatar-decoration-presets/a_670b722e56740d11d1e6fe55b8094013.png'",
     '→ Golden Hexagon': "'https://cdn.discordapp.com/avatar-decoration-presets/a_ccee9031d66bc0f2d7ed0c6178d01784.png'",
     '→ Spirit Coals': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1005898c6acf56a9ac5010baf444f6fd.png'",
     '→ Black Hole': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16b27d9415cafe3b289053644337c4.png'",
     '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
+    '→ Air': "'https://cdn.discordapp.com/avatar-decoration-presets/a_554b7c34f7b6c709f19535aacb128e7b.png'",
+    '→ Thunder': "'https://cdn.discordapp.com/avatar-decoration-presets/a_365eed4178528fe8293c4212e8e2d5cb.png'",
     '→ Magic Waves White': "'https://cdn.discordapp.com/avatar-decoration-presets/a_66f59e59cd3105767f32dfa675822d3e.png'",
     '→ Constellations Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1fe04bd32b70263448ebb1d8ad7d7c84.png'",
     '→ Shoto Todoroki': "'https://cdn.discordapp.com/avatar-decoration-presets/a_9e815a5c371894d0ce5a15fba9cf999a.png'",
@@ -196,10 +200,14 @@
 @var select holder-5 "— 🤬 Chat filtering —" {
     ' ': "holder-5"
 }
-@var checkbox enable-banwords "Hide chat messages with listed banwords:" 0
+@var checkbox enable-banwords "Hide messages with listed banwords:" 0
 @var text __ban-words "→ List:" "'banana, cat, chair'"
+
+@var checkbox enable-blacklist "Hide messages from listed users:" 0
+@var text __user-list "→ List:" "'idiot1, clown2'"
+
 @var select remove-mode "Remove mode:" {
-    'Full (silent)': "full",
+    'Full (silent)': "silent",
     'Default (Twitch-like)': "twitch",
     'Blur (show on hover)': "blur"
 }
@@ -241,13 +249,8 @@
     .side-nav__scrollable_content { scrollbar-width: none; }
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf::after { background-color: #9d5cff; }
     
-    @css { #CLIP_EDITOR_ALERT_BOX_ID .iTLuyA {
-        max-width: 38rem !important;
-        
-        > .dJfBsr {
-            max-width: 38rem !important;
-            .hctRiN { overflow: hidden; text-overflow: ellipsis; .kaIUar { overflow: hidden; .bLZXTb { overflow: hidden; text-overflow: ellipsis; display: inline-block !important; } } }
-        }
+    @css { #CLIP_EDITOR_ALERT_BOX_ID .iTLuyA > .dJfBsr {
+        .hctRiN { overflow: hidden; text-overflow: ellipsis; .kaIUar { overflow: hidden; .bLZXTb { overflow: hidden; text-overflow: ellipsis; display: inline-block !important; } } }
     } }
 	
 		// Notification tweaks
@@ -814,6 +817,7 @@
 	.seekbar-bar { transition: transform .2s; }
 	.seekbar-interaction-area { will-change: transform; }
 	.seekbar-interaction-area:hover { .seekbar-bar { transform: scaleY(1.5); } }
+    .seekbar-thumb { animation: seekbar-thumb .2s; transition: transform .2s; transform: scaleY(0.7) scaleZ(1) translateX(-50%); &:hover { transform: scale(1.3) scaleY(0.65) translateX(-6px); } }
 	
 	if (use-glow) {
 		.community-points-summary .hqIgGz {
@@ -864,7 +868,10 @@
 			@keyframes content-in2 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
 			@keyframes content-in3 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
 			@keyframes content-in4 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
-            @keyframes content-in5 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } } }
+            @keyframes content-in5 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
+            @keyframes content-in6 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
+            @keyframes content-in7 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } }
+            @keyframes content-in8 { from { transform: scale(0.3); opacity: 0; filter: grayscale(1); } } }
 			
 			&::after {
 				content: '';
@@ -1134,6 +1141,8 @@
 		
 		else {
 			.chat-line__message[data-a-user={nick} i] .chat-line__message-container {
+                min-height: 33px;
+                
 				&::before {
 					content: '';
 					position: absolute;
@@ -1609,7 +1618,7 @@
             
             &> div > div { 
                 max-width: 285px;
-                min-width: 255px;
+                min-width: 265px;
                 
                 .dtSdDz { overflow: hidden; text-overflow: ellipsis; }
             }
@@ -1621,7 +1630,6 @@
         
 		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease; } }
         
-		.seekbar-thumb { animation: seekbar-thumb .2s; transition: transform .2s; transform: scaleY(0.7) scaleZ(1) translateX(-50%); &:hover { transform: scale(1.3) scaleY(0.65) translateX(-6px); } }
 		.vod-message .dQedsG { animation: pop-small .3s }
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
 		.viewer-card-header__background, .support-panel .goal_widget_v2__container { animation: content-in .5s }
@@ -1887,49 +1895,63 @@
 		} }
 	}
     
-        // preprocessor is bugged so this check must be there, 
+        // preprocessor is bugged so these checks must be there, 
         // either way it will throw an error
     if (remove-mode=="blur" && enable-banwords && __ban-words != 'banana, cat, chair') {
-        .chat-line__message:not([data-a-user={nick} i]):is({t}) [data-a-target="chat-line-message-body"], .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({t2}) span:last-of-type {
+        .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
             filter: blur(4px);
-            transition: filter .25s .1s;
+            transition: filter .25s;
             
             &:hover {
                 filter: none;
-                transition: filter .25s;
+                transition: filter .25s .15s;
             }
         }
     }
     
-    if (enable-banwords) {
-        // functions from Twitch.tv Compact Left Panel by pabli
-        // credits: https://userstyles.world/style/3045
-        filter(a) {
-            a = split(',', replace('^\s+|\s+(?=,)|(?<=,)\s+|\s+$', '', a))
-            b = ()
-            for n in a {
-                if n != '' {
-                    push(b, n)
-                }
+    if (remove-mode=="blur" && enable-blacklist && __user-list != 'idiot1, clown2') {
+        .chat-line__message:is({users}), .chat-line__message .iQDCwh p:is({users}) span:last-of-type {
+            filter: blur(4px);
+            transition: filter .25s;
+            
+            &:hover {
+                filter: none;
+                transition: filter .25s .15s;
             }
-            return b
         }
-        
-        if (__ban-words != 'banana, cat, chair') {
-            t = ()
-            t2 = ()
-            
-            __ban-words = filter(__ban-words)
-            for n in __ban-words {
-                push(t,'[aria-label*="'+ n +'" i]')
-                push(t2,'[title*="'+ n +'" i]')
+    }
+    
+    // functions from Twitch.tv Compact Left Panel by pabli
+    // credits: https://userstyles.world/style/3045
+    filter(a) {
+        a = split(',', replace('^\s+|\s+(?=,)|(?<=,)\s+|\s+$', '', a))
+        b = ()
+        for n in a {
+            if n != '' {
+                push(b, n)
             }
-            
-            t = join("\,", t)
-            t2 = join("\,", t2)
+        }
+        return b
+    }
+    // ---
+    
+    if (enable-banwords) {
+        if (__ban-words != 'banana, cat, chair') {
+            words = ()
+            words2 = ()
+
+            __ban-words = filter(__ban-words)
+
+            for n in __ban-words {
+                push(words,'[aria-label*="'+ n +'"i]')
+                push(words2,'[title*="'+ n +'"i]')
+            }
+
+            words = join("\,", words)
+            words2 = join("\,", words2)
             
             if (remove-mode!="blur") { // message answer line
-                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({t2}) span:last-of-type { 
+                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
                     visibility: hidden;
                     pointer-events: none;
 
@@ -1942,13 +1964,62 @@
             }
             
             if (remove-mode=="silent") {
-                .chat-line__message:not([data-a-user={nick} i]):is({t}) {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}) {
                     display: none;
                 }
             }
             
             else if (remove-mode=="twitch") {
-                .chat-line__message:not([data-a-user={nick} i]):is({t}) [data-a-target="chat-line-message-body"] {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
+                    visibility: hidden;
+                    
+                    &::before {
+                        content: "message deleted by the Twitch Better banwords list.";
+                        visibility: visible;
+                        color: var(--color-text-alt-2);
+                        font-style: italic;
+                    }
+                    
+                    > * {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    
+    if (enable-blacklist) {
+        if (__user-list != 'idiot1, clown2') {
+            users = ()
+            __user-list = filter(__user-list)
+            
+            for n1 in __user-list {
+                push(users,'[data-a-user="'+ n1 +'" i]')
+            }
+            
+            users = join("\,", users)
+            
+            if (remove-mode!="blur") { // message answer line
+                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
+                    visibility: hidden;
+                    pointer-events: none;
+                    
+                    &::before {
+                        content: "*censored message*";
+                        visibility: visible;
+                        font-style: italic;
+                    }
+                }
+            }
+            
+            if (remove-mode=="silent") {
+                .chat-line__message:is({users}) {
+                    display: none;
+                }
+            }
+            
+            else if (remove-mode=="twitch") {
+                .chat-line__message:is({users}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
                     &::before {
