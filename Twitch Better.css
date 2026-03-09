@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.9
+@version        3.7.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -38,6 +38,9 @@
 }
 @var select use-avatar-frame "Use avatar frame:" {
     'None*': "none",
+    '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
+    '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
+    '→ Striking Light Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
 	'→ Moon Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7e68c00aa5c50a066b4eb66209204315.png'",
 	'→ Moon Red': "'https://cdn.discordapp.com/avatar-decoration-presets/a_2b4b5a191f89c65d042f15e854129822.png'",
     '→ Moon Amethyst': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7dceacb95c9569bd3a0d4ce69c549474.png'",
@@ -57,13 +60,10 @@
     '→ Star Whales': "'https://cdn.discordapp.com/avatar-decoration-presets/a_fb1fab5c0a30f0a89a7cd5fad873c6f0.png'",
     '→ Star Aura': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6283377ab3c9b70accb1d24c06a2054a.png'",
     '→ Alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
-    '→ Striking Light Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
-    '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
     '→ Air Castles': "'https://cdn.discordapp.com/avatar-decoration-presets/a_670b722e56740d11d1e6fe55b8094013.png'",
     '→ Golden Hexagon': "'https://cdn.discordapp.com/avatar-decoration-presets/a_ccee9031d66bc0f2d7ed0c6178d01784.png'",
     '→ Spirit Coals': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1005898c6acf56a9ac5010baf444f6fd.png'",
     '→ Black Hole': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16b27d9415cafe3b289053644337c4.png'",
-    '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
     '→ Air': "'https://cdn.discordapp.com/avatar-decoration-presets/a_554b7c34f7b6c709f19535aacb128e7b.png'",
     '→ Thunder': "'https://cdn.discordapp.com/avatar-decoration-presets/a_365eed4178528fe8293c4212e8e2d5cb.png'",
     '→ Magic Waves White': "'https://cdn.discordapp.com/avatar-decoration-presets/a_66f59e59cd3105767f32dfa675822d3e.png'",
@@ -226,7 +226,6 @@
 	
 	:root { --sidebar-size: sidebar-size; }
     
-	.video-player[data-a-player-type="site"] video { if (night-mode-value > 0) { filter: brightness(100 - night-mode-value/1.1); } transition: filter .5s; }
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
 	.channel-root--home .channel-info-content { width: unset; }
@@ -346,6 +345,52 @@
         } }
 	}
 	
+    .video-player[data-a-player-type="site"] {
+        video {
+            transition: filter .5s;
+        }
+    }
+        
+    if (night-mode-value > 0) {
+        video { filter: brightness(100 - night-mode-value/1.1); }
+           
+        $notify-width = ();
+        if (night-mode-value < 10%) { $notify-width = 106px; }
+        else if (night-mode-value == 100%) { $notify-width = 121px; }
+        else { $notify-width = 114px; }
+        
+        :root { --notify-width: $notify-width; }
+        
+        .video-player[data-a-player-type="site"] .video-player__container::before {
+            content: "Night mode: " + night-mode-value;
+            position: absolute;
+            background: rgba(10, 10, 10, .722);
+            border: 1px solid #4f4f4f7a;
+            left: 0;
+            right: 0;
+            top: 15px;
+            z-index: 1;
+            margin: 0 auto;
+            padding: 3px 7.5px;
+            border-radius: 7px;
+            width: $notify-width;
+            text-wrap: nowrap;
+            overflow: hidden;
+            opacity: 0;
+            animation: nightmode-notify 3.5s 2s backwards;
+            will-change: width, opacity;
+            visibility: hidden;
+        }
+        
+        .persistent-player--theatre .video-player__container::before { // theatre mode
+            top: 70px !important;
+        }
+        
+        .persistent-player--theatre:not([style*="max-height: 100vh"]) .video-player__container::before, .video-player__container:fullscreen .video-player__container::before { // fullscreen mode
+            top: 50px !important;
+        }
+    }
+    
 	if (player-controls!="default") {
 		
 		// -- VARS: colors, sizes -- //
@@ -911,6 +956,10 @@
 			}
         }
         
+        .user-menu-dropdown__main-menu .tw-avatar {
+            animation: avatar-frame 3s infinite;
+        }
+        
         #live-channel-stream-information a[href$={nick} i] .tw-avatar::after {
             top: -6.4px;
             left: -5.4px;
@@ -1184,33 +1233,34 @@
 		
 		if (nick-gradient!="disabled") {
             if (nick-gradient[0] == "discord") {
-                    .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] > .tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                    background: nick-gradient[1];
+                    background-clip: text;
+                    color: transparent !important;
+                    background-size: 100px auto;
+                    animation: gradient-discord 1.5s linear infinite;
+                    font-weight: 600 !important;
+                    
+                    &::before {
+                        content: "" + nick;
+                        position: absolute;
+                        opacity: .6;
+                        filter: blur(4px);
                         background: nick-gradient[1];
                         background-clip: text;
-                        color: transparent !important;
+                        color: transparent;
                         background-size: 100px auto;
                         animation: gradient-discord 1.5s linear infinite;
-                        font-weight: 600 !important;
-                        
-                        &::before {
-                            content: "" + nick;
-                            position: absolute;
-                            opacity: .6;
-                            filter: blur(4px);
-                            background: nick-gradient[1];
-                            background-clip: text;
-                            color: transparent;
-                            background-size: 100px auto;
-                            animation: gradient-discord 1.5s linear infinite;
-                            pointer-events: none;
-                        }
+                        pointer-events: none;
                     }
-
+                }
+                
+                a[href$={nick} i] h1.tw-title { font-weight: 500 !important; }
                 .message-preview__line .chat-author__display-name::before { content: "Kappa"; }
             }
             
             else if (nick-gradient[0] == "7tv") {
-                .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] > .tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
                     background: nick-gradient[1];
                     background-clip: text;
                     color: transparent !important;
@@ -1221,7 +1271,7 @@
             
             [data-test-selector="user-menu-dropdown__display-name"] { background-size: 50% auto; }
             
-            .metadata-layout__support .dMBVIY a[href$={nick} i]:hover::after { background-color: nick-gradient[2] !important; }
+            .metadata-layout__support .dMBVIY a[href$={nick} i], a[href$={nick} i] h1.tw-title { &:hover::after { background-color: nick-gradient[2] !important; } }
             
             button[data-a-target="user-menu-toggle"][aria-expanded="true"] {
                 box-shadow: 0px 0px 0 3px nick-gradient[2];
@@ -1716,6 +1766,13 @@
 			    border-radius: var(--border-radius-large) !important;
             }
         } }
+        
+        .channel-root--home, .channel-root--home+.persistent-player {
+            .video-player, .channel-page__video-player, .channel-page__video-player+.iHtxZC, .persistent-player {
+                border-radius: var(--border-radius-large);
+                overflow: hidden;
+            }
+        }
 		
 		    // -- END of @CSS -- //
 		
@@ -2055,6 +2112,10 @@
         42%, 78% { clip-path: inset(0 0 0 83%); transform: translateX(-128px); color: #b1b1bf; opacity: 1; }
         90% { clip-path: inset(0 25% 0 0); transform: none; color: #efeff1; opacity: 0.5; }
         to { clip-path: inset(0 25% 0 0); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
+        
+        @keyframes nightmode-notify { 0% { width: 78px; visibility: visible; }
+        30% { width: var(--notify-width); opacity: 1; }
+        85% { opacity: 1; visibility: visible; } }
 
         @keyframes indicator { 0% { opacity: 0.7; transform: scale(0.8); }
         to { opacity: 0; transform: scale(1.5); } }
@@ -2072,6 +2133,8 @@
 
         @keyframes overlays { 0% { transform: scale(50%); opacity: 0; }
         60% { opacity: 1; } }
+        
+        @keyframes avatar-frame { 50% { transform: scale(1.03); } }
 
         @keyframes backdrop { 0% { background: transparent; }
         to { background: rgba(0, 0, 0, .35); } }
