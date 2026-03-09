@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.6.8
+@version        3.6.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
@@ -201,21 +201,20 @@
     ' ': "holder-5"
 }
 @var checkbox enable-banwords "Hide messages with listed banwords:" 0
-@var text __ban-words "→ List:" "'banana, cat, chair'"
+@var text __ban-words "→ Banwords list:" "'banana, cat, chair'"
 
 @var checkbox enable-blacklist "Hide messages from listed users:" 0
-@var text __user-list "→ List:" "'idiot1, clown2'"
+@var text __user-list "→ Users list:" "'idiot1, clown2'"
 
 @var select remove-mode "Remove mode:" {
     'Full (silent)': "silent",
-    'Default (Twitch-like)': "twitch",
+    'Default (Twitch-like)*': "twitch",
     'Blur (show on hover)': "blur"
 }
 
 ==/UserStyle== */
 
-@-moz-document domain("twitch.tv") {	
-	
+@-moz-document domain("twitch.tv") {
 	$volume-container = "[class='Layout-sc-1xcs6mc-0 kvrzxX']"
 	$whispers-popup = "[class='ScBalloonWrapper-sc-14jr088-0 PjurZ InjectLayout-sc-1i43xsx-0 bAWxnr tw-balloon']"
 	$player-settings = "[data-a-target='player-settings-menu']"
@@ -1141,7 +1140,9 @@
 		
 		else {
 			.chat-line__message[data-a-user={nick} i] .chat-line__message-container {
-                min-height: 33px;
+                display: flex;
+                align-items: center;
+                padding: 4px 0px;
                 
 				&::before {
 					content: '';
