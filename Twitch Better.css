@@ -1,10 +1,10 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.7.5
+@version        3.7.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
-@supportURL 	https://github.com/Desynci/Twitch-Better/issues
+@supportURL 	https://github.com/Desynci/Twitch-Better/
 @preprocessor 	stylus
 
 @var checkbox custom-theme "Stylus theme" 1
@@ -97,7 +97,7 @@
 @var checkbox sidebar-counter "Add channels counter" 1
 @var checkbox sidebar-hover-only "Show only on hover" 1
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
-@var checkbox only-following "Clear categories" 0
+@var checkbox only-following "Following only" 0
 
 @var select holder-4 "— 🍂 Removers —" {
     ' ': "holder-4"
@@ -150,7 +150,7 @@
     '→ 7TV Domos': "7tv url(\"https://cdn.7tv.app/paint/01JEDE45FTB7XTQGRFXP0BA2PT/layer/01JF06XNCYM98WZAGNT0D51SQ3/1x.webp\") #FBD268 (none)",
     '→ 7TV Paradise': "7tv url(\"https://cdn.7tv.app/paint/01K6ZYWT597ZQ7TEDRT26R5BNM/layer/01K8W5RJAQ183DG7Y1D450VVTF/1x.webp\") #9900FE (none)",
 }
-@var select custom-badge "Badge changer:" {
+@var select __custom-badge "Badge changer:" {
 	'None*': "disabled",
 	'→ Hornet': "'https://static-cdn.jtvnw.net/badges/v1/4dc7b047-8c59-4522-97f2-24fb63147f56/2'",
 	'→ Ruby Heart': "'https://static-cdn.jtvnw.net/badges/v1/ca0aa8ce-b2a8-4582-a5de-4d5b6915dc47/2'",
@@ -194,10 +194,8 @@
     '→ 7TV X-MAS \'24': "'https://cdn.7tv.app/badge/01JFQV88ENDHWA3TXJHVVT0BQJ/2x.avif'",
     '→ 7TV Valentine': "'https://cdn.7tv.app/badge/01JM3F4N2Y65KKHDGWDEDFTJNA/2x.avif'",
     '→ 7TV Sub #1': "'https://cdn.7tv.app/badge/01GJGRX0FG0002GRV318PGDRKT/2x.avif'",
-    '→ 7TV Sub #2': "'https://cdn.7tv.app/badge/01JAT9BPCRSDK1BQSM17278GJN/2x.avif'",
-	'[Custom image]': "custom"
+    '→ 7TV Sub #2': "'https://cdn.7tv.app/badge/01JAT9BPCRSDK1BQSM17278GJN/2x.avif'"
 }
-@var text __custom-badge-url "→ [custom image] URL in quotes:" "'Example.com/img.png'"
 @var select holder-6 "— 🤬 Chat filtering —" {
     ' ': "holder-6"
 }
@@ -255,7 +253,7 @@
 		// Notification tweaks
 	.onsite-notification-toast__action.dhbGUE { display: none !important; }
 	.onsite-notification-toast__action-wrapper { width: unset; border-left: none !important; }
-	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.5s cubic-bezier(0.76, 0, 0.24, 1) !important; }
+	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.9s cubic-bezier(0.76, 0, 0.24, 1) !important; }
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
 	
 		// Fix strange animation bug on closing popup
@@ -1279,19 +1277,16 @@
 		}
 		
 		if (custom-badge!="disabled") {
-			if (custom-badge=="custom") { __badge = __custom-badge-url }
-			else { __badge = custom-badge }
-			
 			.chat-line__message[data-a-user={nick} i] {
 				.chat-line__username-container span > .dvtAVE:last-of-type {
-					.chat-badge { content: url(__badge); max-height: 18px; max-width: 18px;
+					.chat-badge { content: url(__custom-badge); max-height: 18px; max-width: 18px;
 						&:hover { animation: reveal-badge .5s forwards; }
 					}
 				}
 			}
 			
 			[aria-label="ChatBadgeCarousel"] {
-				img { content: url(__badge); max-height: 2rem; max-width: 2rem; }
+				img { content: url(__custom-badge); max-height: 2rem; max-width: 2rem; }
 				
 				&:hover {
 					img { animation: reveal-badge-carousel .3s forwards cubic-bezier(0.76, 0, 0.24, 1); }
@@ -2257,36 +2252,88 @@
 }
 
 if (custom-theme) {
-    @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url-prefix("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
+    @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
         #stylus-popup:has(.config-select [value="YouTube Dark"]) {
             scrollbar-color: hsla(0,0%,100%,.4) transparent;
             
-            .config-select:has([value=" "]) {
-                .select-wrapper { display: none !important; }
-                .config-name { text-align: center; margin: 8px 0; }
-            }
-            
-            .config-checkbox+.config-select+.config-checkbox+.config-text {
-                .config-name { transition: color .3s;}
-                &:not(.nondefault) .config-name { color: #ff3c3c; }
-            }
-            
-            if (custom-badge!="disabled") {
-                if (custom-badge=="custom") { __badge = __custom-badge-url }
-                else { __badge = custom-badge }
-
-                .config-select:has([value$="Hornet"]) .config-name {
-                    padding-left: 15px;
-                    
-                    &::before {
-                        content: url(__badge); 
-                        position: absolute;
-                        max-height: 14px;
-                        max-width: 14px;
-                        font-size: 11px;
-                        transform: translate(-22px, -4px) scale(0.4);
-                    }
+            #message-box {
+                background: none;
+                
+                &> div {
+                    backdrop-filter: blur(13px);
+                    border-radius: 8px;
+                    overflow: hidden;
+                    background: #00000038;
+                    box-shadow: none;
+                    border: 1px solid #4f4f4f7a;
+                    transition: .5s;
+                    transition-property: backdrop-filter, border-radius, background, box-shadow;
                 }
+            }
+            
+            #message-box-title {
+                font-family: "Inter" !important;
+                font-size: 19px;
+                text-align: center;
+                align-content: center;
+                position: static;
+                min-height: 54px;
+                padding: 0;
+                background-color: #141414d9;
+                color: #9db2ff;
+                transition: .5s;
+                transition-property: background-color;
+
+                &::before {
+                    display: none;
+                }
+            }
+            
+            #message-box-buttons {
+                position: static;
+                background-color: #363636c4;
+                
+                button[data-cmd="close"] {
+                    visibility: hidden;
+                }
+            }
+            
+            #message-box-close-icon i {
+                font-size: 19px;
+            }
+            
+            .slider, .select-wrapper { animation: checkboxes .35s backwards; }
+            for row in (1..19) { .config-body > label:nth-of-type({row}) :is(.slider, .select-wrapper) { animation-delay: round(45ms*(row/1.8)); } }
+            
+            .slider {
+                transition: .25s;
+                
+                &:checked {
+                    color: #9752ff;
+                    background-color: currentColor;
+                }
+            }
+            
+            .config-name {
+                font-size: 13px;
+                margin-right: 5px;
+            }
+            
+            .config-select select {
+                background-color: #292929;
+                border-radius: 5px;
+            }
+            
+            .config-color .config-value {
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            
+            .config-heading {
+                position: fixed;
+                text-wrap: nowrap;
+                top: 49.75em;
+                left: 134px;
             }
             
             .config-body :is(input[type=text],.select-wrapper,select) {
@@ -2306,50 +2353,32 @@ if (custom-theme) {
                 accent-color: #e7e7e7;
             }
             
-            #message-box-title {
-                background-color: #141414d9;
-                color: #9db2ff;
-                font-family: "Inter" !important;
-                font-size: 19px;
-                text-align: center;
-                align-content: center;
-                position: static;
-                min-height: 54px;
-                padding: 0;
-                transition: .5s;
-                transition-property: background-color;
-
-                &::before {
-                    display: none;
-                }
+            .config-select:has([value=" "]) {
+                .select-wrapper { display: none !important; }
+                .config-name { text-align: center; margin: 8px 0; }
             }
             
-            #message-box-buttons {
-                position: static;
-                background-color: #363636c4;
+            .config-checkbox+.config-select+.config-checkbox+.config-text {
+                .config-name { transition: color .3s;}
+                &:not(.nondefault) .config-name { color: #ff3c3c; }
+            }
+            
+            .config-select:has([value$="Hornet"]) .config-name {
+                transition: padding-left .35s;
                 
-                button[data-cmd="close"] {
-                    visibility: hidden;
+                if (__custom-badge!="disabled") {
+                    padding-left: 15px;
+                    
+                    &::before {
+                        content: url(__custom-badge);
+                        position: absolute;
+                        max-height: 14px;
+                        max-width: 14px;
+                        font-size: 11px;
+                        transform: translate(-22px, -4px) scale(0.4);
+                        animation: opacity-in .4s;
+                    }
                 }
-            }
-
-            #message-box-close-icon i {
-                font-size: 19px;
-            }
-            
-            .config-name {
-                font-size: 13px;
-                margin-right: 5px;
-            }
-            
-            .config-select select {
-                background-color: #292929;
-                border-radius: 5px;
-            }
-            
-            .config-color .config-value {
-                border-radius: 5px;
-                overflow: hidden;
             }
             
             if (nick-gradient!="disabled") {
@@ -2391,60 +2420,30 @@ if (custom-theme) {
                     }
                 }
 		    }
-
-            #message-box {
-                background: none;
-
-                &> div {
-                    backdrop-filter: blur(13px);
-                    border-radius: 8px;
-                    overflow: hidden;
-                    background: #00000038;
-                    box-shadow: none;
-                    border: 1px solid #4f4f4f7a;
-                    transition: .5s;
-                    transition-property: backdrop-filter, border-radius, background, box-shadow;
+            
+            @css {
+                [class=".external-support"] {
+                    color: transparent;
+                     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
+                    background-repeat: no-repeat;
+                    background-size: 25px;
+                    height: 25px !important;
+                    display: inline-flex;
+                    animation: github 2s infinite ease;
+                    transition: filter .35s;
+                    filter: drop-shadow(0px 0px 12px #ffffff9e);
+                    &:hover {
+                        filter: drop-shadow(0px 0px 8px #fff);
+                    }
+                }
+                
+                .slider, .slider:focus {
+                    box-shadow: inset 1px 1px 2px hsla(var(--shadow-hsl),.5) !important;
                 }
             }
-            
-            .config-heading {
-                position: fixed;
-                text-wrap: nowrap;
-                top: 49.75em;
-                left: 134px;
-            }
-            
-            for row in (1..19) { .config-body > label:nth-of-type({row}) :is(.slider, .select-wrapper) { animation-delay: round(45ms*(row/1.8)); } }
-            
-            .slider, .select-wrapper {
-                animation: checkboxes .35s backwards;
-            }
-            
-            .slider {
-                transition: .25s;
-            }
-            
-            .slider:checked {
-                color: #9752ff;
-                background-color: currentColor;
-            }
-            
-            @css { [class=".external-support"] {
-                color: transparent;
-                 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
-                background-repeat: no-repeat;
-                background-size: 25px;
-                height: 25px !important;
-                display: inline-flex;
-                animation: github 2s infinite ease;
-                transition: filter .35s;
-                filter: drop-shadow(0px 0px 12px #ffffff9e);
-                &:hover {
-                    filter: drop-shadow(0px 0px 8px #fff);
-                }
-            } }
         }
         
+        @keyframes opacity-in { from { opacity: 0; } }
         @keyframes checkboxes { from { transform: translateX(-45%); } }
         @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
     }
