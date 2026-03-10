@@ -1,13 +1,13 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.7.2
+@version        3.7.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
 @preprocessor 	stylus
 
-@var checkbox custom-theme "Custom Stylus theme" 1
+@var checkbox custom-theme "Stylus theme" 1
 @var select holder-1 "— 🌠  General —" {
     ' ': "holder-1"
 }
@@ -76,10 +76,10 @@
 @var color timeline_color "VOD timeline color:" #a970ff
 @var color thumb_color "VOD thumb color:" #ffffff
 
-@var select animations "— 🎭 Animations —" {
-    'ON*': "enabled",
-	'OFF': "disabled"
+@var select holder-2 "— 🎭 Animations —" {
+    ' ': "holder-2"
 }
+@var checkbox enable-animations "Enabled" 1
 @var checkbox animate-badge "Animate chat badges" 1
 @var checkbox rainbow-effect "Rainbow nicknames appear" 1
 @var select animate-messages "Messages animation:" {
@@ -90,7 +90,7 @@
 }
 @var checkbox last-only "Animate last message only" 0
 
-@var select sidebar-tweaks "— 🍫 Sidebar tweaks —" {
+@var select holder-3 "— 🍫 Sidebar tweaks —" {
     ' ': "holder-3"
 }
 @var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
@@ -115,10 +115,10 @@
 @var checkbox remove-bits "Bits buttons" 0
 @var checkbox remove-powerups "Rewards list power ups" 0
 
-@var select highlight "— 🌌 Message highlight —" {
-    'ON*': "enabled",
-	'OFF': "disabled"
+@var select holder-5 "— 🌌 Message highlight —" {
+    ' ': "holder-5"
 }
+@var checkbox enable-highlight "Enabled" 1
 @var text nick "[REQUIRED] Enter your exact nickname:" nickname
 @var select highlight-type "Highlight type:" {
 	'None': "disabled",
@@ -198,14 +198,14 @@
 	'[Custom image]': "custom"
 }
 @var text __custom-badge-url "→ [custom image] URL in quotes:" "'Example.com/img.png'"
-@var select holder-5 "— 🤬 Chat filtering —" {
-    ' ': "holder-5"
+@var select holder-6 "— 🤬 Chat filtering —" {
+    ' ': "holder-6"
 }
 @var checkbox enable-banwords "Hide messages with listed banwords:" 0
-@var text __ban-words "→ Banwords list:" "'banana, cat, chair'"
+@var text __ban-words "List:" "'banana, cat, chair'"
 
 @var checkbox enable-blacklist "Hide messages from listed users:" 0
-@var text __user-list "→ Users list:" "'idiot1, clown2'"
+@var text __user-list "List:" "'idiot1, clown2'"
 
 @var select remove-mode "Remove mode:" {
     'Full (silent)': "silent",
@@ -346,14 +346,12 @@
         } }
 	}
 	
-    .video-player[data-a-player-type="site"] {
-        video {
-            transition: filter .5s;
-        }
+    .video-player[data-a-player-type="site"] video {
+        transition: filter .5s;
     }
         
     if (night-mode-value > 0) {
-        video { filter: brightness(100 - night-mode-value/1.1); }
+        .video-player[data-a-player-type="site"] video { filter: brightness(100 - night-mode-value/1.1); }
            
         $notify-width = ();
         if (night-mode-value < 10%) { $notify-width = 106px; }
@@ -1156,7 +1154,7 @@
 		.side-nav-section:not(:nth-of-type(2)) { display: none !important; }
 	}
 	
-	if (highlight=="enabled") {
+	if (enable-highlight) {
 		if (highlight-type=="cosmic") {
 			.chat-line__message[data-a-user={nick} i] { background-image: url("https://i.postimg.cc/mgswRY35/cosmic-abyss-tall-ezgif-com-video-to-gif-converter.gif"); padding: 1.8rem 1rem; background-repeat: repeat-y;
 			.chat-line__message-container { background: var(--color-background-body); padding: .8rem 1rem; width: 100% !important; border-radius: var(--border-radius-medium) !important; } }
@@ -1456,7 +1454,7 @@
     [data-test-selector="chat-private-callout-queue__callout-container"] [data-a-target="tw-progress-bar-animation"] { transition: none; }
 	
 		// -- ANIMATIONS
-	if (animations=="enabled") {
+	if (enable-animations) {
 		{$notifications}[data-test-selector="center-window__balloon"] {
 			.scrollable-area { max-height: 46px; transition: max-height .6s ease; overflow-y: scroll; }
 			.scrollable-area:not(.center-window__short-scrollable-area) { max-height: 400px; }
@@ -1955,35 +1953,9 @@
 		} }
 	}
     
-        // preprocessor is bugged so these checks must be there, 
-        // either way it will throw an error
-    if (remove-mode=="blur" && enable-banwords && __ban-words != 'banana, cat, chair') {
-        .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
-            filter: blur(4px);
-            transition: filter .25s;
-            
-            &:hover {
-                filter: none;
-                transition: filter .25s .15s;
-            }
-        }
-    }
-    
-    if (remove-mode=="blur" && enable-blacklist && __user-list != 'idiot1, clown2') {
-        .chat-line__message:is({users}), .chat-line__message .iQDCwh p:is({users}) span:last-of-type {
-            filter: blur(4px);
-            transition: filter .25s;
-            
-            &:hover {
-                filter: none;
-                transition: filter .25s .15s;
-            }
-        }
-    }
-    
-    // functions from Twitch.tv Compact Left Panel by pabli
+    // function from Twitch.tv Compact Left Panel by pabli
     // credits: https://userstyles.world/style/3045
-    filter(a) {
+    filter-words(a) {
         a = split(',', replace('^\s+|\s+(?=,)|(?<=,)\s+|\s+$', '', a))
         b = ()
         for n in a {
@@ -2000,7 +1972,7 @@
             words = ()
             words2 = ()
 
-            __ban-words = filter(__ban-words)
+            __ban-words = filter-words(__ban-words)
 
             for n in __ban-words {
                 push(words,'[aria-label*="'+ n +'"i]')
@@ -2045,13 +2017,25 @@
                     }
                 }
             }
+            
+            else if (remove-mode=="blur") {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
+                    filter: blur(4px);
+                    transition: filter .25s;
+
+                    &:hover {
+                        filter: none;
+                        transition: filter .25s .15s;
+                    }
+                }
+            }
         }
     }
     
     if (enable-blacklist) {
         if (__user-list != 'idiot1, clown2') {
             users = ()
-            __user-list = filter(__user-list)
+            __user-list = filter-words(__user-list)
             
             for n1 in __user-list {
                 push(users,'[data-a-user="'+ n1 +'" i]')
@@ -2091,6 +2075,18 @@
                     
                     > * {
                         display: none;
+                    }
+                }
+            }
+            
+            else if (remove-mode=="blur") {
+                .chat-line__message:is({users}), .chat-line__message .iQDCwh p:is({users}) span:last-of-type {
+                    filter: blur(4px);
+                    transition: filter .25s;
+
+                    &:hover {
+                        filter: none;
+                        transition: filter .25s .15s;
                     }
                 }
             }
@@ -2265,24 +2261,75 @@ if (custom-theme) {
         #stylus-popup:has(.config-select [value="YouTube Dark"]) {
             scrollbar-color: hsla(0,0%,100%,.4) transparent;
             
+            .config-select:has([value=" "]) {
+                .select-wrapper { display: none !important; }
+                .config-name { text-align: center; margin: 8px 0; }
+            }
+            
+            .config-checkbox+.config-select+.config-checkbox+.config-text {
+                .config-name { transition: color .3s;}
+                &:not(.nondefault) .config-name { color: #ff3c3c; }
+            }
+            
+            if (custom-badge!="disabled") {
+                if (custom-badge=="custom") { __badge = __custom-badge-url }
+                else { __badge = custom-badge }
+
+                .config-select:has([value$="Hornet"]) .config-name {
+                    padding-left: 15px;
+                    
+                    &::before {
+                        content: url(__badge); 
+                        position: absolute;
+                        max-height: 14px;
+                        max-width: 14px;
+                        font-size: 11px;
+                        transform: translate(-22px, -4px) scale(0.4);
+                    }
+                }
+            }
+            
+            .config-body :is(input[type=text],.select-wrapper,select) {
+                max-width: 116px;
+            }
+            
             .config-body {
-                color: #e2e2e2;
+                color: #e6e6e6;
+                text-shadow: 0 0 3px #000000, 0 0 3px #000000ad, 0 0 3px #000000ad;
+            }
+            
+            input[type="text"], select {
+                 color: #e6e6e6;
+            }
+            
+            input[type=range] {
+                accent-color: #e7e7e7;
             }
             
             #message-box-title {
-                background: #0e0e104a;
+                background-color: #141414d9;
                 color: #9db2ff;
                 font-family: "Inter" !important;
-                font-size: 18px;
+                font-size: 19px;
                 text-align: center;
-                bottom: -28px;
-                min-height: 56px;
+                align-content: center;
+                position: static;
+                min-height: 54px;
                 padding: 0;
                 transition: .5s;
                 transition-property: background-color;
 
                 &::before {
                     display: none;
+                }
+            }
+            
+            #message-box-buttons {
+                position: static;
+                background-color: #363636c4;
+                
+                button[data-cmd="close"] {
+                    visibility: hidden;
                 }
             }
 
@@ -2292,7 +2339,58 @@ if (custom-theme) {
             
             .config-name {
                 font-size: 13px;
+                margin-right: 5px;
             }
+            
+            .config-select select {
+                background-color: #292929;
+                border-radius: 5px;
+            }
+            
+            .config-color .config-value {
+                border-radius: 5px;
+                overflow: hidden;
+            }
+            
+            if (nick-gradient!="disabled") {
+                if (nick-gradient[0] == "discord") {
+                    .config-select:has([value$="Discord #1"]) .config-name {
+                        font-family: "Roboto";
+                        text-shadow: none !important;
+                        background: nick-gradient[1];
+                        background-clip: text;
+                        color: transparent !important;
+                        background-size: 100px auto;
+                        animation: gradient-discord 1.5s linear infinite;
+                        font-weight: 600 !important;
+
+                        &::before {
+                            content: "" + nick;
+                            position: absolute;
+                            opacity: .6;
+                            filter: blur(4px);
+                            background: nick-gradient[1];
+                            background-clip: text;
+                            color: transparent;
+                            background-size: 100px auto;
+                            animation: gradient-discord 1.5s linear infinite;
+                            pointer-events: none;
+                        }
+                    }
+                }
+
+                else if (nick-gradient[0] == "7tv") {
+                    .config-select:has([value$="Discord #1"]) .config-name {
+                        font-family: "Roboto";
+                        text-shadow: none !important;
+                        background: nick-gradient[1];
+                        background-clip: text;
+                        color: transparent !important;
+                        background-size: 100% 100%;
+                        filter: nick-gradient[3];
+                    }
+                }
+		    }
 
             #message-box {
                 background: none;
@@ -2304,30 +2402,50 @@ if (custom-theme) {
                     background: #00000038;
                     box-shadow: none;
                     border: 1px solid #4f4f4f7a;
-                    
                     transition: .5s;
                     transition-property: backdrop-filter, border-radius, background, box-shadow;
                 }
             }
-
-            #message-box-buttons {
-                background-color: #0e0e104a;
+            
+            .config-heading {
+                position: fixed;
+                text-wrap: nowrap;
+                top: 49.75em;
+                left: 134px;
             }
             
-            input[type=range] {
-                accent-color: #e7e7e7;
+            for row in (1..19) { .config-body > label:nth-of-type({row}) :is(.slider, .select-wrapper) { animation-delay: round(45ms*(row/1.8)); } }
+            
+            .slider, .select-wrapper {
+                animation: checkboxes .35s backwards;
             }
-
+            
             .slider {
-                animation: chat-tray .35s;
+                transition: .25s;
             }
             
             .slider:checked {
-                color: #a970ff;
+                color: #9752ff;
                 background-color: currentColor;
             }
+            
+            @css { [class=".external-support"] {
+                color: transparent;
+                 background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
+                background-repeat: no-repeat;
+                background-size: 25px;
+                height: 25px !important;
+                display: inline-flex;
+                animation: github 2s infinite ease;
+                transition: filter .35s;
+                filter: drop-shadow(0px 0px 12px #ffffff9e);
+                &:hover {
+                    filter: drop-shadow(0px 0px 8px #fff);
+                }
+            } }
         }
         
-        @keyframes chat-tray { from { transform: translateX(15%); opacity: 0.5; } }
+        @keyframes checkboxes { from { transform: translateX(-45%); } }
+        @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
     }
 }
