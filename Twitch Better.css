@@ -1,12 +1,13 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.7.0
+@version        3.7.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/issues
 @preprocessor 	stylus
 
+@var checkbox custom-theme "Custom Stylus theme" 1
 @var select holder-1 "— 🌠  General —" {
     ' ': "holder-1"
 }
@@ -23,7 +24,7 @@
 @var checkbox new-design "Apply design tweaks" 1
 @var checkbox dark-chat "Use dark chat mode" 1
 @var checkbox use-glow "Add glow effect to buttons" 1
-@var checkbox use-apple-emoji "Use Apple Emoji font" 0
+@var checkbox use-apple-emoji "Use Apple emoji font" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
 @var select custom-chat-button "Customize chat button:" {
 	'None': "disabled",
@@ -36,7 +37,7 @@
     '→ Nevermore': "'https://i.postimg.cc/d38PLzbP/nevermore.gif' content-in7 none",
     '→ Red Dragon': "'https://i.postimg.cc/PJ2GWmqG/red-dragon.gif' content-in8 linear-gradient(90deg, #9000071a 0%, #90000730 100%)",
 }
-@var select use-avatar-frame "Use avatar frame:" {
+@var select use-avatar-frame "Add avatar frame:" {
     'None*': "none",
     '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
     '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
@@ -958,6 +959,7 @@
         
         .user-menu-dropdown__main-menu .tw-avatar {
             animation: avatar-frame 3s infinite;
+            will-change: transform;
         }
         
         #live-channel-stream-information a[href$={nick} i] .tw-avatar::after {
@@ -980,9 +982,9 @@
             }
             
             &[aria-expanded="true"] {
-                transform: scale(1.05);
+                transform: scale(1.1);
                 filter: brightness(1.2);
-                transition: .25s;
+                transition: .35s;
             }
         }
     }
@@ -1030,7 +1032,7 @@
                     &+.tw-new-item-indicator__container { display: none; }
                 }
                 
-                > button[class="ScCoreButton-sc-ocjdkq-0 yezmM"] { /* large button */
+                button[class="ScCoreButton-sc-ocjdkq-0 yezmM"] { /* large button */
                     display: none;
                     
                     &+.tw-new-item-indicator__container { display: none; }
@@ -1189,10 +1191,6 @@
 		
 		else {
 			.chat-line__message[data-a-user={nick} i] .chat-line__message-container {
-                display: flex;
-                align-items: center;
-                padding: 4px 0px;
-                
 				&::before {
 					content: '';
 					position: absolute;
@@ -1219,6 +1217,10 @@
 					background: highlight-type[2];
 					pointer-events: none;
 				}
+                
+                .chat-line__no-background {
+                    padding: 3px 0px;
+                }
 				
 				[data-a-target="chat-line-message-body"] {
 					font-weight: 600;
@@ -2133,8 +2135,8 @@
 
         @keyframes overlays { 0% { transform: scale(50%); opacity: 0; }
         60% { opacity: 1; } }
-        
-        @keyframes avatar-frame { 50% { transform: scale(1.03); } }
+
+        @keyframes avatar-frame { 50% { transform: scale(1.05); } }
 
         @keyframes backdrop { 0% { background: transparent; }
         to { background: rgba(0, 0, 0, .35); } }
@@ -2256,4 +2258,76 @@
 			
 		.kvrzxX .tw-transition[aria-hidden] { opacity: 1 !important; } // volume slider
 	}
+}
+
+if (custom-theme) {
+    @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url-prefix("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
+        #stylus-popup:has(.config-select [value="YouTube Dark"]) {
+            scrollbar-color: hsla(0,0%,100%,.4) transparent;
+            
+            .config-body {
+                color: #e2e2e2;
+            }
+            
+            #message-box-title {
+                background: #0e0e104a;
+                color: #9db2ff;
+                font-family: "Inter" !important;
+                font-size: 18px;
+                text-align: center;
+                bottom: -28px;
+                min-height: 56px;
+                padding: 0;
+                transition: .5s;
+                transition-property: background-color;
+
+                &::before {
+                    display: none;
+                }
+            }
+
+            #message-box-close-icon i {
+                font-size: 19px;
+            }
+            
+            .config-name {
+                font-size: 13px;
+            }
+
+            #message-box {
+                background: none;
+
+                &> div {
+                    backdrop-filter: blur(13px);
+                    border-radius: 8px;
+                    overflow: hidden;
+                    background: #00000038;
+                    box-shadow: none;
+                    border: 1px solid #4f4f4f7a;
+                    
+                    transition: .5s;
+                    transition-property: backdrop-filter, border-radius, background, box-shadow;
+                }
+            }
+
+            #message-box-buttons {
+                background-color: #0e0e104a;
+            }
+            
+            input[type=range] {
+                accent-color: #e7e7e7;
+            }
+
+            .slider {
+                animation: chat-tray .35s;
+            }
+            
+            .slider:checked {
+                color: #a970ff;
+                background-color: currentColor;
+            }
+        }
+        
+        @keyframes chat-tray { from { transform: translateX(15%); opacity: 0.5; } }
+    }
 }
