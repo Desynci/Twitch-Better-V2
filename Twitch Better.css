@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.7.6
+@version        3.7.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -942,6 +942,7 @@
             .tw-avatar::after {
 				content: '';
 				position: absolute;
+                contain: paint;
                 top: -3.2px;
                 left: -3px;
                 height: 120%;
@@ -949,7 +950,7 @@
                 background: url(use-avatar-frame[0]);
 				pointer-events: none;
                 background-size: 100% 100%;
-                contain: paint;
+                animation: content-in .45s;
 			}
         }
         
@@ -1276,7 +1277,7 @@
             }
 		}
 		
-		if (custom-badge!="disabled") {
+		if (__custom-badge!="disabled") {
 			.chat-line__message[data-a-user={nick} i] {
 				.chat-line__username-container span > .dvtAVE:last-of-type {
 					.chat-badge { content: url(__custom-badge); max-height: 18px; max-width: 18px;
@@ -2258,6 +2259,7 @@ if (custom-theme) {
             
             #message-box {
                 background: none;
+                font-family: "Inter";
                 
                 &> div {
                     backdrop-filter: blur(13px);
@@ -2337,7 +2339,11 @@ if (custom-theme) {
             }
             
             .config-body :is(input[type=text],.select-wrapper,select) {
-                max-width: 116px;
+                max-width: 108px;
+            }
+            
+            .config-range .current-value {
+                min-width: auto;
             }
             
             .config-body {
@@ -2350,7 +2356,7 @@ if (custom-theme) {
             }
             
             input[type=range] {
-                accent-color: #e7e7e7;
+                accent-color: #575757;
             }
             
             .config-select:has([value=" "]) {
@@ -2363,11 +2369,14 @@ if (custom-theme) {
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
             }
             
+            .config-select:has([value$="Discord #1"]) .select-wrapper { max-width: 101px !important; }
+            
             .config-select:has([value$="Hornet"]) .config-name {
                 transition: padding-left .35s;
                 
                 if (__custom-badge!="disabled") {
                     padding-left: 15px;
+                    .config-select:has([value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
                     
                     &::before {
                         content: url(__custom-badge);
@@ -2384,7 +2393,7 @@ if (custom-theme) {
             if (nick-gradient!="disabled") {
                 if (nick-gradient[0] == "discord") {
                     .config-select:has([value$="Discord #1"]) .config-name {
-                        font-family: "Roboto";
+                        font-family: "Inter";
                         text-shadow: none !important;
                         background: nick-gradient[1];
                         background-clip: text;
@@ -2410,7 +2419,7 @@ if (custom-theme) {
 
                 else if (nick-gradient[0] == "7tv") {
                     .config-select:has([value$="Discord #1"]) .config-name {
-                        font-family: "Roboto";
+                        font-family: "Inter";
                         text-shadow: none !important;
                         background: nick-gradient[1];
                         background-clip: text;
@@ -2424,7 +2433,7 @@ if (custom-theme) {
             @css {
                 [class=".external-support"] {
                     color: transparent;
-                     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
+                    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
                     background-repeat: no-repeat;
                     background-size: 25px;
                     height: 25px !important;
@@ -2441,6 +2450,24 @@ if (custom-theme) {
                     box-shadow: inset 1px 1px 2px hsla(var(--shadow-hsl),.5) !important;
                 }
             }
+        }
+        
+        @font-face {
+            font-family: Inter;
+            src: url("https://assets.twitch.tv/assets/inter-latin-variable-wghtOnly-normal-a05a0d687a088c4efed3.woff2") format("woff2-variations"), url("https://assets.twitch.tv/assets/inter-latin-400-normal-a05a0d687a088c4efed3.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        
+        @font-face {
+            font-family: Inter;
+            src: url("https://assets.twitch.tv/assets/inter-latin-variable-wghtOnly-normal-a05a0d687a088c4efed3.woff2") format("woff2-variations"), url("https://assets.twitch.tv/assets/inter-latin-600-normal-a05a0d687a088c4efed3.woff2") format("woff2");
+            font-style: normal;
+            font-weight: 600;
+            font-display: swap;
+            unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
         @keyframes opacity-in { from { opacity: 0; } }
