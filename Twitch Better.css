@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.7.9
+@version        3.8.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -207,9 +207,10 @@
 
 @var select remove-mode "Remove mode:" {
     'Full (silent)': "silent",
-    'Default (Twitch-like)*': "twitch",
+    'Twitch-like*': "twitch",
     'Blur (show on hover)': "blur"
 }
+@var text __deathnote "Death Note (scratch these nicknames):" "Lawliet, Light"
 
 ==/UserStyle== */
 
@@ -257,7 +258,7 @@
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
 	
 		// Fix strange animation bug on closing popup
-	.react-modal__overlay:has(.tw-transition[aria-hidden="true"]) { display: none; }
+	.react-modal__overlay .tw-transition[aria-hidden="true"] { display: none; }
 	
 	.chat-line__message-body--highlighted {
 		background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
@@ -374,7 +375,7 @@
             text-wrap: nowrap;
             overflow: hidden;
             opacity: 0;
-            animation: nightmode-notify 3.5s 2s backwards;
+            animation: nightmode-notify 4s 4s backwards;
             will-change: width, opacity;
             visibility: hidden;
         }
@@ -431,7 +432,7 @@
 				}
                 
                 &::after {
-                    content: "";
+                    content: '';
                     position: absolute;
                     inset: 2px;
                     pointer-events: none;
@@ -451,7 +452,7 @@
 			    }
                 
                 &::after {
-                    content: "";
+                    content: '';
                     position: absolute;
                     inset: 2.5px;
                     pointer-events: none;
@@ -503,7 +504,7 @@
 			}
 			
 			[data-a-target="player-mute-unmute-button"]::after {
-				content: "";
+				content: '';
 				position: absolute;
 				inset: 2.5px;
 				pointer-events: none;
@@ -520,7 +521,7 @@
 			}
 			
 			&::after {
-				content: "";
+				content: '';
 				position: absolute;
 				inset: 2px;
 				pointer-events: none;
@@ -601,7 +602,7 @@
 			}
 			
 			> div:not(.cofMAX, .resize-detector, .kYtUcc)::after {
-				content: "";
+				content: '';
 				position: absolute;
 				inset: 2.5px;
 				pointer-events: none;
@@ -954,9 +955,25 @@
 			}
         }
         
-        .user-menu-dropdown__main-menu .tw-avatar {
-            animation: avatar-frame 3s infinite;
-            will-change: transform;
+        .viewer-card-header__display-name a[href$={nick} i]::after {
+            content: '';
+			position: absolute;
+            contain: paint;
+            top: 31px;
+            left: 3px;
+            height: 60px;
+            width: 60px;
+            background: url(use-avatar-frame[0]);
+			pointer-events: none;
+            background-size: 100% 100%;
+            animation: content-in .65s;
+        }
+        
+        @supports not (-moz-appearance: none) { // this animation is laggy in firefox, so use only in chromium
+            .user-menu-dropdown__main-menu .tw-avatar {
+                animation: avatar-frame 3s infinite;
+                will-change: transform;
+            }
         }
         
         #live-channel-stream-information a[href$={nick} i] .tw-avatar::after {
@@ -1170,7 +1187,7 @@
                 }
 				
 				.AoXTY::before {
-					content: "";
+					content: '';
 					filter: blur(4px);
 					z-index: -1;
 					height: 98%;
@@ -1232,7 +1249,7 @@
 		
 		if (nick-gradient!="disabled") {
             if (nick-gradient[0] == "discord") {
-                .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i]:not([data-a-target="mod-comments-skip-link"]), a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
                     background: nick-gradient[1];
                     background-clip: text;
                     color: transparent !important;
@@ -1241,7 +1258,7 @@
                     font-weight: 600 !important;
                     
                     &::before {
-                        content: "" + nick;
+                        content: '' + nick;
                         position: absolute;
                         opacity: .6;
                         filter: blur(4px);
@@ -1963,6 +1980,33 @@
     }
     // ---
     
+    if (__deathnote != 'Lawliet, Light')  {
+        nicks = ()
+        nicks2 = ()
+        
+        __deathnote = filter-words(__deathnote)
+        
+        for n in __deathnote {
+            push(nicks,'[data-a-user*="'+ n +'" i]')
+            push(nicks2,'[href*="'+ n +'" i]')
+        }
+        
+        nicks1 = join("\,", nicks)
+        nicks2 = join("\,", nicks2)
+        
+        :not(.chat-line__message):is({nicks1}) {
+           text-decoration: line-through 2px;
+        }
+        
+        .viewer-card a:is({nicks2}) {
+            text-decoration: line-through 2px !important;
+        }
+        
+        .home-header-sticky a:is({nicks2}) > div {
+            text-decoration: line-through 2px !important;
+        }
+    }
+    
     if (enable-banwords) {
         if (__ban-words != 'banana, cat, chair') {
             words = ()
@@ -2033,8 +2077,8 @@
             users = ()
             __user-list = filter-words(__user-list)
             
-            for n1 in __user-list {
-                push(users,'[data-a-user="'+ n1 +'" i]')
+            for n in __user-list {
+                push(users,'[data-a-user="'+ n +'" i]')
             }
             
             users = join("\,", users)
@@ -2393,7 +2437,6 @@ if (custom-theme) {
             if (nick-gradient!="disabled") {
                 if (nick-gradient[0] == "discord") {
                     .config-select:has([value$="Discord #1"]) .config-name {
-                        font-family: "Inter";
                         text-shadow: none !important;
                         background: nick-gradient[1];
                         background-clip: text;
@@ -2403,7 +2446,7 @@ if (custom-theme) {
                         font-weight: 600 !important;
 
                         &::before {
-                            content: "" + nick;
+                            content: '' + nick;
                             position: absolute;
                             opacity: .6;
                             filter: blur(4px);
@@ -2419,7 +2462,6 @@ if (custom-theme) {
 
                 else if (nick-gradient[0] == "7tv") {
                     .config-select:has([value$="Discord #1"]) .config-name {
-                        font-family: "Inter";
                         text-shadow: none !important;
                         background: nick-gradient[1];
                         background-clip: text;
