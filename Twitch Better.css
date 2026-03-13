@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.8.3
+@version        3.8.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -210,7 +210,7 @@
     'Twitch-like*': "twitch",
     'Blur (show on hover)': "blur"
 }
-@var text __deathnote "Death Note (scratch these nicknames):" "Lawliet, Light"
+@var text __deathnote "Death Note (scratch these nicknames):" "'Lawliet, Light'"
 
 ==/UserStyle== */
 
@@ -969,6 +969,8 @@
             animation: content-in .65s;
         }
         
+        .viewer-card-header__display-name a[href$={nick} i] { filter: none !important; } // fix frame isn't displayed when 7tv nick decoration is selected
+        
         @supports not (-moz-appearance: none) { // this animation is laggy in firefox, so use only in chromium
             .user-menu-dropdown__main-menu .tw-avatar {
                 animation: avatar-frame 3s infinite;
@@ -1003,10 +1005,11 @@
         }
     }
 	
-	if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
+    if (remove-gift) { #live-channel-stream-information [data-a-target="gift-button"] { display: none; } }
+	if (remove-subscription) { #live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; } }
 	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
-	if (remove-banners) { .kXYDBY[class*="giftExpirationCallout"] { display: none !important; } }
+	if (remove-banners) { .kXYDBY[class*="giftExpirationCallout"], .kbXNWp[style*="Promo_Banner"] { display: none !important; } }
 	if (remove-hype-train) { .hypeTrainBanner--OojpY, .side-nav-card [class="Layout-sc-1xcs6mc-0 hMzOYz"], .online-side-nav-channel-tooltip__body .ipRTld .hMzOYz { display: none !important; } }
 	if (remove-disclosure) { #channel-player-disclosures { display: none !important; } }
 	if (remove-combo) {
@@ -1014,7 +1017,6 @@
 		.video-player__overlay { .iZiJYe > #one-tap-store-id[role="menu"] { display: none !important; } }
 	}
 	if (remove-combo-overlay) { .video-player__overlay > [class="Layout-sc-1xcs6mc-0 hHZcXo"][style="pointer-events: none;"] > .cqrOTI[style^="padding"] { display: none !important; } }
-	
 	if (remove-bits) {
 		@css {
 			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
@@ -1029,14 +1031,12 @@
             }
 		}
 	}
-	
 	if (remove-powerups) {
 		.reward-center__content__with-bits-rewards {
 			.bitsRewardListItem--yx4rk, [class="Layout-sc-1xcs6mc-0 cceijo"]:first-of-type > p.bsLreE { display: none !important; }
 			.iWfHEd { padding-block-start: 0 !important; }
 		}
 	}
-	
 	if (remove-turbo) {
         @css {
             .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO {
@@ -1057,14 +1057,8 @@
         if (remove-bits) { .top-nav__menu .bZYcrx > div.hdaUxc:last-of-type { margin-left: -8px; } }
     }
 	
-	if (remove-gift) {
-		#live-channel-stream-information [data-a-target="gift-button"] { display: none; }
-	}
-	
-	if (remove-subscription) {
-		#live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; }
-	}
-	
+    if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
+    
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
 	
     if (sidebar-counter) {
@@ -1612,7 +1606,7 @@
 			.jvDEkm { animation: spin-hue-180 .8s; }
 			[data-a-target="follow-button"] { animation: follow-button .65s .15s backwards; }
 			[data-a-target="unfollow-button"] { animation: unfollow-button .55s .15s backwards; }
-			[class="ScPlaceholderFill-sc-wb1w3c-2 eJtHtF"] { animation: follow-placeholder .3s .1s forwards; }
+			[class="ScPlaceholderFill-sc-wb1w3c-2 hZXqAm"] { animation: follow-placeholder .3s .1s forwards; }
             .tw-halo { border: none; &::before { margin: 0; } }
             .tw-halo:hover::before { transform: scale(1.015); }
 		}
