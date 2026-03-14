@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.8.6
+@version        3.8.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -763,6 +763,20 @@
 	}
 	
 	if (new-design) {
+        .persistent-player__border--mini {
+            margin: 1rem 3rem 7rem !important;
+            border-radius: 5px;
+            -webkit-mask-image: none;
+            
+            .player-overlay-background {
+                background: rgba(0,0,0,.2);
+            }
+            
+            .mini-overlay__title {
+                background-color: hsl(240, 7%, 4%) !important;
+            }
+        }
+        
         .metadata-layout__support [data-target="channel-header-right"] .tw-new-item-indicator__container {
             display: none;
         }
@@ -773,6 +787,12 @@
         
         .featured-content-carousel :is(.video-player__container, .video-player, [data-test-selector="featured-item-image"]) {
             border-radius: 11px;
+        }
+        
+        .tw-root--theme-dark .carousel-metadata {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            overflow: hidden;
         }
         
         [data-test-selector="featured-item-image"] {
@@ -845,6 +865,7 @@
 		}
 		
 		.tw-tag {
+            color: #d3d3d9;
 			background-color: #34363c61 !important;
 		}
 		
@@ -1446,7 +1467,7 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
     .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
-    .cpQXQS { transition: .15s }
+    .cpQXQS, .bMCdEc, .dgVYJo { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
@@ -1534,7 +1555,7 @@
             animation: carousel 1.8s .25s backwards cubic-bezier(0.76, 0, 0.24, 1);
         }
         [data-test-selector="featured-content-carousel-placeholder"] {
-            animation: carousel-placeholder .45s forwards;
+            animation: carousel 1.8s forwards reverse ubic-bezier(0.76, 0, 0.24, 1) !important;
         }
 		
 		{$player-settings} > div, .chat-settings__content > div {
@@ -1955,7 +1976,7 @@
 		}
 		
 		@css { .extensions-popover-view-layout__body::before {
-			content: "NOTE: Twitch Better\'s option \"PAUSE ANYWHERE\" breaks an interaction with the stream extensions. Disable it in the settings of style if needed.";
+			content: "NOTE: Twitch Better\'s option \"PAUSE ANYWHERE\" prevents an interaction with the stream extensions. Disable it in the settings of style if needed.";
 			color: #ff9898;
 		} }
 	}
@@ -2005,19 +2026,22 @@
         if (__ban-words != 'banana, cat, chair') {
             words = ()
             words2 = ()
+            not_username = ()
 
             __ban-words = filter-words(__ban-words)
 
             for n in __ban-words {
                 push(words,'[aria-label*="'+ n +'"i]')
                 push(words2,'[title*="'+ n +'"i]')
+                push(not_username,'[data-a-user*="'+ n +'"i]')
             }
 
             words = join("\,", words)
             words2 = join("\,", words2)
+            not_username = join("\,", not_username)
             
             if (remove-mode!="blur") { // message answer line
-                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
+                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})) .iQDCwh p:is({words2}) span:last-of-type { 
                     visibility: hidden;
                     pointer-events: none;
 
@@ -2030,13 +2054,31 @@
             }
             
             if (remove-mode=="silent") {
-                .chat-line__message:not([data-a-user={nick} i]):is({words}) {
+                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) {
                     display: none;
+                }
+                
+                    // do not hide message fully for the reply menu
+                .chat-input-tray__open .chat-line__message { display: inherit !important; }
+                
+                .chat-input-tray__open .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) [data-a-target="chat-line-message-body"] {
+                    visibility: hidden;
+                    
+                    &::before {
+                        content: "message deleted by the Twitch Better banwords list.";
+                        visibility: visible;
+                        color: var(--color-text-alt-2);
+                        font-style: italic;
+                    }
+                    
+                    > * {
+                        display: none;
+                    }
                 }
             }
             
             else if (remove-mode=="twitch") {
-                .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
+                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
                     &::before {
@@ -2053,7 +2095,7 @@
             }
             
             else if (remove-mode=="blur") {
-                .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
+                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}), .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})) .iQDCwh p:is({words2}) span:last-of-type {
                     filter: blur(4px);
                     transition: filter .25s;
 
@@ -2094,6 +2136,24 @@
                 .chat-line__message:is({users}) {
                     display: none;
                 }
+                
+                    // do not hide message fully for the reply menu
+                .chat-input-tray__open .chat-line__message { display: inherit !important; }
+                
+                .chat-input-tray__open .chat-line__message:is({users}) [data-a-target="chat-line-message-body"] {
+                    visibility: hidden;
+                    
+                    &::before {
+                        content: "message deleted by the Twitch Better blacklist." !important;
+                        visibility: visible;
+                        color: var(--color-text-alt-2);
+                        font-style: italic;
+                    }
+                    
+                    > * {
+                        display: none;
+                    }
+                }
             }
             
             else if (remove-mode=="twitch") {
@@ -2101,7 +2161,7 @@
                     visibility: hidden;
                     
                     &::before {
-                        content: "message deleted by the Twitch Better blacklist.";
+                        content: "message deleted by the Twitch Better blacklist." !important;
                         visibility: visible;
                         color: var(--color-text-alt-2);
                         font-style: italic;
