@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.8.8
+@version        3.8.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -131,7 +131,7 @@
 	'→ Green Mana': "'https://i.postimg.cc/K8s2D4Fy/Video-2025-12-10-221931-ezgif-com-video-to-gif-converter.gif' 1 linear-gradient(90deg, transparent 0%, rgba(4, 123, 32, 0.08) 20%, rgba(4, 123, 32, 0.08) 50%, rgba(4, 123, 32, 0.2) 100%)",
     '→ 2035': "'https://i.postimg.cc/k4p2XtxQ/2035.gif' 0.8 none",
     '→ Nevermore': "'https://i.postimg.cc/d38PLzbP/nevermore.gif' 0.8 linear-gradient(90deg, #ffffff1a 0%, #fff0 100%)",
-    '→ Red Dragon': "'https://i.postimg.cc/PJ2GWmqG/red-dragon.gif' 1 linear-gradient(90deg, #9000070a 0%, #9000071a 100%)",
+    '→ Red Dragon': "'https://i.postimg.cc/PJ2GWmqG/red-dragon.gif' 1 linear-gradient(90deg, #9000070a 0%, #9000071a 100%)"
 }
 @var select nick-gradient "Nickname gradient:" {
     'None': "disabled",
@@ -148,7 +148,7 @@
     '→ 7TV Cichlid': "7tv radial-gradient(#fbff00 27%, #e0f 47%, #5a00e0 56%) #e0f (drop-shadow(#b727b9 -1px 2px 1px))",
     '→ 7TV Grass': "7tv url(\"https://cdn.7tv.app/paint/01JFQV4G27ND0S36CW9GKQ1B61/layer/01JFT792WRS0SAC9K5WNH2XC04/1x.webp\") #49B01C (none)",
     '→ 7TV Domos': "7tv url(\"https://cdn.7tv.app/paint/01JEDE45FTB7XTQGRFXP0BA2PT/layer/01JF06XNCYM98WZAGNT0D51SQ3/1x.webp\") #FBD268 (none)",
-    '→ 7TV Paradise': "7tv url(\"https://cdn.7tv.app/paint/01K6ZYWT597ZQ7TEDRT26R5BNM/layer/01K8W5RJAQ183DG7Y1D450VVTF/1x.webp\") #9900FE (none)",
+    '→ 7TV Paradise': "7tv url(\"https://cdn.7tv.app/paint/01K6ZYWT597ZQ7TEDRT26R5BNM/layer/01K8W5RJAQ183DG7Y1D450VVTF/1x.webp\") #9900FE (none)"
 }
 @var select __custom-badge "Badge changer:" {
 	'None*': "disabled",
@@ -173,6 +173,7 @@
 	'→ Good \'25: Gooder': "'https://static-cdn.jtvnw.net/badges/v1/84a37e81-9d61-4c29-970e-64a32ec040c7/2'",
 	'→ Good \'25: The best': "'https://static-cdn.jtvnw.net/badges/v1/928b8033-3777-49cb-a056-230135a08a62/2'",
 	'→ Streamer Awards \'25': "'https://static-cdn.jtvnw.net/badges/v1/d52bd174-3509-460b-80ac-4a8d5840194b/2'",
+    '→ Pokémon Ditto': "'https://static-cdn.jtvnw.net/badges/v1/b577304e-7dc9-49f2-bee1-68caf56a91e6/2'",
 	'→ Rust': "'https://static-cdn.jtvnw.net/badges/v1/5ec1bcd1-82fa-4c42-abf1-be5b64cb63ed/2'",
 	'→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
 	'→ BCB Red': "'https://static-cdn.jtvnw.net/badges/v1/ef1e96e8-a0f9-40b6-87af-2977d3c004bb/2'",
@@ -205,7 +206,7 @@
 @var checkbox enable-blacklist "Hide messages from listed users:" 0
 @var text __user-list "List:" "'idiot1, clown2'"
 
-@var select remove-mode "Remove mode:" {
+@var select remove-mode "Censore mode:" {
     'Full (silent)': "silent",
     'Twitch-like*': "twitch",
     'Blur (show on hover)': "blur"
@@ -790,9 +791,13 @@
         }
         
         .tw-root--theme-dark .carousel-metadata {
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
             overflow: hidden;
+        }
+        
+        .featured-content-carousel-featured-item > .bxLWl {
+            background-color: #0e0e10 !important;
         }
         
         [data-test-selector="featured-item-image"] {
@@ -1061,7 +1066,7 @@
 	if (remove-turbo) {
         @css {
             .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO {
-                .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0.dcNXJO { /* small button */
+                .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0[aria-label] { /* small button */
                     display: none;
                     
                     &+.tw-new-item-indicator__container { display: none; }
@@ -1385,6 +1390,8 @@
 	
 	.vod-message {
 		overflow-wrap: anywhere;
+        word-break: break-all;
+        
 		transition: .05s linear;
 		
 	 	@css { [style="color: rgb(0, 0, 255);"] {
@@ -1399,13 +1406,13 @@
 		
 		.video-chat__message-menu {
 			path { visibility: visible; }
-			.fxVxcR { opacity: 0; }
+			.tw-svg { opacity: 0; }
 		}
 		
 		&:hover {
 			background: var(--color-background-interactable-alpha-hover);
 			border-radius: var(--border-radius-medium) !important;
-			.fxVxcR { opacity: 1; }
+			.tw-svg { opacity: 1; }
 		}
 	}
 	
@@ -1467,7 +1474,7 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
     .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
-    .cpQXQS, .bMCdEc, .dgVYJo { transition: .15s }
+    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
@@ -1752,10 +1759,15 @@
 			}
 		}
 		
-		[aria-labelledby="active-settings-menu-header"] > div, .channel-root__player .home-carousel-info {
+		[aria-labelledby="active-settings-menu-header"] > div {
 			animation: settings-blur 0.9s forwards !important;
 		}
-		
+        
+        .channel-root__player .home-carousel-info {
+            animation: none !important;
+            backdrop-filter: blur(55px) saturate(180%);
+        }
+        
 		[data-popper-placement]:not([data-popper-placement="right-start"]):has(.dduVcl) {
 			background: #18181bb0 !important;
 			border-radius: var(--border-radius-large);
