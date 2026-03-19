@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.8.9
+@version        3.9.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -41,6 +41,7 @@
     'None*': "none",
     '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
     '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
+    '→ The Magic Mist': "'https://cdn.discordapp.com/avatar-decoration-presets/a_75348082d14b5097708444fca20a09e0.png'",
     '→ Striking Light Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
 	'→ Moon Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7e68c00aa5c50a066b4eb66209204315.png'",
 	'→ Moon Red': "'https://cdn.discordapp.com/avatar-decoration-presets/a_2b4b5a191f89c65d042f15e854129822.png'",
@@ -138,6 +139,9 @@
 	'→ Discord #1': "discord linear-gradient(to right, #369876, #71ff9e, #369876) #369876",
 	'→ Discord #2*': "discord linear-gradient(to right, #ffa300, #ffea00, #ffa300) #ffa300",
 	'→ Discord #3': "discord linear-gradient(to right, #a9c9ff, #ffbbec, #ffc3a0, #a9c9ff) #ffc3a0",
+    '→ Discord #4': "discord linear-gradient(to right, #9e6bff, #9fc1ff, #9e6bff) #9e6bff",
+    '→ Discord #5': "discord linear-gradient(to right, #826bc2, #b7a7f1, #826bc2) #826bc2",
+    '→ Discord #6': "discord linear-gradient(to right, #d3b65d, #9e8142, #d3b65d) #d3b65d",
     '→ 7TV Citrus': "7tv linear-gradient(90deg, #fff700 0%, #ffc400 20%, #ff8438 40%, #ff1f77 60%, #f0b 80%, #e0f 100%) #FF455F (drop-shadow(#e0f 0px 0px 0.1px))",
     '→ 7TV Evelone': "7tv url(\"https://cdn.7tv.app/paint/01KC2M1QNZ1Q1E47KPM14VSERH/layer/01KC2MMGYA4K0XE948FKRM307F/1x.webp\") #ec7600 (drop-shadow(rgb(236, 118, 0) 0px 0px 1.5px))",
     '→ 7TV Banger': "7tv repeating-linear-gradient(90deg, #feb820 0%, #ffc014 23%, #8c01fe 53%, #8c01fe 0%, #0fc 100%) #8c01fe (drop-shadow(#56caf0 0px 0px 1px))",
@@ -173,6 +177,7 @@
 	'→ Good \'25: Gooder': "'https://static-cdn.jtvnw.net/badges/v1/84a37e81-9d61-4c29-970e-64a32ec040c7/2'",
 	'→ Good \'25: The best': "'https://static-cdn.jtvnw.net/badges/v1/928b8033-3777-49cb-a056-230135a08a62/2'",
 	'→ Streamer Awards \'25': "'https://static-cdn.jtvnw.net/badges/v1/d52bd174-3509-460b-80ac-4a8d5840194b/2'",
+    '→ FATAL FRAME II': "'https://static-cdn.jtvnw.net/badges/v1/63243824-6d43-45cf-8d21-fe0b06ab587f/2'",
     '→ Pokémon Ditto': "'https://static-cdn.jtvnw.net/badges/v1/b577304e-7dc9-49f2-bee1-68caf56a91e6/2'",
 	'→ Rust': "'https://static-cdn.jtvnw.net/badges/v1/5ec1bcd1-82fa-4c42-abf1-be5b64cb63ed/2'",
 	'→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
@@ -1385,13 +1390,12 @@
 	.video-chat__message-list-wrapper {
 		.ggvZjN { /*padding-left: 4px;*/ padding-top: 1px; }
 		.jUiaVy { border-radius: var(--border-radius-medium); }
-		.jUiaVy:hover { text-decoration: underline; background: var(--color-background-interactable-alpha-hover); }
+		.jUiaVy:hover { text-decoration: underline #dbdbdb 2px; background: var(--color-background-interactable-alpha-hover); }
 	}
 	
 	.vod-message {
 		overflow-wrap: anywhere;
-        word-break: break-all;
-        
+        //word-break: break-all;
 		transition: .05s linear;
 		
 	 	@css { [style="color: rgb(0, 0, 255);"] {
@@ -1559,10 +1563,10 @@
 		}
         
         .featured-content-carousel > .featured-content-carousel__item-container {
-            animation: carousel 1.8s .25s backwards cubic-bezier(0.76, 0, 0.24, 1);
+            animation: carousel 1.8s cubic-bezier(0.76, 0, 0.24, 1);
         }
         [data-test-selector="featured-content-carousel-placeholder"] {
-            animation: carousel 1.8s forwards reverse ubic-bezier(0.76, 0, 0.24, 1) !important;
+            animation: opacity-off 1.2s forwards ubic-bezier(0.76, 0, 0.24, 1) !important;
         }
 		
 		{$player-settings} > div, .chat-settings__content > div {
@@ -2038,22 +2042,19 @@
         if (__ban-words != 'banana, cat, chair') {
             words = ()
             words2 = ()
-            not_username = ()
 
             __ban-words = filter-words(__ban-words)
 
             for n in __ban-words {
                 push(words,'[aria-label*="'+ n +'"i]')
                 push(words2,'[title*="'+ n +'"i]')
-                push(not_username,'[data-a-user*="'+ n +'"i]')
             }
 
             words = join("\,", words)
             words2 = join("\,", words2)
-            not_username = join("\,", not_username)
             
             if (remove-mode!="blur") { // message answer line
-                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})) .iQDCwh p:is({words2}) span:last-of-type { 
+                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
                     visibility: hidden;
                     pointer-events: none;
 
@@ -2066,14 +2067,14 @@
             }
             
             if (remove-mode=="silent") {
-                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}) {
                     display: none;
                 }
                 
                     // do not hide message fully for the reply menu
                 .chat-input-tray__open .chat-line__message { display: inherit !important; }
                 
-                .chat-input-tray__open .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) [data-a-target="chat-line-message-body"] {
+                .chat-input-tray__open .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
                     &::before {
@@ -2090,7 +2091,7 @@
             }
             
             else if (remove-mode=="twitch") {
-                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}) [data-a-target="chat-line-message-body"] {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
                     &::before {
@@ -2107,7 +2108,7 @@
             }
             
             else if (remove-mode=="blur") {
-                .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})):is({words}), .chat-line__message:not([data-a-user={nick} i]):not(:is({not_username})) .iQDCwh p:is({words2}) span:last-of-type {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
                     filter: blur(4px);
                     transition: filter .25s;
 
