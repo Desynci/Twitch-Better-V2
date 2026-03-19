@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.2
+@version        3.9.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -2369,12 +2369,12 @@ if (custom-theme) {
             scrollbar-color: hsla(0,0%,100%,.4) transparent;
             
             #message-box {
-                background: none;
+                background: rgba(0, 0, 0, .1);
                 font-family: "Inter";
                 
                 &> div {
                     backdrop-filter: blur(13px);
-                    border-radius: 8px;
+                    border-radius: 10px;
                     overflow: hidden;
                     background: #00000038;
                     box-shadow: none;
@@ -2399,6 +2399,61 @@ if (custom-theme) {
 
                 &::before {
                     display: none;
+                }
+            }
+            
+            .config-body {
+                animation: go-down .55s;
+            }
+            
+            #message-box-contents {
+                padding-top: 50px;
+                
+                __top-line = (nick=="nickname") ? "Welcome" : "Welcome,";
+                __bottom-line = (nick=="nickname") ? "to Twitch Better" : "[" + nick + "]";
+                
+                &::before, &::after {
+                    position: absolute;
+                    font-family: "Inter" !important;
+                    font-size: 15.5px;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+                    mask-size: 100% 200%;
+                    mask-position: 0 100%;
+                    animation: reveal 1.4s forwards;
+                }
+                
+                &::before {
+                    content: __top-line;
+                    color: #dfdfdf;
+                    font-style: italic;
+                    top: 14px;
+                }
+                
+                &::after {
+                    content: __bottom-line
+                    text-wrap: nowrap;
+                    top: 34px;
+                    
+                    if (nick-gradient[0] == "discord") {
+                        text-shadow: none !important;
+                        background: nick-gradient[1];
+                        background-clip: text;
+                        color: transparent !important;
+                        background-size: 100px auto;
+                        animation: gradient-discord 1.5s linear infinite, reveal 1.6s forwards;
+                        font-weight: 600 !important;
+                    }
+                    
+                    else if (nick-gradient[0] == "7tv") {
+                        text-shadow: none !important;
+                        background: nick-gradient[1];
+                        background-clip: text;
+                        color: transparent !important;
+                        background-size: 100% 100%;
+                        filter: nick-gradient[3];
+                    }
                 }
             }
             
@@ -2494,13 +2549,13 @@ if (custom-theme) {
                         height: 21px;
                         width: 21px;
                         left: 24px;
-                        bottom: 94px;
+                        margin-top: 4px;
                         background-position: right;
                         background-image: url(custom-chat-button[0]);
                         background-size: cover;
                         pointer-events: none;
                         border-radius: 8px;
-                        animation: opacity-in .55s .2s backwards;
+                        animation: opacity-in .55s .55s backwards;
                         border: 2px ridge #b3b3b3;
                     }
                 }
@@ -2518,27 +2573,27 @@ if (custom-theme) {
                         height: 21px;
                         width: 21px;
                         left: 24px;
-                        top: 1179px;
+                        margin-top: -4px;
                         pointer-events: none;
                         border-radius: 12px;
+                        animation: opacity-in .55s .2s backwards;
                         
                         if (highlight-type=="rainbow") {
                             filter: blur(2px);
                             background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8);
                             animation: angle-gradient 4s linear infinite, opacity-in .55s .2s backwards;
+                            margin-top: -2px;
                         }
                         
                         else if (highlight-type=="cosmic") {
                             background-image: url("https://i.postimg.cc/mgswRY35/cosmic-abyss-tall-ezgif-com-video-to-gif-converter.gif");
                             background-size: cover;
-                            animation: opacity-in .55s .2s backwards;
                         }
                         
                         else {
                             background-position: right;
                             background-image: url(highlight-type[0]);
                             background-size: cover;
-                            animation: opacity-in .55s .2s backwards;
                             border: 2px ridge #b3b3b3;
                         }
                     }
@@ -2645,6 +2700,15 @@ if (custom-theme) {
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
+        @keyframes reveal {
+          from {
+            mask-position: 0 100%;
+          }
+          to {
+            mask-position: 0 0%;
+          }
+        }
+        @keyframes go-down { from { transform: translateY(-50px); } }
         @keyframes angle-gradient { to { --angle: 360deg; } }
         @keyframes opacity-in { from { opacity: 0; } }
         @keyframes checkboxes { from { transform: translateX(-45%); } }
