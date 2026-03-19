@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.0
+@version        3.9.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -1228,7 +1228,7 @@
 			}
 		}
 		
-		else {
+		else if (highlight-type!="disabled") {
 			.chat-line__message[data-a-user={nick} i] .chat-line__message-container {
 				&::before {
 					content: '';
@@ -2415,8 +2415,8 @@ if (custom-theme) {
                 font-size: 19px;
             }
             
-            .slider, .select-wrapper { animation: checkboxes .35s backwards; }
-            for row in (1..19) { .config-body > label:nth-of-type({row}) :is(.slider, .select-wrapper) { animation-delay: round(45ms*(row/1.8)); } }
+            label .config-value { animation: checkboxes .35s backwards; }
+            for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(42ms*(row/1.8)); } }
             
             .slider {
                 transition: .25s;
@@ -2480,14 +2480,76 @@ if (custom-theme) {
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
             }
             
-            .config-select:has([value$="Discord #1"]) .select-wrapper { max-width: 101px !important; }
+            .config-select:has([value$="Nevermore"]) .select-wrapper { max-width: 95px !important; }
+            
+            .config-select:has([value$="Nevermore"]):not(:has([value$="Cosmic Abyss"])) .config-name {
+                transition: padding-left .45s;
+                
+                if (custom-chat-button!="disabled") {
+                    padding-left: 26px;
+                    
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        height: 24px;
+                        width: 24px;
+                        left: 23px;
+                        bottom: 94px;
+                        background-position: right;
+                        background-image: url(custom-chat-button[0]);
+                        background-size: cover;
+                        pointer-events: none;
+                        border-radius: 12px;
+                        animation: opacity-in .55s .2s backwards;
+                    }
+                }
+            }
+            
+            .config-select:has([value$="Cosmic Abyss"]) .config-name {
+                transition: padding-left .45s;
+                
+                if (enable-highlight && highlight-type!="disabled") {
+                    padding-left: 26px;
+                    
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        height: 21px;
+                        width: 21px;
+                        left: 23px;
+                        top: 1181px;
+                        pointer-events: none;
+                        border-radius: 12px;
+                        
+                        if (highlight-type=="rainbow") {
+                            filter: blur(4px);
+                            background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8);
+                            animation: angle-gradient 4s linear infinite, opacity-in .55s .2s backwards;
+                        }
+                        
+                        else if (highlight-type=="cosmic") {
+                            background-image: url("https://i.postimg.cc/mgswRY35/cosmic-abyss-tall-ezgif-com-video-to-gif-converter.gif");
+                            background-size: cover;
+                            animation: opacity-in .55s .2s backwards;
+                        }
+                        
+                        else {
+                            background-position: right;
+                            background-image: url(highlight-type[0]);
+                            background-size: cover;
+                            animation: opacity-in .55s .2s backwards;
+                        }
+                    }
+                }
+            }
+            
+            .config-select:has([value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
             
             .config-select:has([value$="Hornet"]) .config-name {
                 transition: padding-left .35s;
                 
                 if (__custom-badge!="disabled") {
                     padding-left: 15px;
-                    .config-select:has([value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
                     
                     &::before {
                         content: url(__custom-badge);
@@ -2500,6 +2562,8 @@ if (custom-theme) {
                     }
                 }
             }
+            
+            .config-select:has([value$="Discord #1"]) .select-wrapper { max-width: 101px !important; }
             
             if (nick-gradient!="disabled") {
                 if (nick-gradient[0] == "discord") {
@@ -2579,8 +2643,10 @@ if (custom-theme) {
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
+        @keyframes angle-gradient { to { --angle: 360deg; } }
         @keyframes opacity-in { from { opacity: 0; } }
         @keyframes checkboxes { from { transform: translateX(-45%); } }
         @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
+        @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
     }
 }
