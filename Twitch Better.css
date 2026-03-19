@@ -1,13 +1,14 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.3
+@version        3.9.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
 @preprocessor 	stylus
 
 @var checkbox custom-theme "Stylus theme" 1
+@var checkbox welcome-animation "Welcome animation" 1
 @var select holder-1 "— 🌠  General —" {
     ' ': "holder-1"
 }
@@ -1197,8 +1198,18 @@
 	
 	if (enable-highlight) {
 		if (highlight-type=="cosmic") {
-			.chat-line__message[data-a-user={nick} i] { background-image: url("https://i.postimg.cc/mgswRY35/cosmic-abyss-tall-ezgif-com-video-to-gif-converter.gif"); padding: 1.8rem 1rem; background-repeat: repeat-y;
-			.chat-line__message-container { background: var(--color-background-body); padding: .8rem 1rem; width: 100% !important; border-radius: var(--border-radius-medium) !important; } }
+			.chat-line__message[data-a-user={nick} i] {
+                background-image: url("https://i.postimg.cc/mgswRY35/cosmic-abyss-tall-ezgif-com-video-to-gif-converter.gif");
+                padding: 1.8rem 1rem;
+                background-repeat: repeat-y;
+                
+			    .chat-line__message-container {
+                    background: var(--color-background-body);
+                    padding: .8rem 1rem;
+                    width: 100% !important;
+                    border-radius: var(--border-radius-medium) !important; 
+                }
+            }
 		}
 		
 		else if (highlight-type=="rainbow") {
@@ -1208,7 +1219,7 @@
 				
 				.AoXTY {
 					overflow: hidden !important;
-					border-radius: var(--border-radius-medium) !important; 
+					border-radius: var(--border-radius-medium) !important;
                 }
 				
 				.AoXTY::before {
@@ -1222,39 +1233,36 @@
 					transform: translate(-50%, -50%);
 					width: 96%;
 					border-radius: var(--border-radius-medium) !important;
-					animation: angle-gradient 4s linear infinite; 
-					background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8); 
+					animation: angle-gradient 4s linear infinite;
+					background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8);
 				}
 			}
 		}
 		
 		else if (highlight-type!="disabled") {
 			.chat-line__message[data-a-user={nick} i] .chat-line__message-container {
-				&::before {
-					content: '';
+                &::before, &::after {
+                    content: '';
 					position: absolute;
-					z-index: -2;
 					height: 100%;
 					width: 100%;
 					border-radius: 4px;
+                    pointer-events: none;
+                }
+                
+				&::before {
+					z-index: -2;
 					opacity: highlight-type[1];
 					background-position: right;
 					background-image: url(highlight-type[0]);
 					background-size: cover;
-					pointer-events: none;
 				}
 				
 				&::after {
-					content: '';
-					position: absolute;
 					z-index: -1;
-					height: 100%;
-					width: 100%;
-					border-radius: 4px;
 					left: 0px;
 					top: 0px;
 					background: highlight-type[2];
-					pointer-events: none;
 				}
                 
                 .chat-line__no-background {
@@ -2363,8 +2371,8 @@
 	}
 }
 
-if (custom-theme) {
-    @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
+@-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
+    if (custom-theme) {
         #stylus-popup:has(.config-select [value="YouTube Dark"]) {
             scrollbar-color: hsla(0,0%,100%,.4) transparent;
             
@@ -2402,8 +2410,17 @@ if (custom-theme) {
                 }
             }
             
-            .config-body {
-                animation: go-down .55s;
+            if (welcome-animation) {
+                .config-body {
+                    animation: menu-down .65s;
+                }
+                
+                label .config-value { animation: checkboxes .25s backwards; }
+                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(35ms*(row/1.8)); } }
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+                .config-body, label .config-value { animation: none; }
             }
             
             #message-box-contents {
@@ -2421,7 +2438,7 @@ if (custom-theme) {
                     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
                     mask-size: 100% 200%;
                     mask-position: 0 100%;
-                    animation: reveal 1.4s forwards;
+                    animation: reveal 0.75s forwards;
                 }
                 
                 &::before {
@@ -2435,22 +2452,18 @@ if (custom-theme) {
                     content: __bottom-line
                     text-wrap: nowrap;
                     top: 34px;
+                    text-shadow: none !important;
+                    background: nick-gradient[1];
+                    background-clip: text;
+                    color: transparent !important;
                     
                     if (nick-gradient[0] == "discord") {
-                        text-shadow: none !important;
-                        background: nick-gradient[1];
-                        background-clip: text;
-                        color: transparent !important;
                         background-size: 100px auto;
-                        animation: gradient-discord 1.5s linear infinite, reveal 1.6s forwards;
+                        animation: gradient-discord 1.5s linear infinite, reveal 0.9s forwards;
                         font-weight: 600 !important;
                     }
                     
                     else if (nick-gradient[0] == "7tv") {
-                        text-shadow: none !important;
-                        background: nick-gradient[1];
-                        background-clip: text;
-                        color: transparent !important;
                         background-size: 100% 100%;
                         filter: nick-gradient[3];
                     }
@@ -2469,9 +2482,6 @@ if (custom-theme) {
             #message-box-close-icon i {
                 font-size: 19px;
             }
-            
-            label .config-value { animation: checkboxes .35s backwards; }
-            for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(42ms*(row/1.8)); } }
             
             .slider {
                 transition: .25s;
@@ -2504,7 +2514,7 @@ if (custom-theme) {
                 left: 134px;
             }
             
-            .config-body :is(input[type=text],.select-wrapper,select) {
+            .config-body :is(input[type=text], .select-wrapper, select) {
                 max-width: 108px;
             }
             
@@ -2535,7 +2545,10 @@ if (custom-theme) {
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
             }
             
-            .config-select:has([value$="Nevermore"]) .select-wrapper { max-width: 90px !important; }
+            .config-select {
+                &:has([value$="Discord #1"], [value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
+                &:has([value$="Nevermore"]) .select-wrapper { max-width: 90px !important; }
+            }
             
             .config-select:has([value$="Nevermore"]):not(:has([value$="Cosmic Abyss"])) .config-name {
                 transition: padding-left .45s;
@@ -2600,8 +2613,6 @@ if (custom-theme) {
                 }
             }
             
-            .config-select:has([value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
-            
             .config-select:has([value$="Hornet"]) .config-name {
                 transition: padding-left .35s;
                 
@@ -2619,8 +2630,6 @@ if (custom-theme) {
                     }
                 }
             }
-            
-            .config-select:has([value$="Discord #1"]) .select-wrapper { max-width: 101px !important; }
             
             if (nick-gradient!="disabled") {
                 if (nick-gradient[0] == "discord") {
@@ -2700,19 +2709,18 @@ if (custom-theme) {
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
-        @keyframes reveal {
-          from {
-            mask-position: 0 100%;
-          }
-          to {
-            mask-position: 0 0%;
-          }
-        }
-        @keyframes go-down { from { transform: translateY(-50px); } }
+        @keyframes reveal { from { mask-position: 0 100%; } to { mask-position: 0 0%; } }
+        @keyframes menu-down { from { transform: translateY(-20px); } }
         @keyframes angle-gradient { to { --angle: 360deg; } }
         @keyframes opacity-in { from { opacity: 0; } }
-        @keyframes checkboxes { from { transform: translateX(-45%); } }
+        @keyframes checkboxes { from { transform: translateX(-15%); } }
         @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
         @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+    }
+        
+    else {
+        #stylus-popup:has(.config-select [value="YouTube Dark"]) {
+            .config-checkbox:nth-of-type(2) { display: none; } // Welcome animation checkbox
+        }
     }
 }
