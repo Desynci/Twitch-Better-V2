@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.4
+@version        3.9.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -210,7 +210,7 @@
 @var text __ban-words "List:" "'banana, cat, chair'"
 
 @var checkbox enable-blacklist "Hide messages from listed users:" 0
-@var text __user-list "List:" "'idiot1, clown2'"
+@var text __black-list "List:" "'idiot1, clown2'"
 
 @var select remove-mode "Censore mode:" {
     'Full (silent)': "silent",
@@ -227,9 +227,9 @@
 	$player-settings = "[data-a-target='player-settings-menu']"
 	$chat-customization = "[class='Attached-sc-go6eno-0 cJkJNl']"
 	$notifications = "[class='ScBalloonWrapper-sc-14jr088-0 PjurZ InjectLayout-sc-1i43xsx-0 bAWxnr tw-balloon']"
-	side-nav-bg = transparentify(#0E0E10, #fff, 0.8)
-	blurred-menu-header = #ffffff0d
-	__badge = ()
+    
+	__side-nav-bg = transparentify(#0E0E10, #fff, 0.8)
+	__blurred-menu-header = #ffffff0d
 	
 	:root { --sidebar-size: sidebar-size; }
     
@@ -255,7 +255,18 @@
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf::after { background-color: #9d5cff; }
     
     @css { #CLIP_EDITOR_ALERT_BOX_ID .iTLuyA > .dJfBsr {
-        .hctRiN { overflow: hidden; text-overflow: ellipsis; .kaIUar { overflow: hidden; .bLZXTb { overflow: hidden; text-overflow: ellipsis; display: inline-block !important; } } }
+        .hctRiN {
+            overflow: hidden;
+            .OyGFd {
+                overflow: hidden;
+                .iBachR {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: inline-block !important;
+                    padding-inline: 4px !important;
+                }
+            }
+        }
     } }
 	
 		// Notification tweaks
@@ -359,12 +370,12 @@
     if (night-mode-value > 0) {
         .video-player[data-a-player-type="site"] video { filter: brightness(100 - night-mode-value/1.1); }
            
-        $notify-width = ();
-        if (night-mode-value < 10%) { $notify-width = 106px; }
-        else if (night-mode-value == 100%) { $notify-width = 121px; }
-        else { $notify-width = 114px; }
+        __notify-width = ();
+        if (night-mode-value < 10%) { __notify-width = 106px; }
+        else if (night-mode-value == 100%) { __notify-width = 121px; }
+        else { __notify-width = 114px; }
         
-        :root { --notify-width: $notify-width; }
+        :root { --notify-width: __notify-width; }
         
         .video-player[data-a-player-type="site"] .video-player__container::before {
             content: "Night mode: " + night-mode-value;
@@ -378,7 +389,7 @@
             margin: 0 auto;
             padding: 3px 7.5px;
             border-radius: 7px;
-            width: $notify-width;
+            width: __notify-width;
             text-wrap: nowrap;
             overflow: hidden;
             opacity: 0;
@@ -399,30 +410,30 @@
 	if (player-controls!="default") {
 		
 		// -- VARS: colors, sizes -- //
-		light-bg = rgba(83, 83, 95, .478);
-		dark-bg = rgba(2, 2, 3, .478);
+		__light-bg = rgba(83, 83, 95, .478);
+		__dark-bg = rgba(2, 2, 3, .478);
 		
-		bg-inset-on-hover = rgba(255, 255, 255, .15);
-		bg-inset-on-active = rgba(255, 255, 255, .2);
-		bg-inset-volume = rgba(255, 255, 255, .12);
+		__bg-inset-on-hover = rgba(255, 255, 255, .15);
+		__bg-inset-on-active = rgba(255, 255, 255, .2);
+		__bg-inset-volume = rgba(255, 255, 255, .12);
 		
-		button-size = 32px + 8px;
-		icon-size-left-panel = 2rem + 0.4rem;
-		icon-size-right-panel = 2rem + 0.2rem;
+		__button-size = 32px + 8px;
+		__icon-size-left-panel = 2rem + 0.4rem;
+		__icon-size-right-panel = 2rem + 0.2rem;
 		
 		// -- PAUSE BUTTON -- //
 		
 		[data-a-target="player-play-pause-button"] {
-			width: button-size;
-			height: button-size;
+			width: __button-size;
+			height: __button-size;
 			transition: background-color .3s;
 			
 			.lnTwMD {
-				width: icon-size-left-panel;
-				height: icon-size-left-panel;
+				width: __icon-size-left-panel;
+				height: __icon-size-left-panel;
 			}
 			
-			background-color: (player-controls=="yt-light") ? light-bg !important : dark-bg !important;
+			background-color: (player-controls=="yt-light") ? __light-bg !important : __dark-bg !important;
 			
 			&:hover .tw-svg {
 				transform: scale(1.1);
@@ -434,7 +445,7 @@
 			
 			if (new-pause) {
 				&[data-a-player-state="paused"]:hover::after {
-					background-color: bg-inset-on-hover;
+					background-color: __bg-inset-on-hover;
 					animation: content-in .2s;
 				}
                 
@@ -455,7 +466,7 @@
 				}
                 
                 &:active::after {
-				    background-color: bg-inset-on-active;
+				    background-color: __bg-inset-on-active;
 			    }
                 
                 &::after {
@@ -467,7 +478,7 @@
                     transition: .15s;
                     transform: scale(0.3);
                     opacity: 0;
-                    background-color: bg-inset-on-hover;
+                    background-color: __bg-inset-on-hover;
                 }
 			}
 		}
@@ -482,13 +493,13 @@
 			transition: background-color .15s;
 			
 			[class="Layout-sc-1xcs6mc-0 dEKQxZ"] {
-				background-color: (player-controls=="yt-light") ? light-bg : dark-bg;
+				background-color: (player-controls=="yt-light") ? __light-bg : __dark-bg;
 				border-radius: 55px !important;
 				transition: background-color .15s;
 			}
 			
 			&:hover {
-				background-color: (player-controls=="yt-light") ? light-bg : dark-bg;
+				background-color: (player-controls=="yt-light") ? __light-bg : __dark-bg;
 				
 				[class="Layout-sc-1xcs6mc-0 dEKQxZ"], [data-a-target="player-mute-unmute-button"] {
 					background-color: transparent;
@@ -507,7 +518,7 @@
 			}
 			
 			[data-a-target="player-mute-unmute-button"]:active::after {
-				background-color: bg-inset-on-active;
+				background-color: __bg-inset-on-active;
 			}
 			
 			[data-a-target="player-mute-unmute-button"]::after {
@@ -519,7 +530,7 @@
 				transition: .15s;
 				transform: scale(0.3);
 				opacity: 0;
-				background-color: bg-inset-on-hover;
+				background-color: __bg-inset-on-hover;
 			}
 			
 			&:hover::after {
@@ -536,7 +547,7 @@
 				transition: .15s;
 				transform: scaleX(0.5);
 				opacity: 0;
-				background-color: bg-inset-volume;
+				background-color: __bg-inset-volume;
 				transform-origin: left;
 			}
 			
@@ -550,12 +561,12 @@
 		}
 		
 		[data-a-target="player-mute-unmute-button"] {
-			width: button-size;
-			height: button-size;
+			width: __button-size;
+			height: __button-size;
 			
 			.lnTwMD {
-				width: icon-size-left-panel;
-				height: icon-size-left-panel;
+				width: __icon-size-left-panel;
+				height: __icon-size-left-panel;
 			}
 		}
 		
@@ -588,15 +599,15 @@
 			.gUwAuK {
 				color: rgb(247, 247, 247);
 				backdrop-filter: blur(2px);
-				if (player-controls=="yt-light") { background-color: light-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #8c8c8c4d; }
-				else if (player-controls=="yt-dark") { background-color: dark-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #33333369; }
+				if (player-controls=="yt-light") { background-color: __light-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #8c8c8c4d; }
+				else if (player-controls=="yt-dark") { background-color: __dark-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #33333369; }
 			}
 			
 			> div:not(.cofMAX, .resize-detector, .kYtUcc) {
 				transition: background-color .15s;
 				position: relative;
 				
-				background-color: (player-controls=="yt-light") ? light-bg : dark-bg;
+				background-color: (player-controls=="yt-light") ? __light-bg : __dark-bg;
 			}
 			
 			> div:not(.cofMAX, .resize-detector, .kYtUcc):hover::after {
@@ -605,7 +616,7 @@
 			}
 			
 			> div:not(.cofMAX, .resize-detector, .kYtUcc):active::after {
-				background-color: bg-inset-on-active;
+				background-color: __bg-inset-on-active;
 			}
 			
 			> div:not(.cofMAX, .resize-detector, .kYtUcc)::after {
@@ -617,7 +628,7 @@
 				transition: .15s;
 				transform: scale(0.3);
 				opacity: 0;
-				background-color: bg-inset-on-hover;
+				background-color: __bg-inset-on-hover;
 			}
             
             .low-latency-notification button {
@@ -647,12 +658,12 @@
 				}
 				
 				&:not([aria-label*="(alt+x)"], .hMaomf.iwMIba) {
-					width: button-size;
-					height: button-size;
+					width: __button-size;
+					height: __button-size;
 				}
 				
 				&[aria-label*="(alt+x)"] {
-					height: button-size;
+					height: __button-size;
 				}
 				
 				&[aria-label].yezmM:disabled { // disabled clip button
@@ -667,8 +678,8 @@
             }
 			
 			.lnTwMD, .hHUQhB {
-				width: icon-size-right-panel;
-				height: icon-size-right-panel;
+				width: __icon-size-right-panel;
+				height: __icon-size-right-panel;
 			}
 			
 			 [aria-label*="(alt+x)"] {
@@ -1189,7 +1200,7 @@
 			width: 5rem; transition: transform .25s .05s, opacity .25s .05s;
 		}
 		
-		if (apply-blur) { .side-nav.kHqXhd { background: side-nav-bg !important; backdrop-filter: blur(55px); } }
+		if (apply-blur) { .side-nav.kHqXhd { background: __side-nav-bg !important; backdrop-filter: blur(55px); } }
 	}
 	
 	if (only-following) {
@@ -1621,13 +1632,13 @@
 		}
 	    
 			// verification badge animation
-        verif-badge-container = ();
-        push(verif-badge-container, '.channel-info-content .dMBVIY');
-        push(verif-badge-container, '.streamer-card__balloon .ihBVuT .gEnGqX');
-        push(verif-badge-container, '.home-header-sticky a');
-        $verif-badge-container = join(', ', verif-badge-container);
+        verif-badge-containers = ();
+        push(verif-badge-containers, '.channel-info-content .dMBVIY');
+        push(verif-badge-containers, '.streamer-card__balloon .ihBVuT .gEnGqX');
+        push(verif-badge-containers, '.home-header-sticky a');
+        $verif-badge-containers = join(', ', verif-badge-containers);
 
-        {$verif-badge-container} {
+        {$verif-badge-containers} {
             .ijyopa .tw-svg, .eqFpjC .tw-svg { transition: transform .35s; }
             .gsIgyh .tw-svg { transition: transform .22s; }
             a, h1 { &:hover+.eqFpjC .tw-svg, &:hover+.ijyopa .tw-svg, &:hover+.gsIgyh .tw-svg { transform: rotate(0.02turn) scale(1.1); } }
@@ -1639,9 +1650,8 @@
 		.reward-icon--large { transition: .25s; filter: hue-rotate(0); &:hover { filter: hue-rotate(0.1turn); } }
 	    
 		.streamer-card__balloon {
-            is-blur = ();
-            is-blur = (apply-blur) ? "blur-15 0.9s forwards," : "";
-            [data-popper-placement] { animation: unquote(is-blur) opacity-in 0.3s !important; overflow: hidden; }
+            $enable-blur = (apply-blur) ? "blur-15 0.9s forwards," : "";
+            [data-popper-placement] { animation: unquote($enable-blur) opacity-in 0.3s !important; overflow: hidden; }
 			.kXaRRs { animation: streamer-card .6s !important; }
 			.jvDEkm { animation: spin-hue-180 .8s; }
 			[data-a-target="follow-button"] { animation: follow-button .65s .15s backwards; }
@@ -1876,7 +1886,7 @@
 			background: #18181bb0 !important;
 			
 			.fNeqge, .whispers-threads-box__header {
-				background: blurred-menu-header !important;
+				background: __blurred-menu-header !important;
 				box-shadow: none !important;
                 border-top-left-radius: var(--border-radius-large) !important;
                 border-top-right-radius: var(--border-radius-large) !important;
@@ -1907,7 +1917,7 @@
 			box-shadow: var(--shadow-elevation-2) !important;
 			backdrop-filter: blur(15px);
 			
-			.tw-table-heading { background: blurred-menu-header !important; border: none !important; }
+			.tw-table-heading { background: __blurred-menu-header !important; border: none !important; }
 			.tw-table { box-shadow: none; }
 		}
 		
@@ -1919,7 +1929,7 @@
 			}
 			
 			.thread-header__title-bar-container {
-				background: blurred-menu-header !important;
+				background: __blurred-menu-header !important;
 				box-shadow: none !important;
 			}
 		}
@@ -2130,11 +2140,11 @@
     }
     
     if (enable-blacklist) {
-        if (__user-list != 'idiot1, clown2') {
+        if (__black-list != 'idiot1, clown2') {
             users = ()
-            __user-list = filter-words(__user-list)
+            __black-list = filter-words(__black-list)
             
-            for n in __user-list {
+            for n in __black-list {
                 push(users,'[data-a-user="'+ n +'" i]')
             }
             
