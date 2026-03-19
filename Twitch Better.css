@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.1
+@version        3.9.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -2480,27 +2480,28 @@ if (custom-theme) {
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
             }
             
-            .config-select:has([value$="Nevermore"]) .select-wrapper { max-width: 95px !important; }
+            .config-select:has([value$="Nevermore"]) .select-wrapper { max-width: 90px !important; }
             
             .config-select:has([value$="Nevermore"]):not(:has([value$="Cosmic Abyss"])) .config-name {
                 transition: padding-left .45s;
                 
                 if (custom-chat-button!="disabled") {
-                    padding-left: 26px;
+                    padding-left: 28px;
                     
                     &::before {
                         content: '';
                         position: absolute;
-                        height: 24px;
-                        width: 24px;
-                        left: 23px;
+                        height: 21px;
+                        width: 21px;
+                        left: 24px;
                         bottom: 94px;
                         background-position: right;
                         background-image: url(custom-chat-button[0]);
                         background-size: cover;
                         pointer-events: none;
-                        border-radius: 12px;
+                        border-radius: 8px;
                         animation: opacity-in .55s .2s backwards;
+                        border: 2px ridge #b3b3b3;
                     }
                 }
             }
@@ -2509,20 +2510,20 @@ if (custom-theme) {
                 transition: padding-left .45s;
                 
                 if (enable-highlight && highlight-type!="disabled") {
-                    padding-left: 26px;
+                    padding-left: 28px;
                     
                     &::before {
                         content: '';
                         position: absolute;
                         height: 21px;
                         width: 21px;
-                        left: 23px;
-                        top: 1181px;
+                        left: 24px;
+                        top: 1179px;
                         pointer-events: none;
                         border-radius: 12px;
                         
                         if (highlight-type=="rainbow") {
-                            filter: blur(4px);
+                            filter: blur(2px);
                             background-image: conic-gradient(from var(--angle), #b23ff8, #3cc890, #38a7ca, #b23ff8);
                             animation: angle-gradient 4s linear infinite, opacity-in .55s .2s backwards;
                         }
@@ -2538,6 +2539,7 @@ if (custom-theme) {
                             background-image: url(highlight-type[0]);
                             background-size: cover;
                             animation: opacity-in .55s .2s backwards;
+                            border: 2px ridge #b3b3b3;
                         }
                     }
                 }
