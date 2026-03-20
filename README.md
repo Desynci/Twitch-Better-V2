@@ -37,6 +37,10 @@ It's custom CSS theme that adds animations, new look, improved usability and a l
 - Censore modes: silent, twitch-like, blur
 <img width="242,5" height="38" alt="Demonstration of working user blacklist" src="https://github.com/user-attachments/assets/5f88d6ca-4238-4232-bb4d-6829ce7bdd3d" />
 
+> [!IMPORTANT]
+> The filter works for every message that contains one of written words in ANY part of it.\
+> **Example:** listed "**lack**" will filter message with the word "b<ins>**lack**</ins>list" or "b<ins>**lack**</ins>" too.
+
 #### 🍂 Selective removers:
 
 - Part of ads and banners
