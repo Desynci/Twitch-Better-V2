@@ -11,7 +11,7 @@ It's custom CSS theme that adds animations, new look, improved usability and a l
 #### 🌠 General design and usability tweaks:
 
 - New blurred menu appearance
-- Show sidebar with channels only on hover
+- Show sidebar on hover only
 - Pause anywhere
 - YouTube-like player controls
 - Custom animated chat button
