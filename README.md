@@ -5,7 +5,7 @@ It's custom CSS theme that adds animations, new look, improved usability and a l
 
 #### How to use:
 1) Install [Stylus](https://github.com/openstyles/stylus?tab=readme-ov-file#releases) browser extention.
-2) Install Twitch Better V2 from [UserStyles](https://userstyles.world/style/23247/twitch-better-2025).
+2) Install [Twitch Better V2](https://userstyles.world/style/23247/twitch-better-2025) from UserStyles.
 
 ## Key functions: 
 #### 🌠 General design and usability tweaks:
