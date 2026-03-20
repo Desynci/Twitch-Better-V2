@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.5
+@version        3.9.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -1632,11 +1632,11 @@
 		}
 	    
 			// verification badge animation
-        verif-badge-containers = ();
+        __verif-badge-containers = ();
         push(verif-badge-containers, '.channel-info-content .dMBVIY');
         push(verif-badge-containers, '.streamer-card__balloon .ihBVuT .gEnGqX');
         push(verif-badge-containers, '.home-header-sticky a');
-        $verif-badge-containers = join(', ', verif-badge-containers);
+        $verif-badge-containers = join(', ', __verif-badge-containers);
 
         {$verif-badge-containers} {
             .ijyopa .tw-svg, .eqFpjC .tw-svg { transition: transform .35s; }
@@ -2421,16 +2421,12 @@
             }
             
             if (welcome-animation) {
-                .config-body {
-                    animation: menu-down .65s;
-                }
-                
-                label .config-value { animation: checkboxes .25s backwards; }
-                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(35ms*(row/1.8)); } }
+                label .config-value { animation: checkboxes .35s backwards; }
+                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(42ms*(row/1.8)); } }
             }
             
             @media (prefers-reduced-motion: reduce) {
-                .config-body, label .config-value { animation: none; }
+                label .config-value { animation: none; }
             }
             
             #message-box-contents {
@@ -2448,7 +2444,7 @@
                     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
                     mask-size: 100% 200%;
                     mask-position: 0 100%;
-                    animation: reveal 0.75s forwards;
+                    animation: opacity-in .75s .15s backwards, reveal 1.6s .80s ease-out forwards;
                 }
                 
                 &::before {
@@ -2469,8 +2465,12 @@
                     
                     if (nick-gradient[0] == "discord") {
                         background-size: 100px auto;
-                        animation: gradient-discord 1.5s linear infinite, reveal 0.9s forwards;
+                        animation: gradient-discord 1.5s linear infinite, reveal 1.8s .80s ease-out forwards, opacity-in .75s .15s backwards;
                         font-weight: 600 !important;
+                        
+                        @media (prefers-reduced-motion: reduce) {
+                            animation: gradient-discord 1.5s linear infinite;
+                        }
                     }
                     
                     else if (nick-gradient[0] == "7tv") {
@@ -2578,7 +2578,7 @@
                         background-size: cover;
                         pointer-events: none;
                         border-radius: 8px;
-                        animation: opacity-in .55s .55s backwards;
+                        animation: opacity-in .55s .2s backwards;
                         border: 2px ridge #b3b3b3;
                     }
                 }
@@ -2719,11 +2719,11 @@
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
+        
         @keyframes reveal { from { mask-position: 0 100%; } to { mask-position: 0 0%; } }
-        @keyframes menu-down { from { transform: translateY(-20px); } }
         @keyframes angle-gradient { to { --angle: 360deg; } }
         @keyframes opacity-in { from { opacity: 0; } }
-        @keyframes checkboxes { from { transform: translateX(-15%); } }
+        @keyframes checkboxes { from { transform: translateX(-35%); } }
         @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
         @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
     }
