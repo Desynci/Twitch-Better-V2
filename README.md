@@ -38,11 +38,11 @@ It's custom CSS theme that adds animations, new look, improved usability and a l
 
 > [!IMPORTANT]
 > Filter works for every message that contains one of the written words in ANY part of it.\
-> Example: listed "**lack**" will filter message with the words "b<ins>**lack**</ins>list" and "b<ins>**lack**</ins>" too.
+> Example: listed "**lack**" will filter messages with not only word "**lack**" itstelf, but words "b<ins>**lack**</ins>list" and "b<ins>**lack**</ins>" too.
 
 #### 🍂 Selective removers:
 
 \- Part of ads and banners,\
 \- Hypetrains,\
 \- New combo & combo messages,\
-\- All related to Bits and Twitch Turbo.\
+\- All related to Bits and Twitch Turbo.
