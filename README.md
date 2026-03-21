@@ -44,5 +44,5 @@ It's custom CSS theme that adds animations, new look, improved usability and a l
 
 \- Part of ads and banners,\
 \- Hypetrains,\
-\- New combo & combo messages,\
-\- All related to Bits and Twitch Turbo.
+\- Combo & combo messages,\
+\- Everything related to Bits and Twitch Turbo.
