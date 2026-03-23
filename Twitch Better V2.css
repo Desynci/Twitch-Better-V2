@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        3.9.7
+@version        3.9.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better/
@@ -178,7 +178,8 @@
 	'→ Good \'25: Gooder': "'https://static-cdn.jtvnw.net/badges/v1/84a37e81-9d61-4c29-970e-64a32ec040c7/2'",
 	'→ Good \'25: The best': "'https://static-cdn.jtvnw.net/badges/v1/928b8033-3777-49cb-a056-230135a08a62/2'",
 	'→ Streamer Awards \'25': "'https://static-cdn.jtvnw.net/badges/v1/d52bd174-3509-460b-80ac-4a8d5840194b/2'",
-    '→ FATAL FRAME II': "'https://static-cdn.jtvnw.net/badges/v1/63243824-6d43-45cf-8d21-fe0b06ab587f/2'",
+    '→ Umbrella corp': "'https://static-cdn.jtvnw.net/badges/v1/995ff00f-c16c-4782-86ba-f2d7668dc6a2/2'",
+    '→ Fatal Frame II': "'https://static-cdn.jtvnw.net/badges/v1/63243824-6d43-45cf-8d21-fe0b06ab587f/2'",
     '→ Pokémon Ditto': "'https://static-cdn.jtvnw.net/badges/v1/b577304e-7dc9-49f2-bee1-68caf56a91e6/2'",
 	'→ Rust': "'https://static-cdn.jtvnw.net/badges/v1/5ec1bcd1-82fa-4c42-abf1-be5b64cb63ed/2'",
 	'→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
@@ -364,12 +365,12 @@
         } }
 	}
 	
-    .video-player[data-a-player-type="site"] video {
+    .video-player video {
         transition: filter .5s;
     }
         
     if (night-mode-value > 0) {
-        .video-player[data-a-player-type="site"] video { filter: brightness(100 - night-mode-value/1.1); }
+        .video-player video { filter: brightness(100 - night-mode-value/1.1); }
            
         __notify-width = ();
         if (night-mode-value < 10%) { __notify-width = 106px; }
@@ -833,6 +834,10 @@
             }
         }
 		
+        .tw-animated-glitch-logo g > .ScEyes-sc-mx5axi-5 {
+            animation-name: none;
+        }
+        
 		.guest-star-live-card-clip-edge {
 			clip-path: inset(1px);
 		}
@@ -1077,7 +1082,7 @@
 	}
 	if (remove-powerups) {
 		.reward-center__content__with-bits-rewards {
-			.bitsRewardListItem--yx4rk, [class="Layout-sc-1xcs6mc-0 cceijo"]:first-of-type > p.bsLreE { display: none !important; }
+			.bitsRewardListItem--yx4rk, .rewards-list > .cYNAGG:first-of-type { display: none !important; }
 			.iWfHEd { padding-block-start: 0 !important; }
 		}
 	}
@@ -2642,7 +2647,7 @@
                 transition: padding-left .35s;
                 
                 if (__custom-badge!="disabled") {
-                    padding-left: 15px;
+                    padding-left: 19px;
                     
                     &::before {
                         content: url(__custom-badge);
