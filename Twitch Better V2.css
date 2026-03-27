@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.1
+@version        4.0.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -1424,14 +1424,16 @@
 	}
 	
 	.vod-message {
-		overflow-wrap: anywhere;
-        //word-break: break-all;
 		transition: .05s linear;
 		
 	 	@css { [style="color: rgb(0, 0, 255);"] {
 			color: rgb(55 55 255) !important;
 		} }
 		
+        .video-chat__message > span > * {
+            display: inline-block !important;
+        }
+        
 		.CoreText-sc-1txzju1-0.irZUBM {
 			color: #adadb8;
 			/*font-size: var(--font-size-base) !important;*/
@@ -2085,7 +2087,6 @@
             if (remove-mode!="blur") { // message answer line
                 .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
                     visibility: hidden;
-                    pointer-events: none;
 
                     &::before {
                         content: "*censored message*";
@@ -2140,7 +2141,7 @@
                 .chat-line__message:not([data-a-user={nick} i]):is({words}), .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type {
                     filter: blur(4px);
                     transition: filter .25s;
-
+                    
                     &:hover {
                         filter: none;
                         transition: filter .25s .15s;
@@ -2160,19 +2161,6 @@
             }
             
             users = join("\,", users)
-            
-            if (remove-mode!="blur") { // message answer line
-                .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
-                    visibility: hidden;
-                    pointer-events: none;
-                    
-                    &::before {
-                        content: "*censored message*";
-                        visibility: visible;
-                        font-style: italic;
-                    }
-                }
-            }
             
             if (remove-mode=="silent") {
                 .chat-line__message:is({users}) {
@@ -2216,7 +2204,7 @@
             }
             
             else if (remove-mode=="blur") {
-                .chat-line__message:is({users}), .chat-line__message .iQDCwh p:is({users}) span:last-of-type {
+                .chat-line__message:is({users}) {
                     filter: blur(4px);
                     transition: filter .25s;
 
