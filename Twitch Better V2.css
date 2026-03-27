@@ -1,10 +1,10 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.0
+@version        4.0.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
-@supportURL 	https://github.com/Desynci/Twitch-Better/
+@supportURL 	https://github.com/Desynci/Twitch-Better-V2/
 @preprocessor 	stylus
 
 @var checkbox custom-theme "Stylus theme" 1
@@ -220,7 +220,6 @@
     'Twitch-like*': "twitch",
     'Blur (show on hover)': "blur"
 }
-
 ==/UserStyle== */
 
 @-moz-document domain("twitch.tv") {
@@ -1054,7 +1053,6 @@
         }
     }
 	
-    if (remove-gift) { #live-channel-stream-information [data-a-target="gift-button"] { display: none; } }
 	if (remove-subscription) { #live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; } }
 	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
@@ -1066,6 +1064,12 @@
 		.video-player__overlay { .iZiJYe > #one-tap-store-id[role="menu"] { display: none !important; } }
 	}
 	if (remove-combo-overlay) { .video-player__overlay > [class="Layout-sc-1xcs6mc-0 hHZcXo"][style="pointer-events: none;"] > .cqrOTI[style^="padding"] { display: none !important; } }
+    if (remove-gift) {
+        #live-channel-stream-information { 
+            [data-a-target="gift-button"] { display: none; }
+            [data-target="channel-header-right"] > .AoXTY:first-of-type { margin-right: -4px; }
+        }
+    }
 	if (remove-bits) {
 		@css {
 			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
@@ -1084,6 +1088,7 @@
 		.reward-center__content__with-bits-rewards {
 			.bitsRewardListItem--yx4rk, .rewards-list > .cYNAGG:first-of-type { display: none !important; }
 			.iWfHEd { padding-block-start: 0 !important; }
+            .reward-center__content { height: auto; }
 		}
 	}
 	if (remove-turbo) {
@@ -1113,14 +1118,14 @@
     if (sidebar-counter) {
         .side-nav--expanded {
             .side-nav-section:nth-of-type(2) {
-                counter-reset: active-channels-counter;
+                counter-reset: channels-counter;
                 
                 [data-test-selector="followed-channel"]:not(.side-nav-card__link--offline) {
-                    counter-increment: active-channels-counter;
+                    counter-increment: channels-counter;
                 }
                 
                 &::after {
-                    content: counter(active-channels-counter);
+                    content: counter(channels-counter);
                     display: block;
                     font-family: var(--font-display);
                     font-size: 18px;
@@ -1139,8 +1144,8 @@
             }
         }
         
-        .side-nav--expanded:hover { counter-reset: active-channels-counter; }
-        if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: active-channels-counter; } }
+        .side-nav--expanded:hover { counter-reset: channels-counter; }
+        if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: channels-counter; } }
     }
     
 	if (sidebar-hover-only) {
