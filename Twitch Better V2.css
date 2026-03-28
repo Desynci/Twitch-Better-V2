@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.2
+@version        4.0.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -740,6 +740,14 @@
 			transition: background .5s;
 		}
         
+        .channel-root__right-column > .cCSAoN {
+            border-color: rgba(38, 38, 43, 0.6) !important;
+        }
+        
+        #live-channel-stream-information .cSIZZn {
+            border-color: rgba(38, 38, 43, 0.9) !important;
+        }
+        
 		.chat-wysiwyg-input-box, .announcement-line, .announcement-line .jmdYJS {
 			background-color: #131315b0 !important;
 		}
@@ -776,8 +784,12 @@
 			animation: gradient-custom 8s linear infinite;
 			
 			&:hover {
-				transform: scale(0.98)
+				filter: brightness(0.95);
 			}
+            
+            &:active {
+                filter: brightness(0.9);
+            }
 		}
 	}
 	
@@ -1053,6 +1065,12 @@
         }
     }
 	
+    if (remove-gift) {
+        #live-channel-stream-information { 
+            [data-a-target="gift-button"] { display: none; }
+            [data-target="channel-header-right"] > .AoXTY:first-of-type { margin-right: -6px; }
+        }
+    }
 	if (remove-subscription) { #live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; } }
 	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
@@ -1064,12 +1082,6 @@
 		.video-player__overlay { .iZiJYe > #one-tap-store-id[role="menu"] { display: none !important; } }
 	}
 	if (remove-combo-overlay) { .video-player__overlay > [class="Layout-sc-1xcs6mc-0 hHZcXo"][style="pointer-events: none;"] > .cqrOTI[style^="padding"] { display: none !important; } }
-    if (remove-gift) {
-        #live-channel-stream-information { 
-            [data-a-target="gift-button"] { display: none; }
-            [data-target="channel-header-right"] > .AoXTY:first-of-type { margin-right: -4px; }
-        }
-    }
 	if (remove-bits) {
 		@css {
 			.community-points-summary { [class="Layout-sc-1xcs6mc-0 eCNebZ"], [data-test-selector="bits-balance-string"] { display: none !important; } }
@@ -1392,7 +1404,7 @@
 	}
 	
 	.chat-paused-footer {
-		transform: none;
+	    transform: none;
 		background-color: rgba(10, 10, 10, .722) !important;
 		border-color: #4f4f4f7a;
 		transition: .4s;
@@ -1418,12 +1430,19 @@
 	
 		// -- VOD messages tweaks
 	.video-chat__message-list-wrapper {
-		.ggvZjN { /*padding-left: 4px;*/ padding-top: 1px; }
+		.ggvZjN { padding-top: 1px; }
 		.jUiaVy { border-radius: var(--border-radius-medium); }
 		.jUiaVy:hover { text-decoration: underline #dbdbdb 2px; background: var(--color-background-interactable-alpha-hover); }
+        
+        .InjectLayout-sc-1i43xsx-0.kvgXPf > li.InjectLayout-sc-1i43xsx-0 {
+            padding-inline-end: .5rem;
+        }
 	}
 	
 	.vod-message {
+        margin-inline-start: .5rem;
+        padding-inline-start: 0;
+        border-radius: var(--border-radius-medium) !important;
 		transition: .05s linear;
 		
 	 	@css { [style="color: rgb(0, 0, 255);"] {
@@ -1432,6 +1451,14 @@
 		
         .video-chat__message > span > * {
             display: inline-block !important;
+        }
+        
+        .mention-fragment {
+            border-radius: 6px;
+            background: #a970ff1a;
+            margin-right: 4px;
+            padding: 0px 2px;
+            height: auto;
         }
         
 		.CoreText-sc-1txzju1-0.irZUBM {
@@ -1447,7 +1474,6 @@
 		
 		&:hover {
 			background: var(--color-background-interactable-alpha-hover);
-			border-radius: var(--border-radius-medium) !important;
 			.tw-svg { opacity: 1; }
 		}
 	}
