@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.5
+@version        4.0.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -42,9 +42,9 @@
     'None*': "none",
     '→ Fire': "'https://cdn.discordapp.com/avatar-decoration-presets/a_a065206df7b011a5510e4e5bca7d49be.png'",
     '→ Solar Flare': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16abde318608c1359b4da8d74c6f6c.png'",
-    '→ The Magic Mist': "'https://cdn.discordapp.com/avatar-decoration-presets/a_75348082d14b5097708444fca20a09e0.png'",
-    '→ Striking Light Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
-	'→ Moon Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7e68c00aa5c50a066b4eb66209204315.png'",
+    '→ Magic Mist': "'https://cdn.discordapp.com/avatar-decoration-presets/a_75348082d14b5097708444fca20a09e0.png'",
+    '→ Striking Sunset': "'https://cdn.discordapp.com/avatar-decoration-presets/a_205011b1e9e1b3538f8cc7c6ccba61b3.png'",
+	'→ Moon': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7e68c00aa5c50a066b4eb66209204315.png'",
 	'→ Moon Red': "'https://cdn.discordapp.com/avatar-decoration-presets/a_2b4b5a191f89c65d042f15e854129822.png'",
     '→ Moon Amethyst': "'https://cdn.discordapp.com/avatar-decoration-presets/a_7dceacb95c9569bd3a0d4ce69c549474.png'",
     '→ Moon Blue': "'https://cdn.discordapp.com/avatar-decoration-presets/a_fec887e27568cf62cc5ca44253eace73.png'",
@@ -58,21 +58,21 @@
     '→ Twilight Amethyst': "'https://cdn.discordapp.com/avatar-decoration-presets/a_17e170cd07a325877152cc0ae31c3219.png'",
     '→ Nebula Blueberry': "'https://cdn.discordapp.com/avatar-decoration-presets/a_671c4fcfb8d06e05fec00b061c720f7d.png'",
     '→ Nebula Strawberry': "'https://cdn.discordapp.com/avatar-decoration-presets/a_b35cffbe28968c2f1e02179013e32159.png'",
+    '→ Comets': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc061a688308084bf118d312264f5ced.png'",
     '→ Comets Pink': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc8b4ab348e5194ecff454095ea2df38.png'",
-    '→ Comets Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc061a688308084bf118d312264f5ced.png'",
     '→ Star Whales': "'https://cdn.discordapp.com/avatar-decoration-presets/a_fb1fab5c0a30f0a89a7cd5fad873c6f0.png'",
     '→ Star Aura': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6283377ab3c9b70accb1d24c06a2054a.png'",
-    '→ Alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
+    '→ The alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
     '→ Air Castles': "'https://cdn.discordapp.com/avatar-decoration-presets/a_670b722e56740d11d1e6fe55b8094013.png'",
     '→ Golden Hexagon': "'https://cdn.discordapp.com/avatar-decoration-presets/a_ccee9031d66bc0f2d7ed0c6178d01784.png'",
     '→ Spirit Coals': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1005898c6acf56a9ac5010baf444f6fd.png'",
     '→ Black Hole': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6d16b27d9415cafe3b289053644337c4.png'",
     '→ Air': "'https://cdn.discordapp.com/avatar-decoration-presets/a_554b7c34f7b6c709f19535aacb128e7b.png'",
     '→ Thunder': "'https://cdn.discordapp.com/avatar-decoration-presets/a_365eed4178528fe8293c4212e8e2d5cb.png'",
-    '→ Magic Waves White': "'https://cdn.discordapp.com/avatar-decoration-presets/a_66f59e59cd3105767f32dfa675822d3e.png'",
+    '→ Magic Waves': "'https://cdn.discordapp.com/avatar-decoration-presets/a_66f59e59cd3105767f32dfa675822d3e.png'",
     '→ Constellations Twilight': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1fe04bd32b70263448ebb1d8ad7d7c84.png'",
     '→ Shoto Todoroki': "'https://cdn.discordapp.com/avatar-decoration-presets/a_9e815a5c371894d0ce5a15fba9cf999a.png'",
-    '→ The Star Tiara': "'https://cdn.discordapp.com/avatar-decoration-presets/a_55393fb776ecc721bc551823d4ea52df.png'"
+    '→ Star Tiara': "'https://cdn.discordapp.com/avatar-decoration-presets/a_55393fb776ecc721bc551823d4ea52df.png'"
 }
 @var range night-mode-value "Player night mode:" [0,0,100,5,"%"]
 @var color timeline_color "VOD timeline color:" #a970ff
@@ -237,6 +237,7 @@
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
 	.channel-root--home .channel-info-content { width: unset; }
+    .reward-center__content { height: auto; }
 	.side-nav--expanded { width: sidebar-size; }
     .converter-preview-player-controls--gradient .tw-transition .bMRWRT { width: 80% !important; }
 	.reward-icon__animated, .predictions-list-item__body, .extensions-dock-card__image { will-change: transform; }
@@ -740,14 +741,6 @@
 			transition: background .5s;
 		}
         
-        .channel-root__right-column > .cCSAoN {
-            border-color: rgba(38, 38, 43, 0.6) !important;
-        }
-        
-        #live-channel-stream-information .cSIZZn {
-            border-color: rgba(38, 38, 43, 0.9) !important;
-        }
-        
 		.chat-wysiwyg-input-box, .announcement-line, .announcement-line .jmdYJS {
 			background-color: #131315b0 !important;
 		}
@@ -784,11 +777,11 @@
 			animation: gradient-custom 8s linear infinite;
 			
 			&:hover {
-				filter: brightness(0.95);
+				filter: brightness(0.9);
 			}
             
             &:active {
-                filter: brightness(0.9);
+                filter: brightness(0.8);
             }
 		}
 	}
@@ -821,8 +814,8 @@
         }
         
         .tw-root--theme-dark .carousel-metadata {
-            border-top-right-radius: 3px;
-            border-bottom-right-radius: 3px;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
             overflow: hidden;
         }
         
@@ -831,7 +824,7 @@
         }
         
         [data-test-selector="featured-item-image"] {
-            width: auto !important;
+            width: 530px !important;
         }
         
         .channel-root__player .home-carousel-info--suspended {
@@ -941,6 +934,7 @@
 	
 	if (custom-chat-button!="disabled") {
 		[data-a-target="chat-send-button"] {
+            width: 49px;
 			background: none !important;
 			box-shadow: 0px 0px 7px #9f9f9f26 !important;
 			color: transparent !important;
@@ -984,17 +978,6 @@
 				background: custom-chat-button[2];
 				pointer-events: none;
 			}
-			
-			&[aria-label="Чат"] {
-				width: 49.5px;
-			}
-			
-			&[aria-label="Ответить"] {
-				width: 60px;
-				transition: .65s;
-			}
-			
-			max-width: 60px;
 		}
 	}
     
@@ -1098,9 +1081,8 @@
 	}
 	if (remove-powerups) {
 		.reward-center__content__with-bits-rewards {
-			.bitsRewardListItem--yx4rk, .rewards-list > .cYNAGG:first-of-type { display: none !important; }
+		    .bitsRewardListItem--yx4rk, .rewards-list > .cYNAGG:first-of-type { display: none !important; }
 			.iWfHEd { padding-block-start: 0 !important; }
-            .reward-center__content { height: auto; }
 		}
 	}
 	if (remove-turbo) {
@@ -1536,7 +1518,7 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
     .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
-    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI { transition: .15s }
+    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
@@ -1770,15 +1752,15 @@
                 .dtSdDz { overflow: hidden; text-overflow: ellipsis; }
             }
             
-            @supports(-moz-appearance: none) { // override and use animation with blur only in firefox, lags in chromium
+            @supports(-moz-appearance: none) { // override and use animation with blur only in firefox; lags in chromium
                 [class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: user-element .3s backwards; } }
             }
 		}
         
-		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease; } }
-        
+		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease } }
 		.vod-message .dQedsG { animation: pop-small .3s }
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
+        .channel-info-content .home-header-sticky a[href]+p.gtJaaB { animation: swipe .55s .35s backwards }
 		.viewer-card-header__background, .support-panel .goal_widget_v2__container { animation: content-in .5s }
 		.community-highlight [class="Layout-sc-1xcs6mc-0 fSfyIg"] { animation: community-highlight .3s }
 		[aria-label="Hide for yourself"] { animation: hide-button .45s }
@@ -1874,7 +1856,6 @@
                 overflow: hidden;
             }
         }
-		
 		    // -- END of @CSS -- //
 		
 		{$player-settings} > div.goosYB:first-of-type {
