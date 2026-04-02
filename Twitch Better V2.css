@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.9
+@version        4.1.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -10,7 +10,7 @@
 @var checkbox custom-theme "Stylus theme" 1
 @var checkbox welcome-animation "Title animation" 1
 @var select holder-1 "— 🌠  General —" {
-    ' ': "holder-1"
+    '#1': "holder-1"
 }
 @var checkbox welcome "Twitch Better logo" 1
 @var checkbox new-pause "Pause anywhere (breaks stream extensions!)" 1
@@ -79,7 +79,7 @@
 @var color thumb_color "VOD thumb color:" #ffffff
 
 @var select holder-2 "— 🎭 Animations —" {
-    ' ': "holder-2"
+    '#2': "holder-2"
 }
 @var checkbox enable-animations "Enabled" 1
 @var checkbox animate-badge "Animate chat badges" 1
@@ -93,7 +93,7 @@
 @var checkbox last-only "Animate last message only" 0
 
 @var select holder-3 "— 🍫 Sidebar tweaks —" {
-    ' ': "holder-3"
+    '#3': "holder-3"
 }
 @var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
 @var checkbox sidebar-hover-only "Show only on hover" 1
@@ -102,7 +102,7 @@
 @var checkbox sidebar-counter "Add channels counter" 1
 
 @var select holder-4 "— 🍂 Removers —" {
-    ' ': "holder-4"
+    '#4': "holder-4"
 }
 @var checkbox remove-ads "Ads" 1
 @var checkbox remove-banners "Twitch promo banners" 0
@@ -118,7 +118,7 @@
 @var checkbox remove-powerups "Rewards list power ups" 0
 
 @var select holder-5 "— 🌌 Message highlight —" {
-    ' ': "holder-5"
+    '#5': "holder-5"
 }
 @var checkbox enable-highlight "Enabled" 1
 @var text nick "[REQUIRED] Enter your exact nickname:" nickname
@@ -205,10 +205,8 @@
     '→ 7TV Sub #2': "'https://cdn.7tv.app/badge/01JAT9BPCRSDK1BQSM17278GJN/2x.avif'"
 }
 @var select holder-6 "— 🤬 Chat filtering —" {
-    ' ': "holder-6"
+    '#6': "holder-6"
 }
-@var text __deathnote "Death Note (scratch these nicknames):" "'Lawliet, Light'"
-
 @var checkbox enable-banwords "Hide messages with listed banwords:" 0
 @var text __ban-words "List:" "'banana, cat, chair'"
 
@@ -220,6 +218,8 @@
     'Twitch-like*': "twitch",
     'Blur (show on hover)': "blur"
 }
+
+@var text __deathnote "Death Note (scratch these nicknames):" "'Lawliet, Light'"
 ==/UserStyle== */
 
 @-moz-document domain("twitch.tv") {
@@ -2073,10 +2073,13 @@
         }
     }
     
+    #chat-room-header-label {
+        transition: transform .55s .25s;
+    }
+    
     if (enable-banwords || enable-blacklist) {
-        #chat-room-header-label {
-            padding-right: 15px;
-            transition: transform .55s .25s;
+        :not(.cSLwaV+.kvrzxX) > #chat-room-header-label {
+            transform: translateX(-15px);
             
             &::after {
                 content: "[🛡️] Chat Filter"
@@ -2100,6 +2103,16 @@
                 clip-path: inset(0);
                 background: #d4d4de;
                 background-clip: text;
+            }
+        }
+        
+         .cSLwaV+.kvrzxX > #chat-room-header-label { // shared (collaboration) chat
+            &::after {
+                content: "[🛡️]"
+                background: #c6c6d2;
+                background-clip: text;
+                color: transparent !important;
+                margin-left: 4px;
             }
         }
     }
@@ -2596,14 +2609,90 @@
                 accent-color: #575757;
             }
             
-            .config-select:has([value=" "]) { // separators
+            .config-select:has([value^="#"]) { // separators
                 .select-wrapper { display: none !important; }
                 .config-name { text-align: center; margin: 8px 0; }
             }
             
-            .config-checkbox+.config-select+.config-checkbox+.config-text { // nickname input field
-                .config-name { transition: color .3s;}
+            .config-select:has([value="#5"])+.config-checkbox+.config-text { // nickname input field
+                .config-name { transition: color .3s; }
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
+            }
+            
+            .config-name, input, select {
+                transition: color .25s;
+            }
+            
+            .config-select:has([value="#2"])+.config-checkbox.nondefault { // animations section
+                color: #dfdfdfc4 !important;
+                
+                &+*, &+*+*, &+*+*+*, &+*+*+*+* {
+                    color: #dfdfdfde !important;
+                    .slider:checked { color: #6d3abbde; }
+                    select { color: #dfdfdfc2 !important; }
+                }
+            }
+            
+            .config-select:has([value="#3"])+*+.config-checkbox { // sidebar show on hover only checkbox
+                &.nondefault+.config-checkbox {
+                    display: none;
+                }
+                
+                &+.config-checkbox {
+                    animation: opacity-in .35s;
+                }
+            }
+            
+            .config-select:has([value="#5"])+.config-checkbox.nondefault { // message highlight section
+                color: #dfdfdfc4 !important;
+                
+                &+*, &+*+*, &+*+*+*, &+*+*+*+* {
+                    color: #dfdfdfde !important;
+                    select, input { color: #dfdfdfc2 !important; }
+                }
+            }
+            
+            .config-select:has([value="#6"]) { // chat filter input fields
+                &+*+.config-text, &+*+*+*+.config-text, &+*+*+*+*+.config-text {
+                    flex-wrap: wrap;
+                    padding-bottom: 10px;
+
+                    input {
+                        flex: 1 1 100%;
+                        max-width: 100% !important;
+                    }
+
+                    .config-name {
+                        display: none;
+                    }
+                }
+            }
+            
+            .config-select:has([value="#6"])+*+*+*+*+*+.config-text { // death note input field
+                flex-wrap: wrap;
+                padding-top: 10px;
+
+                input {
+                    flex: 1 1 100%;
+                    max-width: 100% !important;
+                }
+                
+                &:not(.nondefault) {
+                    input { color: #dfdfdfc2 !important; }
+                }
+                
+                .config-reset-icon {
+                    margin-top: 30px;
+                }
+            }
+            
+            .config-select:has([value="#6"]) { // message highlight section
+                &+.config-checkbox:not(.nondefault), &+*+*+.config-checkbox:not(.nondefault) {
+                    &+* {
+                        color: #dfdfdfde !important;
+                        select, input { color: #dfdfdfc2 !important; }
+                    }
+                }
             }
             
             .config-select {
@@ -2679,7 +2768,7 @@
             .config-select:has([value$="Hornet"]) .config-name { // badge changer preview
                 transition: padding-left .35s;
                 
-                if (__custom-badge!="disabled") {
+                if (enable-highlight && __custom-badge!="disabled") {
                     padding-left: 19px;
                     
                     &::before {
@@ -2775,11 +2864,21 @@
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
-        @keyframes reveal { from { mask-position: 0 100%; } to { mask-position: 0 0%; } }
+        @keyframes reveal { 0% { mask-position: 0 100%; }
+        to { mask-position: 0 0%; } }
+        
+        @keyframes reveal-horizontal { 0% { mask-position: 100% 0; }
+        to { mask-position: 0 0; } }
+        
         @keyframes angle-gradient { to { --angle: 360deg; } }
+        
         @keyframes opacity-in { from { opacity: 0; } }
+        
         @keyframes checkboxes { from { transform: translateX(-35%); } }
-        @keyframes gradient-discord { 0% { background-position: 0; } to { background-position: 100px; } }
+        
+        @keyframes gradient-discord { 0% { background-position: 0; }
+        to { background-position: 100px; } }
+        
         @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
     }
     
