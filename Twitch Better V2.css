@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.7
+@version        4.0.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -36,7 +36,7 @@
 	'→ Green Mana': "'https://i.postimg.cc/K8s2D4Fy/Video-2025-12-10-221931-ezgif-com-video-to-gif-converter.gif' content-in5 linear-gradient(90deg, transparent 0%, rgba(4, 123, 32, 0.08) 20%, rgba(4, 123, 32, 0.08) 50%, rgba(4, 123, 32, 0.2) 100%)",
     '→ 2035': "'https://i.postimg.cc/k4p2XtxQ/2035.gif' content-in6 linear-gradient(90deg, #0131c21a 0%, #0131c224 100%)",
     '→ Nevermore': "'https://i.postimg.cc/d38PLzbP/nevermore.gif' content-in7 none",
-    '→ Red Dragon': "'https://i.postimg.cc/PJ2GWmqG/red-dragon.gif' content-in8 linear-gradient(90deg, #9000071a 0%, #90000730 100%)",
+    '→ Red Dragon': "'https://i.postimg.cc/PJ2GWmqG/red-dragon.gif' content-in8 linear-gradient(90deg, #9000071a 0%, #90000730 100%)"
 }
 @var select use-avatar-frame "Add avatar frame:" {
     'None*': "none",
@@ -62,7 +62,7 @@
     '→ Comets Pink': "'https://cdn.discordapp.com/avatar-decoration-presets/a_dc8b4ab348e5194ecff454095ea2df38.png'",
     '→ Star Whales': "'https://cdn.discordapp.com/avatar-decoration-presets/a_fb1fab5c0a30f0a89a7cd5fad873c6f0.png'",
     '→ Star Aura': "'https://cdn.discordapp.com/avatar-decoration-presets/a_6283377ab3c9b70accb1d24c06a2054a.png'",
-    '→ The alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
+    '→ The Alpis': "'https://cdn.discordapp.com/avatar-decoration-presets/a_92f3a8065b43ecef6122b77ee11b5f68.png'",
     '→ Air Castles': "'https://cdn.discordapp.com/avatar-decoration-presets/a_670b722e56740d11d1e6fe55b8094013.png'",
     '→ Golden Hexagon': "'https://cdn.discordapp.com/avatar-decoration-presets/a_ccee9031d66bc0f2d7ed0c6178d01784.png'",
     '→ Spirit Coals': "'https://cdn.discordapp.com/avatar-decoration-presets/a_1005898c6acf56a9ac5010baf444f6fd.png'",
@@ -96,10 +96,10 @@
     ' ': "holder-3"
 }
 @var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
-@var checkbox sidebar-counter "Add channels counter" 1
 @var checkbox sidebar-hover-only "Show only on hover" 1
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
-@var checkbox only-following "Following only" 0
+@var checkbox only-following "Following section only" 0
+@var checkbox sidebar-counter "Add channels counter" 1
 
 @var select holder-4 "— 🍂 Removers —" {
     ' ': "holder-4"
@@ -346,7 +346,7 @@
 			transition-property: opacity, clip-path, word-spacing, color;
             contain: content;
 				/* state after animation */
-			clip-path: inset(0 25% 0 0);
+			clip-path: inset(0 25% 0 -2% round 55px);
 			opacity: 0.5;
 			color: #b1b1bf;
 			cursor: pointer;
@@ -361,7 +361,7 @@
 		
 		@css { .top-nav .itDlPz [data-test-selector="toggle-balloon-wrapper__mouse-enter-detector"] {
 			&:hover::after { word-spacing: 3.5px; transition: .65s, clip-path .4s; }
-			&:active::after { clip-path: inset(0 0 0 0); word-spacing: 0; color: transparent; opacity: 1; transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1) }
+			&:active::after { clip-path: inset(0 0 0 -2%); word-spacing: 0; color: transparent; opacity: 1; transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1) }
         } }
 	}
 	
@@ -1913,7 +1913,7 @@
 			}
 		}
 		
-		@css { [data-popper-placement][data-popper-placement="right-start"] { /* sidepanel stream tooltip poopup */
+		@css { [data-popper-placement][data-popper-placement="right-start"] { /* sidepanel stream tooltip popup */
 			backdrop-filter: none !important; background: none !important;
 			.dduVcl { background: #18181bd6 !important; }
 			.gyaZBH { padding-block: 1px !important; }
@@ -2060,10 +2060,10 @@
             push(nicks2,'[href*="'+ n +'" i]')
         }
         
-        nicks1 = join("\,", nicks)
+        nicks = join("\,", nicks)
         nicks2 = join("\,", nicks2)
         
-        :not(.chat-line__message):is({nicks1}) {
+        :not(.chat-line__message):is({nicks}) {
            text-decoration: line-through 2px;
         }
         
@@ -2076,18 +2076,47 @@
         }
     }
     
+    if (enable-banwords || enable-blacklist) {
+        #chat-room-header-label {
+            margin-right: 6px;
+            transition: transform .55s .25s;
+            
+            &::after {
+                content: "🛡️[Chat Filter]"
+                position: absolute;
+                text-wrap: nowrap;
+                font-variant-emoji: text;
+                clip-path: inset(0 80px 0 0 round 55px);
+                transition: .65s .25s;
+                background: #c6c6d2;
+                background-clip: text;
+                color: transparent !important;
+            }
+            
+            &:hover {
+                transform: translateX(-40px);
+            }
+            
+            &:hover::after {
+                clip-path: inset(0);
+                background: #d4d4de;
+                background-clip: text;
+            }
+        }
+    }
+    
     if (enable-banwords) {
         if (__ban-words != 'banana, cat, chair') {
             words = ()
             words2 = ()
-
+            
             __ban-words = filter-words(__ban-words)
-
+            
             for n in __ban-words {
                 push(words,'[aria-label*="'+ n +'"i]')
                 push(words2,'[title*="'+ n +'"i]')
             }
-
+            
             words = join("\,", words)
             words2 = join("\,", words2)
             
@@ -2235,12 +2264,12 @@
     }
     
     @css {
-        @keyframes logo { 0% { clip-path: inset(0 61% 0 0); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
-        8% { clip-path: inset(0 61% 0 0); transform: none; color: #b1b1bf; opacity: 0.8; }
-        20%, 30% { clip-path: inset(0 25% 0 0); transform: none; color: transparent; opacity: 1; }
-        42%, 78% { clip-path: inset(0 0 0 83%); transform: translateX(-128px); color: #b1b1bf; opacity: 1; }
-        90% { clip-path: inset(0 25% 0 0); transform: none; color: #efeff1; opacity: 0.5; }
-        to { clip-path: inset(0 25% 0 0); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
+        @keyframes logo { 0% { clip-path: inset(0 61% 0 -2% round 55px); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
+        8% { clip-path: inset(0 61% 0 -2% round 55px); transform: none; color: #b1b1bf; opacity: 0.8; }
+        20%, 30% { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: transparent; opacity: 1; }
+        42%, 78% { clip-path: inset(0 0 0 83% round 55px); transform: translateX(-128px); color: #b1b1bf; opacity: 1; }
+        90% { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: #efeff1; opacity: 0.5; }
+        to { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
 
         @keyframes nightmode-notify { 0% { width: 78px; visibility: visible; }
         20% { width: var(--notify-width); opacity: 1; }
@@ -2287,7 +2316,11 @@
         @keyframes swipe { 0% { clip-path: inset(0 100% 0 0); }
         to { clip-path: inset(-5% -5% -5% -5%); } }
 
-        @keyframes top-nav-menu { 0% { clip-path: inset(0 0 100% 0);  }
+        @keyframes swipe-blink { 0% { clip-path: inset(0); }
+        50% { clip-path: inset(100% 0 100% 0); }
+        to { clip-path: inset(0); } }
+
+        @keyframes top-nav-menu { 0% { clip-path: inset(0 0 100% 0); }
         to { clip-path: inset(-5% -5% -5% -5%); } }
 
         @keyframes streamer-card { 0% { transform: translateY(20%); opacity: 0; filter: grayscale(1); pointer-events: none; }
