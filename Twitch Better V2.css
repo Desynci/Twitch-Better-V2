@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.0.8
+@version        4.0.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -377,26 +377,23 @@
         else if (night-mode-value == 100%) { __notify-width = 121px; }
         else { __notify-width = 114px; }
         
-        :root { --notify-width: __notify-width; }
-        
         .video-player[data-a-player-type="site"] .video-player__container::before {
             content: "Night mode: " + night-mode-value;
             position: absolute;
             background: rgba(10, 10, 10, .722);
             border: 1px solid #4f4f4f7a;
+            border-radius: 7px;
             left: 0;
             right: 0;
             top: 15px;
             z-index: 1;
             margin: 0 auto;
             padding: 3px 7.5px;
-            border-radius: 7px;
             width: __notify-width;
             text-wrap: nowrap;
-            overflow: hidden;
             opacity: 0;
             animation: nightmode-notify 5s 4s backwards;
-            will-change: width, opacity;
+            will-change: transform;
             visibility: hidden;
         }
         
@@ -2078,19 +2075,21 @@
     
     if (enable-banwords || enable-blacklist) {
         #chat-room-header-label {
-            margin-right: 6px;
+            padding-right: 15px;
             transition: transform .55s .25s;
             
             &::after {
-                content: "🛡️[Chat Filter]"
+                content: "[🛡️] Chat Filter"
                 position: absolute;
                 text-wrap: nowrap;
                 font-variant-emoji: text;
-                clip-path: inset(0 80px 0 0 round 55px);
+                clip-path: inset(0 70px 0 -2% round 55px);
                 transition: .65s .25s;
                 background: #c6c6d2;
                 background-clip: text;
                 color: transparent !important;
+                margin-left: 4px;
+                animation: opacity-in .35s;
             }
             
             &:hover {
@@ -2264,15 +2263,16 @@
     }
     
     @css {
-        @keyframes logo { 0% { clip-path: inset(0 61% 0 -2% round 55px); transform: translateY(-200%); opacity: 0; color: #b1b1bf; cursor: wait; word-spacing: unset; }
+        @keyframes logo { 0% { clip-path: inset(0 61% 0 -2% round 55px); transform: translateY(-200%); color: #b1b1bf; opacity: 0; cursor: wait; word-spacing: unset; }
         8% { clip-path: inset(0 61% 0 -2% round 55px); transform: none; color: #b1b1bf; opacity: 0.8; }
         20%, 30% { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: transparent; opacity: 1; }
         42%, 78% { clip-path: inset(0 0 0 83% round 55px); transform: translateX(-128px); color: #b1b1bf; opacity: 1; }
         90% { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: #efeff1; opacity: 0.5; }
         to { clip-path: inset(0 25% 0 -2% round 55px); transform: none; color: #b1b1bf; opacity: 0.5; cursor: wait; word-spacing: unset; } }
 
-        @keyframes nightmode-notify { 0% { width: 78px; visibility: visible; }
-        20% { width: var(--notify-width); opacity: 1; }
+        @keyframes nightmode-notify { 0% { clip-path: inset(0 40% 0 0 round 7px); transform: translateX(15%); border-color: transparent; visibility: visible; }
+        20% { clip-path: inset(0 round 7px); opacity: 1; transform: none; transform: scale(1.06); }
+        45% { transform: none; }
         85% { opacity: 1; visibility: visible; } }
 
         @keyframes indicator { 0% { opacity: 0.7; transform: scale(0.8); }
