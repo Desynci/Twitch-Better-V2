@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.1.3
+@version        4.1.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -230,7 +230,7 @@
 	$chat-customization = "[class='Attached-sc-go6eno-0 cJkJNl']"
 	$notifications = "[class='ScBalloonWrapper-sc-14jr088-0 PjurZ InjectLayout-sc-1i43xsx-0 bAWxnr tw-balloon']"
     
-	__side-nav-bg = transparentify(#0E0E10, #fff, 0.8)
+	__side-nav-bg = transparentify(#18181b, #fff, 0.8)
 	__blurred-menu-header = #ffffff0d
 	
 	:root { --sidebar-size: sidebar-size; }
@@ -799,6 +799,33 @@
             }
         }
         
+        .side-nav--expanded .side-nav-card__link {
+            __bg-sidecard-hover = rgba(196, 196, 196, .15)
+            
+            &:hover {
+                background: none !important;
+            }
+            
+            &:hover::after {
+                transform: none;
+                opacity: 1;
+                transition: .15s;
+            }
+            
+            &::after {
+                content: '';
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                border-radius: 6px;
+                transform: scale(0.8);
+                transition: .1s, opacity .05s;
+                transform-origin: left;
+                opacity: 0;
+                background-color: __bg-sidecard-hover;
+            }
+        }
+        
         [data-a-target="stream-title"] .tw-link[href] {
             border-radius: 4px;
             padding: 1px;
@@ -936,6 +963,11 @@
 			
 			box-shadow: 0px 0px 8px __chat-color;
 			&:hover { box-shadow: 0px 0px 10px __chat-color-hover; }
+                
+            /*if (custom-chat-button!="disabled") {
+                box-shadow: 0px 0px 7px #9f9f9f26 !important;
+                &:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }
+            }*/
 		}
 	}
 	
@@ -943,14 +975,14 @@
 		[data-a-target="chat-send-button"] {
             width: 49px;
 			background: none !important;
-			box-shadow: 0px 0px 7px #9f9f9f26 !important;
 			color: transparent !important;
 			
-			&:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }
-			&:hover::before { filter: saturate(3); opacity: 0.8; }
+			&:hover::before {
+                filter: saturate(3); opacity: 0.8;
+            }
 			
 			&[disabled] {
-				&::before, &::after { filter: brightness(0.6) }
+				&::before, &::after { filter: brightness(0.6); }
 			}
 			
 			&::before {
@@ -1859,6 +1891,7 @@
             
             .home-header-sticky {
                 background: none;
+                position: static;
             }
         }
         
@@ -2643,8 +2676,15 @@
                 left: 134px;
             }
             
-            .config-body :is(input[type=text], .select-wrapper, select) {
-                max-width: 108px;
+            .config-body {
+                input[type=text], .select-wrapper, select {
+                    max-width: 108px;
+                }
+                
+                .select-wrapper, select {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
             }
             
             .config-range .current-value {
@@ -2688,7 +2728,7 @@
                 }
                 
                 &+*, &+*+*, &+*+*+*, &+*+*+*+* {
-                    animation: chat-tray .35s;
+                    animation: item-pop .35s;
                 }
             }
             
@@ -2698,7 +2738,7 @@
                 }
                 
                 &+.config-checkbox {
-                    animation: opacity-in .35s;
+                    animation: item-pop .35s;
                 }
             }
             
@@ -2931,7 +2971,7 @@
         
         @keyframes angle-gradient { to { --angle: 360deg; } }
         
-        @keyframes chat-tray { from { transform: translateY(50%); opacity: 0; } }
+        @keyframes item-pop { from { transform: translateY(50%); opacity: 0; } }
             
         @keyframes opacity-in { from { opacity: 0; } }
         
