@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.1.0
+@version        4.1.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -27,6 +27,7 @@
 @var checkbox use-glow "Add glow effect to buttons" 1
 @var checkbox use-apple-emoji "Use Apple emoji font" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
+@var checkbox remove-clip-links "Hide chat clip links (show only cards)" 1
 @var select custom-chat-button "Customize chat button:" {
 	'None': "disabled",
 	'→ Yuji Itadori': "'https://i.postimg.cc/0NqrRwYX/asset3-ezgif-com-video-to-gif-converter.gif' content-in1 linear-gradient(90deg, transparent 0%, rgba(144, 0, 7, 0.08) 20%, rgba(144, 0, 7, 0.08) 50%, rgba(144, 0, 7, 0.2) 100%)",
@@ -315,7 +316,7 @@
 		}
 		
 		.kjWTWh {
-			background-color: transparent !important;
+			background: none !important;
 		}
 	}
 	
@@ -798,8 +799,17 @@
             }
         }
         
-        .metadata-layout__support [data-target="channel-header-right"] .tw-new-item-indicator__container {
-            display: none;
+        [data-a-target="stream-title"] .tw-link[href] {
+            border-radius: 4px;
+            padding: 1px;
+            margin: -1px;
+            transition: .2s;
+            
+            &:hover {
+                background: rgba(255, 255, 255, 0.16);
+                filter: brightness(1.1);
+                text-decoration: none;
+            }
         }
         
 		.guest-star-live-card-border {
@@ -1068,17 +1078,28 @@
 			.community-points-summary:has(.kOLJxV button) .cUmVME { display: none !important; }
 			.chat-input__textarea [data-a-target="bits-button"], button[data-a-target="top-nav-get-bits-button"] { display: none; }
 			.reward-center__content__with-bits-rewards {
-				.fHdBNk > .kFLrqZ { display: none; }
+				.fHdBNk > .kFLrqZ {
+                    display: none;
+                }
 			}
             
+            [data-target="channel-header-right"] .hiJTwz, button[data-a-target="top-nav-get-bits-button"] {
+                &+.tw-new-item-indicator__container {
+                    display: none;
+                }
+            }
+            
             .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > .ihSefD > .iDMNUO > [class="Layout-sc-1xcs6mc-0"] > .fHdBNk > .kOoFSj {
-                > .tw-new-item-indicator__container { display: none; }
+                > .tw-new-item-indicator__container {
+                    display: none;
+                }
             }
 		}
 	}
 	if (remove-powerups) {
 		.reward-center__content__with-bits-rewards {
 		    .bitsRewardListItem--yx4rk, .rewards-list > .cYNAGG:first-of-type { display: none !important; }
+            &>.jbXWJO[role="radiogroup"] { display: none !important; }
 			.iWfHEd { padding-block-start: 0 !important; }
 		}
 	}
@@ -1100,6 +1121,16 @@
 	    }
         
         if (remove-bits) { .top-nav__menu .bZYcrx > div.hdaUxc:last-of-type { margin-left: -8px; } }
+    }
+    if (remove-clip-links) {
+        [data-a-target="chat-line-message-body"] {
+            .link-fragment[href^="https://clips.twitch.tv"] {
+                display: none;
+            }
+            .hfLCgr.chatCard--VU4fm {
+                padding: 6px 0px;
+            }
+        }
     }
 	
     if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
@@ -1501,7 +1532,6 @@
         a[href] { text-decoration: none !important; }
     }
     
-    [data-a-target="stream-title"] .tw-link { transition: filter .2s; &:hover { filter: brightness(1.2); } }
     .streamer-card__balloon .ihBVuT .cfjChX { overflow: visible !important; }
 	
 		// -- 0.5s, 0.3s, 0.2s -- //
@@ -1754,6 +1784,17 @@
             }
 		}
         
+        .channel-root--home.channel-root--live+.persistent-player {
+            position: fixed !important;
+            width: calc(100% - 10.5px) !important;
+            transform: none !important;
+            max-height: unset !important;
+        }
+        
+        #twilight-sticky-header-root+.root-scrollable__content {
+            overflow-x: hidden;
+        }
+        
 		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease } }
 		.vod-message .dQedsG { animation: pop-small .3s }
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
@@ -1800,12 +1841,25 @@
 		}
 		
 		[aria-labelledby="active-settings-menu-header"] > div {
-			animation: settings-blur 0.9s forwards !important;
+			animation: blur-55-saturate 0.9s forwards !important;
 		}
         
         .channel-root__player .home-carousel-info {
             animation: none !important;
             backdrop-filter: blur(55px) saturate(180%);
+        }
+        
+        .channel-root__info {
+            transition: background .55s, transform .5s !important;
+        }
+        
+        .channel-root__info--home .channel-info-content {
+            background: hsla(240, 7%, 4%, .95) !important;
+			animation: blur-25-saturate .55s forwards;
+            
+            .home-header-sticky {
+                background: none;
+            }
         }
         
 		[data-popper-placement]:not([data-popper-placement="right-start"]):has(.dduVcl) {
@@ -1888,7 +1942,8 @@
 		}
 		
 		.onsite-notification-toast {
-    		background: #00000094 !important;
+            border-color: #78787f45 !important;
+    		background: #3b3b441a !important;
 			box-shadow: none !important;
 			margin-block-end: 0 !important;
 		}
@@ -1923,8 +1978,8 @@
 		{$player-settings} > .igZqfU:first-of-type button {
 			background: rgba(23, 23, 23, .4);
 			
-			&:hover { 
-				background-color: rgba(77, 77, 77, .4); 
+			&:hover {
+				background-color: rgba(77, 77, 77, .4);
 			}
 		}
 		
@@ -2074,7 +2129,7 @@
     }
     
     #chat-room-header-label {
-        transition: transform .55s .25s;
+        transition: transform .55s .2s;
     }
     
     if (enable-banwords || enable-blacklist) {
@@ -2092,11 +2147,12 @@
                 background-clip: text;
                 color: transparent !important;
                 margin-left: 4px;
-                animation: opacity-in .35s;
+                animation: opacity-in .25s .85s backwards;
             }
             
             &:hover {
-                transform: translateX(-40px);
+                transform: translateX(-53px);
+                transition-delay: .25s;
             }
             
             &:hover::after {
@@ -2145,13 +2201,11 @@
             }
             
             if (remove-mode=="silent") {
-                .chat-line__message:not([data-a-user={nick} i]):is({words}) {
+                .chat-line__message:not([data-a-user={nick} i]):is({words}):not(.chat-input-tray__open *) {
                     display: none;
                 }
                 
-                    // do not hide message fully for the reply menu
-                .chat-input-tray__open .chat-line__message { display: inherit !important; }
-                
+                    // do not hide message fully for the reply menu        
                 .chat-input-tray__open .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
@@ -2211,13 +2265,11 @@
             users = join("\,", users)
             
             if (remove-mode=="silent") {
-                .chat-line__message:is({users}) {
+                .chat-line__message:is({users}):not(.chat-input-tray__open *) {
                     display: none;
                 }
                 
                     // do not hide message fully for the reply menu
-                .chat-input-tray__open .chat-line__message { display: inherit !important; }
-                
                 .chat-input-tray__open .chat-line__message:is({users}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
@@ -2397,12 +2449,16 @@
 
         @keyframes blur-15 { to { backdrop-filter: blur(15px); } }
 
+        @keyframes blur-15-saturate { to { backdrop-filter: blur(15px) saturate(180%); } }
+
         @keyframes blur-15-decrease { 0% { backdrop-filter: blur(70px); } 
         to { backdrop-filter: blur(15px); } }
+        
+        @keyframes blur-25-saturate { to { backdrop-filter: blur(25px) saturate(180%); } }
 
         @keyframes blur-55 { to { backdrop-filter: blur(55px); } }
 
-        @keyframes settings-blur { to { backdrop-filter: blur(55px) saturate(180%); } }
+        @keyframes blur-55-saturate { to { backdrop-filter: blur(55px) saturate(180%); } }
 
         @keyframes gradient-custom { 0% { background-position: 200%; }
         to { background-position: -200%; } }
@@ -2466,8 +2522,7 @@
             }
             
             if (welcome-animation) {
-                label .config-value { animation: checkboxes .35s backwards; }
-                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation-delay: round(42ms*(row/1.8)); } }
+                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation: checkboxes .35s backwards; animation-delay: round(42ms*(row/1.8)); } }
             }
             
             @media (prefers-reduced-motion: reduce) {
@@ -2623,13 +2678,17 @@
                 transition: color .25s;
             }
             
-            .config-select:has([value="#2"])+.config-checkbox.nondefault { // animations section
-                color: #dfdfdfc4 !important;
+            .config-select:has([value="#2"])+.config-checkbox { // animations section
+                &.nondefault {
+                    color: #dfdfdfc4 !important;
+                
+                    &+*, &+*+*, &+*+*+*, &+*+*+*+* {
+                        display: none;
+                    }
+                }
                 
                 &+*, &+*+*, &+*+*+*, &+*+*+*+* {
-                    color: #dfdfdfde !important;
-                    .slider:checked { color: #6d3abbde; }
-                    select { color: #dfdfdfc2 !important; }
+                    animation: chat-tray .35s;
                 }
             }
             
@@ -2872,6 +2931,8 @@
         
         @keyframes angle-gradient { to { --angle: 360deg; } }
         
+        @keyframes chat-tray { from { transform: translateY(50%); opacity: 0; } }
+            
         @keyframes opacity-in { from { opacity: 0; } }
         
         @keyframes checkboxes { from { transform: translateX(-35%); } }
