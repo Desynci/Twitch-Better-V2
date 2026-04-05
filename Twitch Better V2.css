@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.1.6
+@version        4.1.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -167,6 +167,7 @@
 	'→ Twitch Staff': "'https://static-cdn.jtvnw.net/badges/v1/e48bfab8-6697-4c5b-84df-e64fb0150701/2'",
 	'→ Twitch Intern \'22': "'https://static-cdn.jtvnw.net/badges/v1/91ed38ea-32fe-4f14-8db1-852537d19aa5/2'",
     '→ TwitchCon \'19': "'https://static-cdn.jtvnw.net/badges/v1/590eee9e-f04d-474c-90e7-b304d9e74b32/2'",
+    '→ TwitchCon \'24': "'https://static-cdn.jtvnw.net/badges/v1/95b10c66-775c-4652-9b86-10bd3a709422/2'",
 	'→ Clips 100': "'https://static-cdn.jtvnw.net/badges/v1/d2030c7e-c400-4605-a2cf-ce32bd06af8f/2'",
 	'→ Clips 100 000': "'https://static-cdn.jtvnw.net/badges/v1/590698dd-2bc4-4401-817a-17c641f5e881/2'",
 	'→ Marathon': "'https://static-cdn.jtvnw.net/badges/v1/ae1c6c62-c057-4fad-a1d4-663bf988701f/2'",
@@ -788,7 +789,6 @@
         .persistent-player__border--mini {
             margin: 1rem 3rem 7rem !important;
             border-radius: 5px;
-            -webkit-mask-image: none;
             
             .player-overlay-background {
                 background: rgba(0, 0, 0, .2);
@@ -801,9 +801,14 @@
         
         .side-nav--expanded .side-nav-card__link {
             __bg-sidecard-hover = rgba(196, 196, 196, .15)
+            __bg-sidecard-active = rgba(196, 196, 196, .22)
             
             &:hover {
                 background: none !important;
+            }
+            
+            &:active::after {
+                background-color: __bg-sidecard-active;
             }
             
             &:hover::after {
@@ -871,9 +876,25 @@
                 margin: 0 -4px;
             }
         }
-		
+        
+        .home__lower-content .gxRpGQ[style^="background"] { // popular clips card
+            padding-inline: 0 !important;
+        
+            > div:first-of-type {
+                visibility: hidden;
+            }
+            
+            .gwKDQz { // text
+                padding-inline: 1.5rem !important;
+            }
+            
+            .jfyitl { // button
+                margin: 0 auto;
+            }
+        }
+        
         .tw-animated-glitch-logo g > .ScEyes-sc-mx5axi-5 {
-            animation-name: none;
+            animation-duration: .5s;
         }
         
 		.guest-star-live-card-clip-edge {
@@ -1577,7 +1598,7 @@
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
     [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
     .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
-    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag { transition: .15s }
+    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag, .tw-combo-input__button-icon { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN { transition: .1s }
@@ -2117,6 +2138,11 @@
 		@css { .extensions-popover-view-layout__body::before {
 			content: "NOTE: Twitch Better\'s option \"PAUSE ANYWHERE\" prevents an interaction with the stream extensions. Disable it in the settings of style if needed.";
 			color: #ff9898;
+            background: #0e0e10;
+            display: block;
+            padding: 7px;
+            animation: chat-tray .5s;
+            border-radius: 6px;
 		} }
 	}
     
@@ -2381,6 +2407,8 @@
 
         @keyframes reveal-badge-carousel { 0% { opacity: 0; transform: scale(0.5); content: unset; }
         to { content: unset; } }
+
+        @keyframes pop-scale { 50% { transform: scale(1.05) } }
 
         @keyframes pop-small { from { transform: translateY(15px); } }
 
