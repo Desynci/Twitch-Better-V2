@@ -39,6 +39,7 @@ It's a custom CSS theme for Twitch that adds UI animations, new appearance, impr
 > [!IMPORTANT]
 > Filter works for every message that contains one of the written words in ANY part of it.\
 > Example: listed "**lack**" will filter messages with not only word "**lack**" itstelf, but words "b<ins>**lack**</ins>list" and "b<ins>**lack**</ins>" too.
+> Case insensitive.
 
 #### 🍂 Selective removers:
 
