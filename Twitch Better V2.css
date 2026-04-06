@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.1.7
+@version        4.1.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -96,11 +96,11 @@
 @var select holder-3 "— 🍫 Sidebar tweaks —" {
     '#3': "holder-3"
 }
-@var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
 @var checkbox sidebar-hover-only "Show only on hover" 1
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
 @var checkbox only-following "Following section only" 0
 @var checkbox sidebar-counter "Add channels counter" 1
+@var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
 
 @var select holder-4 "— 🍂 Removers —" {
     '#4': "holder-4"
@@ -234,6 +234,55 @@
 	__side-nav-bg = transparentify(#18181b, #fff, 0.8)
 	__blurred-menu-header = #ffffff0d
 	
+    dummy(__value) { return __value }
+    $inset = dummy
+    $border-radius = dummy
+    $origin = dummy
+    
+    SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset, __transform-origin = initial) {
+        if (__remove-bg) { &:hover, &:active { background: none !important; } }
+        if (__bg-active) { &:active::after { background-color: __bg-active; } }
+        
+        &:hover::after {
+            transform: none;
+            opacity: 1;
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            inset: (__inset) ? __inset : 0;
+            pointer-events: none;
+            border-radius: __border-radius;
+            transform: __scale;
+            transform-origin: __transform-origin;
+            opacity: 0;
+            background-color: __bg-hover;
+        }
+    }
+    
+    Transition(__default, __hover = '') {
+        &::after { transition: unquote(__default); }
+        if (__hover) { &:hover::after { transition: unquote(__hover); } }
+    }
+    
+    border-right-radius(r) {
+        border-top-right-radius: r;
+		border-bottom-right-radius: r;
+    }
+    
+    border-left-radius(r) {
+        border-top-left-radius: r;
+		border-bottom-left-radius: r;
+    }
+    
+    SetupGradientText(__weight = '', __size = "200% 200%") {
+        background-clip: text !important;
+		color: transparent !important;
+        background-size: unquote(__size) !important;
+        if (__weight) { font-weight: __weight !important; }
+    }
+    
 	:root { --sidebar-size: sidebar-size; }
     
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
@@ -283,24 +332,18 @@
 	.react-modal__overlay .tw-transition[aria-hidden="true"] { display: none; }
 	
 	.chat-line__message-body--highlighted {
+        SetupGradientText(900);
 		background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
-		font-weight: 900;
-		background-size: 200% 200%;
 		animation: gradient-custom 8s linear infinite;
-		background-clip: text;
-		color: transparent;
 		border: none !important;
 		font-size: 15px;
 		font-variant-emoji: text;
 	}
 	
 	.chat-room__viewer-card .core-error__message-container p, .emote-card__display-name h4 {
+        SetupGradientText(600, "100px auto");
 		background: linear-gradient(to right, #ffa300, #ffea00, #ffa300);
-		background-clip: text;
-		color: transparent !important;
-		background-size: 100px auto;
 		animation: gradient-discord 1.5s linear infinite;
-		font-weight: 600 !important;
 	}
 	
 	button[data-a-target="user-menu-toggle"] {
@@ -330,6 +373,7 @@
 	
 	if (welcome) { // cubic-bezier(.57,-0.4,.28,1.03);
 		.top-nav .itDlPz [data-test-selector="toggle-balloon-wrapper__mouse-enter-detector"]::after {
+            SetupGradientText(600);
 			content: "Twitch Better | V2";
 			padding-right: 2px;
 			position: absolute;
@@ -337,20 +381,17 @@
 			bottom: 8px;
 			font-size: var(--font-size-4);
 			line-height: var(--line-height-heading);
-			font-weight: 600;
 			letter-spacing: -0.18px;
 			white-space: nowrap;
             animation: gradient-custom 5s 2.5s linear infinite, opacity-in-logo 2s 5s backwards;
 			background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
-			background-size: 200% 200%;
-			background-clip: text;
 			transition: .45s, clip-path .4s;
 			transition-property: opacity, clip-path, word-spacing, color;
             contain: content;
 				/* state after animation */
 			clip-path: inset(0 25% 0 -2% round 55px);
 			opacity: 0.5;
-			color: #b1b1bf;
+			color: #b1b1bf !important;
 			cursor: pointer;
 			
 			@media screen and (min-width: 1440px) {
@@ -461,26 +502,8 @@
 			}
             
 			else {
-				&:hover::after {
-					transform: scale(1);
-				    opacity: 1;
-				}
-                
-                &:active::after {
-				    background-color: __bg-inset-on-active;
-			    }
-                
-                &::after {
-                    content: '';
-                    position: absolute;
-                    inset: 2.5px;
-                    pointer-events: none;
-                    border-radius: 55px;
-                    transition: .15s;
-                    transform: scale(0.3);
-                    opacity: 0;
-                    background-color: __bg-inset-on-hover;
-                }
+                SetupHoverEffect(false, __bg-inset-on-hover, __bg-inset-on-active, $border-radius(55px), scale(0.3), $inset(2.5px));
+                Transition(".15s");
 			}
 		}
 		
@@ -513,52 +536,25 @@
 				transition: transform .25s;
 			}
 			
-			[data-a-target="player-mute-unmute-button"]:hover::after { // mute unmute button
-				transform: scale(1);
-				opacity: 1;
+            SetupHoverEffect(false, __bg-inset-on-hover, '', $border-radius(55px), scale(0.8), $inset(2px));
+            Transition(".15s");
+            
+			[data-a-target="player-mute-unmute-button"] { // mute unmute button
+				SetupHoverEffect(false, __bg-inset-on-hover, __bg-inset-on-active, $border-radius(55px), scale(0.3), $inset(2.5px));
+                Transition(".15s");
 			}
 			
-			[data-a-target="player-mute-unmute-button"]:active::after {
-				background-color: __bg-inset-on-active;
-			}
-			
-			[data-a-target="player-mute-unmute-button"]::after {
-				content: '';
-				position: absolute;
-				inset: 2.5px;
-				pointer-events: none;
-				border-radius: 55px;
-				transition: .15s;
-				transform: scale(0.3);
-				opacity: 0;
-				background-color: __bg-inset-on-hover;
-			}
-			
-			&:hover::after {
-				transform: scaleX(1);
-				opacity: 1;
-			}
-			
-			&::after {
-				content: '';
-				position: absolute;
-				inset: 2px;
-				pointer-events: none;
-				border-radius: 55px;
-				transition: .15s;
-				transform: scaleX(0.5);
-				opacity: 0;
-				background-color: __bg-inset-volume;
-				transform-origin: left;
-			}
-			
-			.ScRangeFillContainer-sc-q01wc3-2 { 
-                height: 3px; 
+			.ScRangeFillContainer-sc-q01wc3-2 {
+                height: 3px;
             }
             
-            .ScRangeFillValue-sc-q01wc3-3 { transition: background-color .45s; }
+            .ScRangeFillValue-sc-q01wc3-3 {
+                transition: background-color .45s;
+            }
 			
-			&:not(:hover) { .volume-slider__slider-container { opacity: 0; } }
+			&:not(:hover) {
+                .volume-slider__slider-container { opacity: 0; }
+            }
 		}
 		
 		[data-a-target="player-mute-unmute-button"] {
@@ -575,62 +571,49 @@
 		
 		.player-controls__right-control-group {
 			> [class="Layout-sc-1xcs6mc-0 bDlkVb"] { // round clip button if it's first
-				border-top-left-radius: 55px;
-				border-bottom-left-radius: 55px;
+				border-left-radius: 55px;
 				margin-inline: 0 !important;
 			}
 			
 			> [class="Layout-sc-1xcs6mc-0"] { // round next button
-				border-top-left-radius: 55px;
-				border-bottom-left-radius: 55px;
+				border-left-radius: 55px;
 			}
 			
 			> [class="Layout-sc-1xcs6mc-0 bDlkVb"]+[class="Layout-sc-1xcs6mc-0"] { // remove round on next button if clip button is there
-				border-top-left-radius: 0;
-				border-bottom-left-radius: 0;
+				border-left-radius: 0;
 			}
 			
 			> div:last-of-type {
-				border-top-right-radius: 55px;
-				border-bottom-right-radius: 55px;
+				border-right-radius: 55px;
 			}
 			
 				// quality tag
-			.cofMAX { margin-inline: 5px; }
+			.cofMAX {
+                margin-inline: 5px;
+            }
+            
 			.gUwAuK {
 				color: rgb(247, 247, 247);
 				backdrop-filter: blur(2px);
 				if (player-controls=="yt-light") { background-color: __light-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #8c8c8c4d; }
 				else if (player-controls=="yt-dark") { background-color: __dark-bg; box-shadow: inset 0 0 0 var(--input-border-width-small) #33333369; }
 			}
+                // --
 			
-			> div:not(.cofMAX, .resize-detector, .kYtUcc) {
+			> div:not(.cofMAX, .resize-detector, .kYtUcc, :not([class])) {
 				transition: background-color .15s;
 				position: relative;
-				
 				background-color: (player-controls=="yt-light") ? __light-bg : __dark-bg;
 			}
-			
-			> div:not(.cofMAX, .resize-detector, .kYtUcc):hover::after {
-				transform: scale(1);
-				opacity: 1;
-			}
-			
-			> div:not(.cofMAX, .resize-detector, .kYtUcc):active::after {
-				background-color: __bg-inset-on-active;
-			}
-			
-			> div:not(.cofMAX, .resize-detector, .kYtUcc)::after {
-				content: '';
-				position: absolute;
-				inset: 2.5px;
-				pointer-events: none;
-				border-radius: 55px;
-				transition: .15s;
-				transform: scale(0.3);
-				opacity: 0;
-				background-color: __bg-inset-on-hover;
-			}
+            
+            > div[class] {
+                SetupHoverEffect(false, __bg-inset-on-hover, __bg-inset-on-active, $border-radius(55px), scale(0.3), $inset(2.5px));
+                Transition(".15s");
+            }
+            
+            > div:is(.cofMAX, .resize-detector, .kYtUcc)::after { // can't apply SetupHoverEffect directly on selector with :not, so use workaround to remove pseudoclass from not needed elements
+                content: initial;
+            }
             
             .low-latency-notification button {
                 &:hover { background-color: var(--color-background-button-text-hover) !important; }
@@ -669,8 +652,7 @@
 				
 				&[aria-label].yezmM:disabled { // disabled clip button
 					background-color: #000 !important;
-					border-top-right-radius: 0;
-					border-bottom-right-radius: 0;
+					border-right-radius: 0;
 					
 					[data-a-target="tw-core-button-label-text"] {
 						display: none !important;
@@ -756,13 +738,11 @@
 		
 		.community-points-summary .hqIgGz {
 			background-color: #00c274;
-			
 			&:hover { background-color: #00f090; }
 		}
 		
 		[data-a-target="chat-send-button"] {
 			background-color: #6200f5;
-			
 			&:hover { background-color: #781fff; }
 		}
 		
@@ -799,35 +779,23 @@
             }
         }
         
-        .side-nav--expanded .side-nav-card__link {
-            __bg-sidecard-hover = rgba(196, 196, 196, .15)
-            __bg-sidecard-active = rgba(196, 196, 196, .22)
+        .side-nav--expanded {
+            .followed-side-nav-header--expanded { position: relative; }
             
-            &:hover {
-                background: none !important;
+            .side-nav-card__link, .followed-side-nav-header--expanded > button {
+                __bg-card-hover = rgba(196, 196, 196, .15)
+                __bg-card-active = rgba(196, 196, 196, .22)
+                
+                SetupHoverEffect(true, __bg-card-hover, __bg-card-active, $border-radius(6px), scale(0.8), $inset(0), $origin(left));
+                Transition(".1s, opacity .05s", ".15s");
             }
             
-            &:active::after {
-                background-color: __bg-sidecard-active;
-            }
-            
-            &:hover::after {
-                transform: none;
-                opacity: 1;
-                transition: .15s;
-            }
-            
-            &::after {
-                content: '';
-                position: absolute;
-                inset: 0;
-                pointer-events: none;
-                border-radius: 6px;
-                transform: scale(0.8);
-                transition: .1s, opacity .05s;
-                transform-origin: left;
-                opacity: 0;
-                background-color: __bg-sidecard-hover;
+            .followed-side-nav-header--expanded > button {
+                __bg-header-hover = rgba(196, 196, 196, .10)
+                __bg-header-active = rgba(196, 196, 196, .15)
+                
+                &::after { background-color: __bg-header-hover; }
+                &:active::after { background-color: __bg-header-active; }
             }
         }
         
@@ -853,8 +821,7 @@
         }
         
         .tw-root--theme-dark .carousel-metadata {
-            border-top-right-radius: 4px;
-            border-bottom-right-radius: 4px;
+            border-right-radius: 4px;
             overflow: hidden;
         }
         
@@ -985,10 +952,11 @@
 			box-shadow: 0px 0px 8px __chat-color;
 			&:hover { box-shadow: 0px 0px 10px __chat-color-hover; }
                 
-            /*if (custom-chat-button!="disabled") {
-                box-shadow: 0px 0px 7px #9f9f9f26 !important;
-                &:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }
-            }*/
+            if (custom-chat-button!="disabled") {
+                /*box-shadow: 0px 0px 7px #9f9f9f26 !important;
+                &:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }*/
+                box-shadow: none !important;
+            }
 		}
 	}
 	
@@ -1042,34 +1010,33 @@
 	}
     
     if (use-avatar-frame!="none") {
-        .user-menu-dropdown__main-menu, a[href$={nick} i], [data-a-target="user-menu-toggle"] {
-            .tw-avatar::after {
-				content: '';
+        $top = dummy
+        $left = dummy
+        
+        SetupAvatarFrame(__top, __left, __size, __duration) {
+            &::after {
+                content: '';
 				position: absolute;
                 contain: paint;
-                top: -3.2px;
-                left: -3px;
-                height: 120%;
-                width: 120%;
+                top: __top;
+                left: __left;
+                height: __size;
+                width: __size;
                 background: url(use-avatar-frame[0]);
 				pointer-events: none;
                 background-size: 100% 100%;
-                animation: content-in .45s;
+                animation: content-in __duration;
+            }
+        }
+        
+        .user-menu-dropdown__main-menu, a[href$={nick} i], [data-a-target="user-menu-toggle"] {
+            .tw-avatar {
+                SetupAvatarFrame($top(-3.2px), $left(-3px), 120%, .45s);
 			}
         }
         
-        .viewer-card-header__display-name a[href$={nick} i]::after {
-            content: '';
-			position: absolute;
-            contain: paint;
-            top: 31px;
-            left: 3px;
-            height: 60px;
-            width: 60px;
-            background: url(use-avatar-frame[0]);
-			pointer-events: none;
-            background-size: 100% 100%;
-            animation: content-in .65s;
+        .viewer-card-header__display-name a[href$={nick} i] {
+            SetupAvatarFrame($top(31px), $left(3px), 60px, .65s);
         }
         
         .viewer-card-header__display-name a[href$={nick} i] { filter: none !important; } // fix frame isn't displayed when 7tv nick decoration is selected
@@ -1177,12 +1144,17 @@
     }
     if (remove-clip-links) {
         [data-a-target="chat-line-message-body"] {
-            .link-fragment[href^="https://clips.twitch.tv"] {
+            .link-fragment:is([href*="clips.twitch.tv/"], [href*="/clip/"]) {
                 display: none;
             }
+            
             .hfLCgr.chatCard--VU4fm {
                 padding: 6px 0px;
             }
+        }
+        
+        .chat-line__no-background > .dtoOxd { // fix short preview cards
+            width: 100%;
         }
     }
 	
@@ -1380,22 +1352,17 @@
 		if (nick-gradient!="disabled") {
             if (nick-gradient[0] == "discord") {
                 .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i]:not([data-a-target="mod-comments-skip-link"]), a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                    SetupGradientText(600, "100px auto");
                     background: nick-gradient[1];
-                    background-clip: text;
-                    color: transparent !important;
-                    background-size: 100px auto;
                     animation: gradient-discord 1.5s linear infinite;
-                    font-weight: 600 !important;
                     
                     &::before {
+                        SetupGradientText('', "100px auto");
                         content: '' + nick;
                         position: absolute;
                         opacity: .6;
                         filter: blur(4px);
                         background: nick-gradient[1];
-                        background-clip: text;
-                        color: transparent;
-                        background-size: 100px auto;
                         animation: gradient-discord 1.5s linear infinite;
                         pointer-events: none;
                     }
@@ -1407,10 +1374,8 @@
             
             else if (nick-gradient[0] == "7tv") {
                 .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
+                    SetupGradientText('', "100% 100%");
                     background: nick-gradient[1];
-                    background-clip: text;
-                    color: transparent !important;
-                    background-size: 100% 100%;
                     filter: nick-gradient[3];
                 }
             }
@@ -1841,7 +1806,7 @@
             position: fixed !important;
             width: calc(100% - 10.5px) !important;
             transform: none !important;
-            max-height: unset !important;
+            //max-height: 100% !important;
         }
         
         #twilight-sticky-header-root+.root-scrollable__content {
@@ -2014,8 +1979,7 @@
 			.fNeqge, .whispers-threads-box__header {
 				background: __blurred-menu-header !important;
 				box-shadow: none !important;
-                border-top-left-radius: var(--border-radius-large) !important;
-                border-top-right-radius: var(--border-radius-large) !important;
+                border-left-radius: var(--border-radius-large) !important;
 			}
 		}
 		
@@ -2626,13 +2590,12 @@
                 }
                 
                 &::after {
+                    SetupGradientText();
                     content: __bottom-line
                     text-wrap: nowrap;
                     top: 34px;
                     text-shadow: none !important;
                     background: nick-gradient[1];
-                    background-clip: text;
-                    color: transparent !important;
                     
                     if (!welcome-animation) {
                         animation: none;
@@ -2640,7 +2603,7 @@
                     }
                     
                     if (nick-gradient[0] == "discord") {
-                        background-size: 100px auto;
+                        background-size: 100px auto !important;
                         animation: gradient-discord 1.5s linear infinite, reveal 1.8s .80s ease-out forwards, opacity-in .75s .15s backwards;
                         font-weight: 600 !important;
                         
@@ -2654,7 +2617,7 @@
                     }
                     
                     else if (nick-gradient[0] == "7tv") {
-                        background-size: 100% 100%;
+                        background-size: 100% 100% !important;
                         filter: nick-gradient[3];
                     }
                 }
@@ -2760,7 +2723,7 @@
                 }
             }
             
-            .config-select:has([value="#3"])+*+.config-checkbox { // sidebar show on hover only checkbox
+            .config-select:has([value="#3"])+.config-checkbox { // sidebar show on hover only checkbox
                 &.nondefault+.config-checkbox {
                     display: none;
                 }
@@ -2913,23 +2876,18 @@
             if (nick-gradient!="disabled") { // nick decoration preview
                 if (nick-gradient[0] == "discord") {
                     .config-select:has([value$="Discord #1"]) .config-name {
+                        SetupGradientText(600, "100px auto");
                         text-shadow: none !important;
                         background: nick-gradient[1];
-                        background-clip: text;
-                        color: transparent !important;
-                        background-size: 100px auto;
                         animation: gradient-discord 1.5s linear infinite;
-                        font-weight: 600 !important;
 
                         &::before {
+                            SetupGradientText('', "100px auto");
                             content: '' + nick;
                             position: absolute;
                             opacity: .6;
                             filter: blur(4px);
                             background: nick-gradient[1];
-                            background-clip: text;
-                            color: transparent;
-                            background-size: 100px auto;
                             animation: gradient-discord 1.5s linear infinite;
                             pointer-events: none;
                         }
@@ -2938,11 +2896,9 @@
 
                 else if (nick-gradient[0] == "7tv") {
                     .config-select:has([value$="Discord #1"]) .config-name {
+                        SetupGradientText('', "100% 100%");
                         text-shadow: none !important;
                         background: nick-gradient[1];
-                        background-clip: text;
-                        color: transparent !important;
-                        background-size: 100% 100%;
                         filter: nick-gradient[3];
                     }
                 }
