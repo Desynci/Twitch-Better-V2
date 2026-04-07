@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.1.9
+@version        4.2.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -91,7 +91,7 @@
 	'→ №2': "opacity",
 	'→ №3*': "from-right"
 }
-@var checkbox last-only "Animate last message only" 0
+@var checkbox last-only "Animate only one message" 0
 
 @var select holder-3 "— 🍫 Sidebar tweaks —" {
     '#3': "holder-3"
@@ -184,7 +184,8 @@
     '→ Fatal Frame II': "'https://static-cdn.jtvnw.net/badges/v1/63243824-6d43-45cf-8d21-fe0b06ab587f/2'",
     '→ Pokémon Ditto': "'https://static-cdn.jtvnw.net/badges/v1/b577304e-7dc9-49f2-bee1-68caf56a91e6/2'",
 	'→ Rust': "'https://static-cdn.jtvnw.net/badges/v1/5ec1bcd1-82fa-4c42-abf1-be5b64cb63ed/2'",
-	'→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
+	'→ Never Grave': "'https://static-cdn.jtvnw.net/badges/v1/fb752b70-4eb6-45dd-8ee1-1194c38d2ac3/2'",
+    '→ BCB Blue': "'https://static-cdn.jtvnw.net/badges/v1/107ebb20-4fcd-449a-9931-cd3f81b84c70/2'",
 	'→ BCB Red': "'https://static-cdn.jtvnw.net/badges/v1/ef1e96e8-a0f9-40b6-87af-2977d3c004bb/2'",
 	'→ Darkest Dungeon': "'https://static-cdn.jtvnw.net/badges/v1/52a98ddd-cc79-46a8-9fe3-30f8c719bc2d/2'",
 	'→ Diablo': "'https://static-cdn.jtvnw.net/badges/v1/2f98d79a-c78c-4c61-ac9e-7bc544d44619/2'",
@@ -539,7 +540,7 @@
             SetupHoverEffect(false, __bg-inset-on-hover, '', $border-radius(55px), scale(0.8), $inset(2px));
             Transition(".15s");
             
-			[data-a-target="player-mute-unmute-button"] { // mute unmute button
+			[data-a-target="player-mute-unmute-button"] { // mute button on volume container
 				SetupHoverEffect(false, __bg-inset-on-hover, __bg-inset-on-active, $border-radius(55px), scale(0.3), $inset(2.5px));
                 Transition(".15s");
 			}
@@ -600,7 +601,7 @@
 			}
                 // --
 			
-			> div:not(.cofMAX, .resize-detector, .kYtUcc, :not([class])) {
+			> div[class]:not(.cofMAX, .resize-detector, .kYtUcc) {
 				transition: background-color .15s;
 				position: relative;
 				background-color: (player-controls=="yt-light") ? __light-bg : __dark-bg;
@@ -611,8 +612,8 @@
                 Transition(".15s");
             }
             
-            > div:is(.cofMAX, .resize-detector, .kYtUcc)::after { // can't apply SetupHoverEffect directly on selector with :not, so use workaround to remove pseudoclass from not needed elements
-                content: initial;
+            > div:is(.cofMAX, .resize-detector, .kYtUcc)::after { // can't apply SetupHoverEffect directly on selector with :not
+                content: initial;                                 // so use workaround to remove pseudoclass from not needed elements
             }
             
             .low-latency-notification button {
@@ -1335,7 +1336,7 @@
 				}
                 
                 .chat-line__no-background {
-                    padding: 3px 0px;
+                    padding: 3px 12px;
                 }
 				
 				[data-a-target="chat-line-message-body"] {
@@ -1979,7 +1980,7 @@
 			.fNeqge, .whispers-threads-box__header {
 				background: __blurred-menu-header !important;
 				box-shadow: none !important;
-                border-left-radius: var(--border-radius-large) !important;
+                border-radius: var(--border-radius-large) !important;
 			}
 		}
 		
@@ -2047,9 +2048,18 @@
 			background: #18181bbf !important;
 			backdrop-filter: blur(10px) saturate(180%);
 			transition: backdrop-filter .4s;
+            box-shadow: none !important;
 			
+            .highlight {
+                transition: border-color .45s;
+            }
+            
 			&:hover {
 				backdrop-filter: blur(6px) saturate(180%);
+                
+                .highlight {
+                    border-color: #7272837a !important;
+                }
 			}
 		}
 		
