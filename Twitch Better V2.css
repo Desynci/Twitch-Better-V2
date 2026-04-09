@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.0
+@version        4.2.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -267,6 +267,13 @@
         if (__hover) { &:hover::after { transition: unquote(__hover); } }
     }
     
+    SetupGradientText(__weight = '', __size = "200% 200%") {
+        background-clip: text !important;
+		color: transparent !important;
+        background-size: unquote(__size) !important;
+        if (__weight) { font-weight: __weight !important; }
+    }
+    
     border-right-radius(r) {
         border-top-right-radius: r;
 		border-bottom-right-radius: r;
@@ -275,13 +282,6 @@
     border-left-radius(r) {
         border-top-left-radius: r;
 		border-bottom-left-radius: r;
-    }
-    
-    SetupGradientText(__weight = '', __size = "200% 200%") {
-        background-clip: text !important;
-		color: transparent !important;
-        background-size: unquote(__size) !important;
-        if (__weight) { font-weight: __weight !important; }
     }
     
 	:root { --sidebar-size: sidebar-size; }
@@ -424,7 +424,7 @@
         .video-player[data-a-player-type="site"] .video-player__container::before {
             content: "Night mode: " + night-mode-value;
             position: absolute;
-            background: rgba(10, 10, 10, .722);
+            background: rgba(16, 16, 16, .722);
             border: 1px solid #4f4f4f7a;
             border-radius: 7px;
             left: 0;
@@ -445,8 +445,10 @@
             top: 70px !important;
         }
         
-        .persistent-player--theatre:not([style*="max-height: 100vh"]) .video-player__container::before, .video-player__container:fullscreen .video-player__container::before { // fullscreen mode
-            top: 50px !important;
+        .persistent-player--theatre:not([style*="max-height: 100vh"]), .video-player__container:fullscreen { // fullscreen mode
+            .video-player__container::before {
+                top: 50px !important;
+            }
         }
     }
     
@@ -1145,7 +1147,7 @@
     }
     if (remove-clip-links) {
         [data-a-target="chat-line-message-body"] {
-            .link-fragment:is([href*="clips.twitch.tv/"], [href*="/clip/"]) {
+            .link-fragment:is([href*="clips.twitch.tv/"], [href*="/clip/"]):first-of-type {
                 display: none;
             }
             
@@ -1336,7 +1338,7 @@
 				}
                 
                 .chat-line__no-background {
-                    padding: 3px 12px;
+                    padding: 3px 6px;
                 }
 				
 				[data-a-target="chat-line-message-body"] {
@@ -1897,7 +1899,7 @@
 			}
 		}
 		
-		[aria-describedby="channel-points-reward-center-body"], .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl, .channel-root__player .home-carousel-info {
+		[aria-describedby="channel-points-reward-center-body"] .reward-center__content, .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl, .channel-root__player .home-carousel-info {
 			background: #18181bb0 !important;
 			border-radius: var(--border-radius-large);
 			animation: blur-15 0.4s forwards;
@@ -1906,6 +1908,16 @@
 				background: none !important;
 			}
 		}
+        
+        [aria-describedby="channel-points-reward-center-body"] {
+            .reward-center__content {
+                background: #19191ad9 !important
+            }
+                
+            .dduVcl {
+                background: none !important;
+            }
+        }
         
         .modal__backdrop {
             animation: backdrop .7s forwards;
@@ -1963,7 +1975,7 @@
 		
 		.onsite-notification-toast {
             border-color: #78787f45 !important;
-    		background: #3b3b441a !important;
+    		background: #18181bb0 !important;
 			box-shadow: none !important;
 			margin-block-end: 0 !important;
 		}
@@ -2051,7 +2063,7 @@
             box-shadow: none !important;
 			
             .highlight {
-                transition: border-color .45s;
+                transition: border-color .35s;
             }
             
 			&:hover {
