@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.1
+@version        4.2.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -779,6 +779,24 @@
             
             .mini-overlay__title {
                 background-color: rgba(14, 14, 16, .8) !important;
+            }
+        }
+        
+        .search-box {
+            &:not(:focus-within) {
+                input {
+                    border-radius: 15px;
+                }
+                
+                .tw-combo-input__input+.eLLosC {
+                    opacity: 0;
+                    transition: opacity .15s;
+                }
+            }
+            
+            if (enable-animations) {
+                input { transition: border-radius .35s, box-shadow .25s; }
+                .eLLosC { transition: opacity .65s .1s; }
             }
         }
         
@@ -1829,7 +1847,7 @@
 		.search-box {
 			.tw-combo-input__input > div { z-index: 1; position: relative; }
 			[class="Layout-sc-1xcs6mc-0 bMcAyM"] { background: #18181B !important; padding: 3px !important; padding-left: 5px !important; }
-			.hVLlmi { animation: search .4s, blur-15-decrease 0.8s .1s both; will-change: transform; background: #00000094 !important; }
+			.hVLlmi { animation: search .4s, blur-15-decrease 0.8s .1s both; will-change: transform; background: #18181bb0 !important; }
             .tw-tray-item--highlighted.blixHj { background-color: var(--color-background-interactable-hover); }
 		}
 		
@@ -2422,7 +2440,7 @@
 
         @keyframes side-nav { from { transform: translateX(-50%); } }
 
-        @keyframes search { 0% { clip-path: inset(0 0 100% 0); transform: translateY(-25%); }
+        @keyframes search { 0% { clip-path: inset(50% 0 100% 0); transform: translateY(-25%); }
         to { clip-path: inset(-10% -10% -10% -10%); } }
 
         @keyframes swipe { 0% { clip-path: inset(0 100% 0 0); }
@@ -2941,7 +2959,7 @@
                     filter: drop-shadow(0px 0px 12px #ffffff9e);
                     
                     &:hover {
-                        filter: drop-shadow(0px 0px 8px #fff);
+                        filter: drop-shadow(0px 0px 8px #fffbb3);
                     }
                 }
                 
