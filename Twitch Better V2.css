@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.4
+@version        4.2.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -23,6 +23,7 @@
 @var checkbox compact-pause "Use new chat pause" 1
 @var checkbox transparent-player "More transparent player" 1
 @var checkbox new-design "Apply design tweaks" 1
+@var checkbox new-searchbox "Use new searchbox" 1
 @var checkbox dark-chat "Use dark chat mode" 1
 @var checkbox use-glow "Add glow effect to buttons" 1
 @var checkbox use-apple-emoji "Use Apple emoji font" 0
@@ -234,19 +235,13 @@
     
 	__side-nav-bg = transparentify(#1d1d20, #fff, 0.8)
 	__blurred-menu-header = #ffffff0d
+    
+    :root { --sidebar-size: sidebar-size; }
 	
     dummy(__value) { return __value }
     $inset = dummy
     $border-radius = dummy
     $origin = dummy
-    
-    SetLanguage(__code, __content) {
-        &:lang({__code}) {
-            &::before {
-                content: __content;
-            }
-        } 
-    }
     
     SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset, __transform-origin = initial) {
         if (__remove-bg) { &:hover, &:active { background: none !important; } }
@@ -270,16 +265,24 @@
         }
     }
     
-    Transition(__default, __hover = '') {
-        &::after { transition: unquote(__default); }
-        if (__hover) { &:hover::after { transition: unquote(__hover); } }
-    }
-    
     SetupGradientText(__weight = '', __size = "200% 200%") {
         background-clip: text !important;
 		color: transparent !important;
         background-size: unquote(__size) !important;
         if (__weight) { font-weight: __weight !important; }
+    }
+    
+    SetLanguage(__code, __content) {
+        &:lang({__code}) {
+            &::before {
+                content: __content;
+            }
+        }
+    }
+    
+    Transition(__default, __hover = '') {
+        &::after { transition: unquote(__default); }
+        if (__hover) { &:hover::after { transition: unquote(__hover); } }
     }
     
     border-right-radius(r) {
@@ -291,8 +294,6 @@
         border-top-left-radius: r;
 		border-bottom-left-radius: r;
     }
-    
-	:root { --sidebar-size: sidebar-size; }
     
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
@@ -392,7 +393,7 @@
 			line-height: var(--line-height-heading);
 			letter-spacing: -0.18px;
 			white-space: nowrap;
-            animation: gradient-custom 5s 2.5s linear infinite, opacity-in-logo 2s 5s backwards;
+            animation: gradient-custom 5s 2.5s linear infinite;
 			background: linear-gradient(90deg, #9db2ff 0%, #9db2ff 40%, #de76f0 50%, #9db2ff 90%, #9db2ff 100%);
 			transition: .45s, clip-path .4s;
 			transition-property: opacity, clip-path, word-spacing, color;
@@ -412,18 +413,28 @@
 		}
 		
 		@css { .top-nav .itDlPz [data-test-selector="toggle-balloon-wrapper__mouse-enter-detector"] {
-			&:hover::after { word-spacing: 3.5px; transition: .65s, clip-path .4s; }
-			&:active::after { clip-path: inset(0 0 0 -2%); word-spacing: 0; color: transparent; opacity: 1; transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1) }
+			&:hover::after {
+                word-spacing: 3.5px;
+                transition: .65s, clip-path .4s;
+            }
+            
+			&:active::after {
+                clip-path: inset(0 0 0 -2%);
+                color: transparent;
+                opacity: 1;
+                word-spacing: 0;
+                transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1);
+            }
         } }
 	}
 	
     .video-player video {
         transition: filter .5s;
     }
-        
+    
     if (night-mode-value > 0) {
         .video-player video { filter: brightness(100 - night-mode-value/1.1); }
-           
+        
         __notify-width = ();
         if (night-mode-value < 10%) { __notify-width = 106px; }
         else if (night-mode-value == 100%) { __notify-width = 121px; }
@@ -790,97 +801,10 @@
             }
         }
         
-        .top-nav__search-container {
-            flex-basis: 35rem;
-        }
-        
-        .search-box {
-            &:not(:focus-within) {
-                input {
-                    border-radius: 15px;
-                }
-                
-                .tw-combo-input__input+.eLLosC {
-                    opacity: 0;
-                    transition: opacity .15s;
-                    visibility: hidden;
-                }
-                
-                input[aria-owns] {
-                    width: 109.5%;
-                }
-            }
-            
-            input[aria-owns] {
-                width: 100%;
-            }
-            
-            input {
-                &::placeholder { color: transparent; }
-            }
-            
-            input:focus {
-                box-shadow: none !important;
-            }
-            
-            &:focus-within {
-                .bMcAyM {
-                    box-shadow: inset 0 0 0 var(--input-border-width-small) #a970ff;
-                    transition: box-shadow .45s;
-                }
-            }
-            
-            .bMcAyM {
-                box-shadow: inset 0 0 0 var(--input-border-width-small) rgba(99, 99, 99, 0);
-                transition: box-shadow .3s;
-            }
-            
-            .bMcAyM {
-                border-radius: 9px;
-                padding-right: 1px !important;
-                padding-bottom: 0px !important;
-                padding-top: 2px !important;
-                padding-left: 9px !important;
-            }
-            
-            .AoXTY[data-a-target="tray-search-input"] {
-                position: relative;
-                
-                &::before {
-                    content: "Search";
-                    position: absolute;
-                    pointer-events: none;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    color: var(--color-text-input-placeholder);
-                    transition: .2s;
-                }
-                
-                SetLanguage(ru, "Поиск");
-                SetLanguage(da, "Søg");
-                SetLanguage(fr, "Rechercher");
-                SetLanguage(it, "Cerca");
-                SetLanguage(pl, "Wyszukaj");
-                SetLanguage(pt-PT, "Pesquisa");
-                SetLanguage(pt-BR, "Buscar");
-                SetLanguage(ro, "Căutare");
-                SetLanguage(uk, "Пошук");
-                SetLanguage(zh-CN, "搜索");
-                SetLanguage(zh-TW, "搜尋");
-
-                &:has(> input[aria-owns]) {
-                    &::before {
-                        opacity: 0;
-                        transform: translate(-50%, -65%);
-                    }
-                }
-            }
-            
-            if (enable-animations) {
-                input { transition: border-radius .35s, box-shadow .25s, width .45s; }
-                .eLLosC { transition: opacity .65s .1s, visibility .75s; }
-            }
+        .muted-segments-alert__content {
+            border-color: #78787f45;
+            border-radius: var(--border-radius-extra-large);
+            backdrop-filter: blur(6px) saturate(180%);
         }
         
         .side-nav--expanded {
@@ -1032,6 +956,88 @@
 			background-color: #131316 !important;
 		}
 	}
+    
+    if (new-searchbox) {
+        .top-nav__search-container {
+            flex-basis: 35rem;
+        }
+        
+        .search-box {
+            &:not(:focus-within) {
+                input {
+                    border-radius: 15px;
+                }
+                
+                .tw-combo-input__input+.eLLosC {
+                    opacity: 0;
+                    transition: opacity .15s;
+                    visibility: hidden;
+                }
+            }
+            
+            input {
+                &::placeholder { color: transparent; }
+                &:focus { box-shadow: none !important; }
+                &[aria-owns] { width: 100%; }
+            }
+            
+            &:focus-within {
+                .bMcAyM {
+                    box-shadow: inset 0 0 0 2px rgb(148, 77, 255);
+                    transition: box-shadow .4s;
+                }
+            }
+            
+            .bMcAyM {
+                box-shadow: inset 0 0 0 1px rgba(99, 99, 99, 0);
+                transition: box-shadow .3s;
+                border-radius: 9px;
+                padding: 2px !important;
+                padding-right: 1px !important;
+            }
+            
+            .AoXTY[data-a-target="tray-search-input"] {      
+                &::before {
+                    content: "Search";
+                    position: absolute;
+                    pointer-events: none;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: var(--color-text-input-placeholder);
+                    transition: .2s;
+                }
+                
+                &:hover::before {
+                    opacity: 0.95;
+                }
+                
+                &:has(> input[aria-owns]) {
+                    &::before {
+                        opacity: 0;
+                        transform: translate(-50%, -65%);
+                    }
+                }
+                
+                SetLanguage(ru, "Поиск");
+                SetLanguage(da, "Søg");
+                SetLanguage(fr, "Rechercher");
+                SetLanguage(it, "Cerca");
+                SetLanguage(pl, "Wyszukaj");
+                SetLanguage(pt-PT, "Pesquisa");
+                SetLanguage(pt-BR, "Buscar");
+                SetLanguage(ro, "Căutare");
+                SetLanguage(uk, "Пошук");
+                SetLanguage(zh-CN, "搜索");
+                SetLanguage(zh-TW, "搜尋");
+            }
+            
+            if (enable-animations) {
+                input { transition: border-radius .35s, box-shadow .25s, width .45s; }
+                .eLLosC { transition: opacity .65s .1s, visibility .75s; }
+            }
+        }
+    }
     
     .seekbar-thumb { width: 1.7rem; height: 1.7rem; }
 	.seekbar-bar, .seekbar-segment { height: 9px; }
@@ -1287,14 +1293,12 @@
                     right: 40px;
                     top: 40px;
                 }
+                
+                &:lang(ru)::after {
+                    right: 43px;
+                }
             }
 	    }
-        
-        html[lang="ru-RU"] {
-            .side-nav--expanded .side-nav-section:nth-of-type(2)::after {
-                right: 43px;
-            }
-        }
         
         .side-nav--expanded:hover { counter-reset: channels-counter; }
         if (!sidebar-hover-only) { body.ReactModal__Body--open { counter-reset: channels-counter; } }
@@ -2205,24 +2209,26 @@
 			}
 		}
 		
-		button[data-a-target="player-play-pause-button"] { transition: margin-left .4s .1s, opacity .4s .1s; will-change: margin-left; }
-		
-		button[data-a-target="player-play-pause-button"][data-a-player-state="playing"] {
-			position: absolute !important;
-			color: transparent !important;
-			height: 100% !important;
-			width: 100% !important;
-			border-radius: 0px;
-			background: none !important;
-			margin-left: -32px;
-			opacity: 0;
-			outline: none;
-		}
+        button[data-a-target="player-play-pause-button"] {
+            transition: margin-left .4s .1s, opacity .4s .1s; will-change: margin-left;
+            
+            &[data-a-player-state="playing"] {
+                position: absolute !important;
+                color: transparent !important;
+                height: 100% !important;
+                width: 100% !important;
+                border-radius: 0px;
+                background: none !important;
+                margin-left: -32px;
+                opacity: 0;
+                outline: none;
+            }
+            
+            &[data-a-player-state="paused"] {
+                > .lnTwMD { position: absolute; color: white !important; opacity: 1; }
+            }
+        }
         
-		button[data-a-target="player-play-pause-button"][data-a-player-state="paused"] {
-			> .lnTwMD { position: absolute; color: white !important; opacity: 1; }
-		}
-		
 		@css { .extensions-popover-view-layout__body::before {
 			content: "NOTE: Twitch Better\'s option \"PAUSE ANYWHERE\" prevents an interaction with the stream extensions. Disable it in the settings of style if needed.";
 			color: #ff9898;
@@ -2602,7 +2608,7 @@
 
         @keyframes blur-15-decrease { 0% { backdrop-filter: blur(70px); } 
         to { backdrop-filter: blur(15px); } }
-        
+
         @keyframes blur-25-saturate { to { backdrop-filter: blur(25px) saturate(180%); } }
 
         @keyframes blur-55 { to { backdrop-filter: blur(55px); } }
@@ -2664,7 +2670,7 @@
                 color: #9db2ff;
                 transition: .5s;
                 transition-property: background-color;
-
+                
                 &::before {
                     display: none;
                 }
@@ -2836,7 +2842,7 @@
             .config-select:has([value="#2"])+.config-checkbox { // animations section
                 &.nondefault {
                     color: #dfdfdfc4 !important;
-                
+                    
                     &+*, &+*+*, &+*+*+*, &+*+*+*+* {
                         display: none;
                     }
@@ -2870,12 +2876,12 @@
                 &+*+.config-text, &+*+*+*+.config-text, &+*+*+*+*+.config-text {
                     flex-wrap: wrap;
                     padding-bottom: 10px;
-
+                    
                     input {
                         flex: 1 1 100%;
                         max-width: 100% !important;
                     }
-
+                    
                     .config-name {
                         display: none;
                     }
@@ -2885,7 +2891,7 @@
             .config-select:has([value="#6"])+*+*+*+*+*+.config-text { // death note input field
                 flex-wrap: wrap;
                 padding-top: 10px;
-
+                
                 input {
                     flex: 1 1 100%;
                     max-width: 100% !important;
@@ -2973,7 +2979,6 @@
                             background-position: right;
                             background-image: url(highlight-type[0]);
                             background-size: cover;
-                            
                         }
                     }
                 }
@@ -3004,7 +3009,7 @@
                         text-shadow: none !important;
                         background: nick-gradient[1];
                         animation: gradient-discord 1.5s linear infinite;
-
+                        
                         &::before {
                             SetupGradientText('', "100px auto");
                             content: '' + nick;
@@ -3017,7 +3022,7 @@
                         }
                     }
                 }
-
+                
                 else if (nick-gradient[0] == "7tv") {
                     .config-select:has([value$="Discord #1"]) .config-name {
                         SetupGradientText('', "100% 100%");
@@ -3027,30 +3032,26 @@
                     }
                 }
 		    }
-        }
-        
-        @css {
-            #stylus-popup:has(.config-select [value="YouTube Dark"]) {
-                [class=".external-support"] {
-                    display: inline-flex;
-                    color: transparent;
-                    height: 25px !important;
-                    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=);
-                    background-repeat: no-repeat;
-                    background-size: 25px;
-                    animation: github 2s infinite ease;
-                    transition: filter .35s;
-                    filter: drop-shadow(0px 0px 12px #ffffff9e);
-                    
-                    &:hover {
-                        filter: drop-shadow(0px 0px 8px #fffbb3);
-                    }
-                }
+            
+            [class=".external-support"] {
+                display: inline-flex;
+                color: transparent;
+                height: 25px !important;
+                background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=");
+                background-repeat: no-repeat;
+                background-size: 25px;
+                animation: github 2s infinite ease;
+                transition: filter .35s;
+                filter: drop-shadow(0px 0px 12px #ffffff9e);
                 
-                .slider, .slider:focus {
-                    box-shadow: inset 1px 1px 2px hsla(var(--shadow-hsl), .5) !important;
+                &:hover {
+                    filter: drop-shadow(0px 0px 8px #fffbb3);
                 }
             }
+            
+            .slider, .slider:focus {
+                 box-shadow: inset 1px 1px 2px rgba(13, 38, 38, .5) !important; 
+             }
         }
         
         @font-face {
