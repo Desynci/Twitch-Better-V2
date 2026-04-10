@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.2
+@version        4.2.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -232,13 +232,21 @@
 	$chat-customization = "[class='Attached-sc-go6eno-0 cJkJNl']"
 	$notifications = "[class='ScBalloonWrapper-sc-14jr088-0 PjurZ InjectLayout-sc-1i43xsx-0 bAWxnr tw-balloon']"
     
-	__side-nav-bg = transparentify(#18181b, #fff, 0.8)
+	__side-nav-bg = transparentify(#1d1d20, #fff, 0.8)
 	__blurred-menu-header = #ffffff0d
 	
     dummy(__value) { return __value }
     $inset = dummy
     $border-radius = dummy
     $origin = dummy
+    
+    SetLanguage(__code, __content) {
+        &:lang({__code}) {
+            &::before {
+                content: __content;
+            }
+        } 
+    }
     
     SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset, __transform-origin = initial) {
         if (__remove-bg) { &:hover, &:active { background: none !important; } }
@@ -782,6 +790,10 @@
             }
         }
         
+        .top-nav__search-container {
+            flex-basis: 35rem;
+        }
+        
         .search-box {
             &:not(:focus-within) {
                 input {
@@ -791,12 +803,83 @@
                 .tw-combo-input__input+.eLLosC {
                     opacity: 0;
                     transition: opacity .15s;
+                    visibility: hidden;
+                }
+                
+                input[aria-owns] {
+                    width: 109.5%;
+                }
+            }
+            
+            input[aria-owns] {
+                width: 100%;
+            }
+            
+            input {
+                &::placeholder { color: transparent; }
+            }
+            
+            input:focus {
+                box-shadow: none !important;
+            }
+            
+            &:focus-within {
+                .bMcAyM {
+                    box-shadow: inset 0 0 0 var(--input-border-width-small) #a970ff;
+                    transition: box-shadow .45s;
+                }
+            }
+            
+            .bMcAyM {
+                box-shadow: inset 0 0 0 var(--input-border-width-small) rgba(99, 99, 99, 0);
+                transition: box-shadow .3s;
+            }
+            
+            .bMcAyM {
+                border-radius: 9px;
+                padding-right: 1px !important;
+                padding-bottom: 0px !important;
+                padding-top: 2px !important;
+                padding-left: 9px !important;
+            }
+            
+            .AoXTY[data-a-target="tray-search-input"] {
+                position: relative;
+                
+                &::before {
+                    content: "Search";
+                    position: absolute;
+                    pointer-events: none;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: var(--color-text-input-placeholder);
+                    transition: .2s;
+                }
+                
+                SetLanguage(ru, "Поиск");
+                SetLanguage(da, "Søg");
+                SetLanguage(fr, "Rechercher");
+                SetLanguage(it, "Cerca");
+                SetLanguage(pl, "Wyszukaj");
+                SetLanguage(pt-PT, "Pesquisa");
+                SetLanguage(pt-BR, "Buscar");
+                SetLanguage(ro, "Căutare");
+                SetLanguage(uk, "Пошук");
+                SetLanguage(zh-CN, "搜索");
+                SetLanguage(zh-TW, "搜尋");
+
+                &:has(> input[aria-owns]) {
+                    &::before {
+                        opacity: 0;
+                        transform: translate(-50%, -65%);
+                    }
                 }
             }
             
             if (enable-animations) {
-                input { transition: border-radius .35s, box-shadow .25s; }
-                .eLLosC { transition: opacity .65s .1s; }
+                input { transition: border-radius .35s, box-shadow .25s, width .45s; }
+                .eLLosC { transition: opacity .65s .1s, visibility .75s; }
             }
         }
         
@@ -1199,6 +1282,7 @@
                     font-size: 18px;
                     color: var(--color-hinted-grey-9);
                     font-variant-position: super;
+                    pointer-events: none;
                     position: absolute;
                     right: 40px;
                     top: 40px;
@@ -1279,7 +1363,7 @@
 			width: 5rem; transition: transform .25s .05s, opacity .25s .05s;
 		}
 		
-		if (apply-blur) { .side-nav.kHqXhd { background: __side-nav-bg !important; backdrop-filter: blur(55px); } }
+		if (apply-blur) { .side-nav { background: __side-nav-bg !important; backdrop-filter: blur(55px); } }
 	}
 	
 	if (only-following) {
@@ -1846,7 +1930,7 @@
 		
 		.search-box {
 			.tw-combo-input__input > div { z-index: 1; position: relative; }
-			[class="Layout-sc-1xcs6mc-0 bMcAyM"] { background: #18181B !important; padding: 3px !important; padding-left: 5px !important; }
+			[class="Layout-sc-1xcs6mc-0 bMcAyM"] { background: #18181B !important;}
 			.hVLlmi { animation: search .4s, blur-15-decrease 0.8s .1s both; will-change: transform; background: #18181bb0 !important; }
             .tw-tray-item--highlighted.blixHj { background-color: var(--color-background-interactable-hover); }
 		}
