@@ -1,14 +1,13 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.6
+@version        4.2.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
 @preprocessor 	stylus
 
 @var checkbox custom-theme "Stylus theme" 1
-@var checkbox welcome-animation "Title animation" 1
 @var select holder-1 "— 🌠  General —" {
     '#1': "holder-1"
 }
@@ -101,7 +100,7 @@
 @var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
 @var checkbox only-following "Following section only" 0
 @var checkbox sidebar-counter "Add channels counter" 1
-@var range sidebar-size "Width:" [24,13,28,0.5,"rem"]
+@var range __sidebar-size "Width:" [24,13,28,0.5,"rem"]
 
 @var select holder-4 "— 🍂 Removers —" {
     '#4': "holder-4"
@@ -235,8 +234,6 @@
     
 	__side-nav-bg = transparentify(#1d1d20, #fff, 0.8)
 	__blurred-menu-header = #ffffff0d
-    
-    :root { --sidebar-size: sidebar-size; }
 	
     dummy(__value) { return __value }
     $inset = dummy
@@ -286,20 +283,20 @@
     }
     
     border-right-radius(r) {
-        border-top-right-radius: r;
-		border-bottom-right-radius: r;
+        border-top-right-radius: r !important;
+		border-bottom-right-radius: r !important;
     }
     
     border-left-radius(r) {
-        border-top-left-radius: r;
-		border-bottom-left-radius: r;
+        border-top-left-radius: r !important;
+		border-bottom-left-radius: r !important;
     }
     
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
 	.channel-root--home .channel-info-content { width: unset; }
     .reward-center__content { height: auto; }
-	.side-nav--expanded { width: sidebar-size; }
+	.side-nav--expanded { width: __sidebar-size; }
     .converter-preview-player-controls--gradient .tw-transition .bMRWRT { width: 80% !important; }
 	.reward-icon__animated, .predictions-list-item__body, .extensions-dock-card__image { will-change: transform; }
 	.finNtM a, .offline-recommendations-video-card:hover { text-decoration: none; }
@@ -1041,6 +1038,7 @@
     
     .seekbar-thumb { width: 1.7rem; height: 1.7rem; }
 	.seekbar-bar, .seekbar-segment { height: 9px; }
+    .seekbar-segment[style*="rgba(255\, 255\, 255\, 0.85)"] { margin-left: -4px; padding-right: 8px; Background: white !important; }
 	.seekbar-bar { transition: transform .2s; }
 	.seekbar-interaction-area { will-change: transform; }
 	.seekbar-interaction-area:hover { .seekbar-bar { transform: scaleY(1.5); } }
@@ -1305,16 +1303,14 @@
     }
     
 	if (sidebar-hover-only) {
-		@css {
-            .tw-dialog-layer div[data-popper-placement="bottom"][style*=", 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) { /* channels list sorting popup */
-			    transform: translate3d(var(--sidebar-size), 70.4px, 0px) !important;
-            }
+        .tw-dialog-layer div[data-popper-placement="bottom"][style*="\, 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) { // channels list sorting popup 
+            transform: translate3d(__sidebar-size+.15rem, 70.4px, 0px) !important;
+        }
+        
+        .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(175"]:is([style*="\, 50"], [style*="\, 49"]) { // collapse tooltip
+            transform: translate3d(253px, 11px, 0px) !important;
             
-            .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(175"]:is([style*=", 50"], [style*=", 49"]) { /* collapse tooltip */
-                transform: translate3d(253px, 11px, 0px) !important;
-                
-                .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
-            }
+            .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
         }
         
 		.side-nav {
@@ -1582,9 +1578,9 @@
         border-radius: var(--border-radius-medium) !important;
 		transition: .05s linear;
 		
-	 	@css { [style="color: rgb(0, 0, 255);"] {
+	 	[style="color: rgb(0\, 0\, 255);"] {
 			color: rgb(55 55 255) !important;
-		} }
+		}
 		
         .video-chat__message > span > * {
             display: inline-block !important;
@@ -1891,7 +1887,7 @@
 			animation: top-nav-menu 1s, blur-55 1s forwards !important;
 			[class="Layout-sc-1xcs6mc-0 kvjacc"] > div { animation: panel-element .3s backwards; }
 		} }
-		[data-popper-placement="bottom-start"] { for row in (1..26) { .kvjacc > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.4)); } } }
+		for row in (1..26) { [data-popper-placement="bottom-start"] .kvjacc > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.4)); } }
 		
 		.user-menu-dropdown__main-menu {
 			animation: user-menu .6s; will-change: transform, clip-path;
@@ -1981,7 +1977,7 @@
         }
         
         .channel-root__info--home .channel-info-content {
-            background: hsla(240, 7%, 4%, .95) !important;
+            background: #09090bf2 !important;
 			animation: blur-25-saturate .55s forwards;
             
             .home-header-sticky {
@@ -2033,7 +2029,7 @@
             }
             
             .kjWTWh, .HPVMB, .jChGcU {
-                background: hsla(240, 6%, 15%, .72) !important;
+                background: rgba(36, 36, 41, .72) !important;
                 border: 1px solid #4f4f4f69;
 			    border-radius: var(--border-radius-large) !important;
             }
@@ -2676,8 +2672,11 @@
                 }
             }
             
-            if (welcome-animation) {
-                for row in (1..19) { .config-body > label:nth-of-type({row}) .config-value { animation: checkboxes .35s backwards; animation-delay: round(42ms*(row/1.8)); } }
+            for row in (1..19) {
+                .config-body > label:nth-of-type({row}) .config-value {
+                    animation: checkboxes .35s backwards;
+                    animation-delay: round(42ms*(row/1.8));
+                }
             }
             
             @media (prefers-reduced-motion: reduce) {
@@ -2699,7 +2698,7 @@
                     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
                     mask-size: 100% 200%;
                     mask-position: 0 100%;
-                    animation: opacity-in .75s .15s backwards, reveal 1.6s .80s ease-out forwards;
+                    animation: opacity-in .75s .15s backwards, reveal 2.6s .3s ease forwards;
                     
                     @media (prefers-reduced-motion: reduce) {
                         animation: none !important;
@@ -2712,36 +2711,23 @@
                     color: #dfdfdf;
                     font-style: italic;
                     top: 14px;
-                    
-                    if (!welcome-animation) {
-                        animation: none;
-                        mask-image: none;
-                    }
+                    animation: opacity-in .9s .15s backwards, reveal 2.9s .6s ease forwards;
                 }
                 
                 &::after {
                     SetupGradientText();
-                    content: __bottom-line
+                    content: __bottom-line;
                     text-wrap: nowrap;
                     top: 34px;
                     text-shadow: none !important;
                     background: nick-gradient[1];
                     
-                    if (!welcome-animation) {
-                        animation: none;
-                        mask-image: none;
-                    }
-                    
                     if (nick-gradient[0] == "discord") {
                         background-size: 100px auto !important;
-                        animation: gradient-discord 1.5s linear infinite, reveal 1.8s .80s ease-out forwards, opacity-in .75s .15s backwards;
+                        animation: opacity-in .9s .15s backwards, reveal 2.9s .6s ease forwards, gradient-discord 1.5s linear infinite;
                         font-weight: 600 !important;
                         
                         @media (prefers-reduced-motion: reduce) {
-                            animation: gradient-discord 1.5s linear infinite !important;
-                        }
-                        
-                        if (!welcome-animation) {
                             animation: gradient-discord 1.5s linear infinite !important;
                         }
                     }
