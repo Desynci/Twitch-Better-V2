@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.7
+@version        4.2.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -240,7 +240,7 @@
     $border-radius = dummy
     $origin = dummy
     
-    SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset, __transform-origin = initial) {
+    SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset = 0, __transform-origin = initial) {
         if (__remove-bg) { &:hover, &:active { background: none !important; } }
         if (__bg-active) { &:active::after { background-color: __bg-active; } }
         
@@ -1563,27 +1563,43 @@
 	
 		// -- VOD messages tweaks
 	.video-chat__message-list-wrapper {
-		.ggvZjN { padding-top: 1px; }
-		.jUiaVy { border-radius: var(--border-radius-medium); }
-		.jUiaVy:hover { text-decoration: underline #dbdbdb 2px; background: var(--color-background-interactable-alpha-hover); }
+		.jUiaVy {
+            border-radius: var(--border-radius-medium);
+        }
         
-        .InjectLayout-sc-1i43xsx-0.kvgXPf > li.InjectLayout-sc-1i43xsx-0 {
-            padding-inline-end: .5rem;
+		.jUiaVy:hover {
+            text-decoration: underline #dbdbdb 2px;
+            background: var(--color-background-interactable-alpha-hover);
+        }
+        
+        ul > li {
+            position: relative;
         }
 	}
 	
 	.vod-message {
-        margin-inline-start: .5rem;
+        padding: 0 !important;
+        padding-right: 12px !important;
+        margin: 4px 12px !important;
+        margin-right: 0 !important;
+        line-height: 22px !important;
+        margin-inline-start: 0;
         padding-inline-start: 0;
-        border-radius: var(--border-radius-medium) !important;
-		transition: .05s linear;
+        border-radius: 4px !important;
 		
+        SetupHoverEffect(false, var(--color-background-interactable-alpha-hover), '', $border-radius(12px), scale(0.9));
+        Transition(".15s",  ".05s");
+        
+        &::after {
+            inset: 0 0 0 6px;
+        }
+        
 	 	[style="color: rgb(0\, 0\, 255);"] {
-			color: rgb(55 55 255) !important;
+			color: rgb(55, 55, 255) !important;
 		}
-		
-        .video-chat__message > span > * {
-            display: inline-block !important;
+        
+        .vod-message__header > .cSLwaV {
+            margin-inline-end: 0 !important;
         }
         
         .mention-fragment {
@@ -1594,10 +1610,10 @@
             height: auto;
         }
         
-		.CoreText-sc-1txzju1-0.irZUBM {
-			color: #adadb8;
-			/*font-size: var(--font-size-base) !important;*/
-			font-weight: 600;
+		.vod-message__header p {
+			color: #d3d3d9;
+			font-size: 14px !important;
+            line-height: inherit !important;
 		}
 		
 		.video-chat__message-menu {
@@ -1606,7 +1622,6 @@
 		}
 		
 		&:hover {
-			background: var(--color-background-interactable-alpha-hover);
 			.tw-svg { opacity: 1; }
 		}
 	}
