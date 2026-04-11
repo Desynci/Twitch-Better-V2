@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.2.9
+@version        4.3.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -921,7 +921,7 @@
 		
 		.video-chat__message-list-wrapper .jyLLNw > .jLggkh {
 			&::before {
-				content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='red' d='m19.613 2-1.912.585.584 1.912 1.913-.584L19.613 2Zm-5.737 1.754 1.912-.585.585 1.913-1.913.585-.584-1.913Zm-1.913.585-1.913.585.585 1.912 1.913-.584-.585-1.913ZM8.138 5.508l-1.913.585.585 1.913 1.912-.585-.584-1.913Zm-3.825 1.17L2.4 7.263l.585 1.912 1.912-.584-.584-1.913ZM5 11H3v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9h-2v9H5v-9ZM9 11H7v2h2v-2Zm2 0h2v2h-2v-2Zm6 0h-2v2h2v-2Z'/%3E%3C/svg%3E");
+				content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path fill='red' d='m19.613 2-1.912.585.584 1.912 1.913-.584L19.613 2Zm-5.737 1.754 1.912-.585.585 1.913-1.913.585-.584-1.913Zm-1.913.585-1.913.585.585 1.912 1.913-.584-.585-1.913ZM8.138 5.508l-1.913.585.585 1.913 1.912-.585-.584-1.913Zm-3.825 1.17L2.4 7.263l.585 1.912 1.912-.584-.584-1.913ZM5 11H3v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9h-2v9H5v-9ZM9 11H7v2h2v-2Zm2 0h2v2h-2v-2Zm6 0h-2v2h2v-2Z'/></svg>");
                 top: 28px;
 				display: block;
 				position: relative;
@@ -3107,15 +3107,15 @@
                 display: inline-flex;
                 color: transparent;
                 height: 25px !important;
-                background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+DQo8cGF0aCBmaWxsPSJ3aGl0ZSIgZD0iTTEwLjMwMyAxNi42NTJjLTIuODM3LS4zNDQtNC44MzUtMi4zODUtNC44MzUtNS4wMjggMC0xLjA3NC4zODctMi4yMzUgMS4wMzEtMy4wMDgtLjI3OS0uNzA5LS4yMzYtMi4yMTQuMDg2LTIuODM3Ljg2LS4xMDcgMi4wMi4zNDQgMi43MDguOTY3LjgxNi0uMjU4IDEuNjc2LS4zODYgMi43MjgtLjM4NiAxLjA1MyAwIDEuOTEzLjEyOCAyLjY4Ni4zNjUuNjY2LS42MDIgMS44NDgtMS4wNTMgMi43MDgtLjk0Ni4zLjU4MS4zNDQgMi4wODUuMDY0IDIuODE1LjY4OC44MTcgMS4wNTMgMS45MTMgMS4wNTMgMy4wMyAwIDIuNjQzLTEuOTk4IDQuNjQxLTQuODc3IDUuMDA2LjczLjQ3MyAxLjIyNCAxLjUwNCAxLjIyNCAyLjY4NnYyLjIzNWMwIC42NDQuNTM3IDEuMDEgMS4xODIuNzUyIDMuODg5LTEuNDgzIDYuOTQtNS4zNzIgNi45NC0xMC4xODUgMC02LjA4MS00Ljk0Mi0xMS4wNDQtMTEuMDIyLTExLjA0NC02LjA4MSAwLTEwLjk4IDQuOTYzLTEwLjk4IDExLjA0NGExMC44NCAxMC44NCAwIDAgMCA3LjExMiAxMC4yMDZjLjU4LjIxNSAxLjEzOS0uMTcyIDEuMTM5LS43NTJ2LTEuNzE5YTIuNzY4IDIuNzY4IDAgMCAxLTEuMDMyLjIxNWMtMS40MTggMC0yLjI1Ni0uNzczLTIuODU3LTIuMjEzLS4yMzctLjU4LS40OTUtLjkyNC0uOTg5LS45ODgtLjI1OC0uMDIyLS4zNDQtLjEyOS0uMzQ0LS4yNTggMC0uMjU4LjQzLS40NTEuODYtLjQ1MS42MjMgMCAxLjE2LjM4NiAxLjcxOSAxLjE4MS40My42MjMuODgxLjkwMyAxLjQxOC45MDMuNTM3IDAgLjg4MS0uMTk0IDEuMzc1LS42ODguMzY1LS4zNjUuNjQ1LS42ODcuOTAzLS45MDJaIj48L3BhdGg+DQo8L3N2Zz4=");
+                background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10.226 17.284c-2.965-.36-5.054-2.493-5.054-5.256 0-1.123.404-2.336 1.078-3.144-.292-.741-.247-2.314.09-2.965.898-.112 2.111.36 2.83 1.01.853-.269 1.752-.404 2.853-.404 1.1 0 1.999.135 2.807.382.696-.629 1.932-1.1 2.83-.988.315.606.36 2.179.067 2.942.72.854 1.101 2 1.101 3.167 0 2.763-2.089 4.852-5.098 5.234.763.494 1.28 1.572 1.28 2.807v2.336c0 .674.561 1.056 1.235.786 4.066-1.55 7.255-5.615 7.255-10.646C23.5 6.188 18.334 1 11.978 1 5.62 1 .5 6.188.5 12.545c0 4.986 3.167 9.12 7.435 10.669.606.225 1.19-.18 1.19-.786V20.63a2.9 2.9 0 0 1-1.078.224c-1.483 0-2.359-.808-2.987-2.313-.247-.607-.517-.966-1.034-1.033-.27-.023-.359-.135-.359-.27 0-.27.45-.471.898-.471.652 0 1.213.404 1.797 1.235.45.651.921.943 1.483.943.561 0 .92-.202 1.437-.719.382-.381.674-.718.944-.943' fill='rgb(205, 214, 244)'/></svg>");
                 background-repeat: no-repeat;
                 background-size: 25px;
                 animation: github 2s infinite ease;
                 transition: filter .35s;
-                filter: drop-shadow(0px 0px 12px #ffffff9e);
+                filter: drop-shadow(2px 2px 17px #cdd6f499);
                 
                 &:hover {
-                    filter: drop-shadow(0px 0px 8px #fffbb3);
+                    filter: drop-shadow(2px 2px 8px #f4f3cd99);
                 }
             }
             
