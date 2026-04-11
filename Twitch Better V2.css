@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.3.0
+@version        4.3.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -970,6 +970,8 @@
                     transition: opacity .15s;
                     visibility: hidden;
                 }
+                
+                input[aria-owns] { width: 111.1%; }
             }
             
             input {
@@ -980,7 +982,7 @@
             
             &:focus-within {
                 .bMcAyM {
-                    box-shadow: inset 0 0 0 2px rgb(148, 77, 255);
+                    box-shadow: inset 0 0 0 2px rgb(169, 112, 255);
                     transition: box-shadow .4s;
                 }
             }
@@ -2756,7 +2758,18 @@
                 }
             }
             
-            for row in (1..19) {
+            .config-body::after {
+                content: "Author: idesync.\A More info & help are available on GitHub below.";
+                text-align: center;
+                width: 100%;
+                display: inline-block;
+                padding-top: 15px;
+                white-space: pre;
+                text-wrap: auto;
+                font-weight: bold;
+            }
+            
+            for row in (1..20) {
                 .config-body > label:nth-of-type({row}) .config-value {
                     animation: checkboxes .35s backwards;
                     animation-delay: round(42ms*(row/1.8));
@@ -3160,11 +3173,5 @@
         to { background-position: 100px; } }
         
         @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-    }
-    
-    else {
-        #stylus-popup:has(.config-select [value="YouTube Dark"]) {
-            .config-checkbox:nth-of-type(2) { display: none; } // welcome animation checkbox
-        }
     }
 }
