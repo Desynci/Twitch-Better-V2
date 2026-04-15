@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.3.1
+@version        4.3.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -264,7 +264,7 @@
     
     SetupGradientText(__weight = '', __size = "200% 200%") {
         background-clip: text !important;
-		color: transparent !important;
+		color: transparent;
         background-size: unquote(__size) !important;
         if (__weight) { font-weight: __weight !important; }
     }
@@ -398,7 +398,7 @@
 				/* state after animation */
 			clip-path: inset(0 25% 0 -2% round 55px);
 			opacity: 0.5;
-			color: #b1b1bf !important;
+			color: #b1b1bf;
 			cursor: pointer;
 			
 			@media screen and (min-width: 1440px) {
@@ -1004,7 +1004,7 @@
                     left: 50%;
                     transform: translate(-50%, -50%);
                     color: var(--color-text-input-placeholder);
-                    transition: .2s;
+                    transition: .25s;
                 }
                 
                 &:hover::before {
@@ -1014,7 +1014,7 @@
                 &:has(> input[aria-owns]) {
                     &::before {
                         opacity: 0;
-                        transform: translate(-50%, -65%);
+                        transform: translate(-50%, -70%);
                     }
                 }
                 
