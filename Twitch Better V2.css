@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.3.4
+@version        4.3.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -891,10 +891,6 @@
         
 		.guest-star-live-card-clip-edge {
 			clip-path: inset(1px);
-		}
-		
-		[aria-label*="(alt+x)"] {
-			background: none !important;
 		}
 		
 		[class^="giftExpirationSparkles"] { display: none !important; }
@@ -2371,6 +2367,9 @@
     
     #chat-room-header-label {
         transition: transform .55s .2s;
+        width: 250px;
+        text-align: center;
+        cursor: pointer;
     }
     
     if (enable-banwords || enable-blacklist) {
@@ -2378,11 +2377,11 @@
             transform: translateX(-15px);
             
             &::after {
-                content: "[🛡️] Chat Filter"
+                content: "[🛡️] [Chat Filter]"
                 position: absolute;
                 text-wrap: nowrap;
                 font-variant-emoji: text;
-                clip-path: inset(0 70px 0 -2% round 55px);
+                clip-path: inset(0 80px 0 -2% round 55px);
                 transition: .65s .25s;
                 background: #c6c6d2;
                 background-clip: text;
@@ -2392,12 +2391,13 @@
             }
             
             &:hover {
-                transform: translateX(-53px);
+                transform: translateX(-45px);
                 transition-delay: .25s;
             }
             
             &:hover::after {
-                clip-path: inset(0);
+                transform: translateX(-31px);
+                clip-path: inset(0 0 0 31px);
                 background: #d4d4de;
                 background-clip: text;
             }
@@ -2434,7 +2434,7 @@
                     visibility: hidden;
 
                     &::before {
-                        content: "*censored message*";
+                        content: "deleted by banwords list.";
                         visibility: visible;
                         font-style: italic;
                     }
@@ -2750,7 +2750,7 @@
             
             #message-box-title {
                 font-family: "Inter" !important;
-                font-size: 19px;
+                font-size: 18px;
                 text-align: center;
                 align-content: center;
                 position: static;
