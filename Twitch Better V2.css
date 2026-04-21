@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.3.7
+@version        4.3.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -262,9 +262,9 @@
         }
     }
     
-    SetupGradientText(__weight = '', __size = "200% 200%") {
+    SetupGradientText(__weight = '', __size = "200% 200%", __i = false) {
         background-clip: text !important;
-		color: transparent;
+		color: transparent (__i) ? (!important) : ();
         background-size: unquote(__size) !important;
         if (__weight) { font-weight: __weight !important; }
     }
@@ -1463,12 +1463,12 @@
 		if (nick-gradient!="disabled") {
             if (nick-gradient[0] == "discord") {
                 .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i]:not([data-a-target="mod-comments-skip-link"]), a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
-                    SetupGradientText(600, "100px auto");
+                    SetupGradientText(600, "100px auto", true);
                     background: nick-gradient[1];
                     animation: gradient-discord 1.5s linear infinite;
                     
                     &::before {
-                        SetupGradientText('', "100px auto");
+                        SetupGradientText('', "100px auto", true);
                         content: '' + nick;
                         position: absolute;
                         opacity: .6;
@@ -1485,7 +1485,7 @@
             
             else if (nick-gradient[0] == "7tv") {
                 .chat-author__display-name[data-a-user={nick} i], .tw-link[href$={nick} i], a[href$={nick} i] h1.tw-title, [data-test-selector="user-menu-dropdown__display-name"], .thread-message__message--user-name[aria-label={nick} i], .message-preview__line .chat-author__display-name {
-                    SetupGradientText('', "100% 100%");
+                    SetupGradientText('', "100% 100%", true);
                     background: nick-gradient[1];
                     filter: nick-gradient[3];
                 }
