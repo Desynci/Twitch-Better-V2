@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.4.2
+@version        4.4.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -347,8 +347,8 @@
 		font-variant-emoji: text;
 	}
 	
-	.chat-room__viewer-card .core-error__message-container p, .emote-card__display-name h4 {
-        SetupGradientText(600, "100px auto");
+	.chat-room__viewer-card .core-error__message-container p, .emote-card__display-name h4, .viewer-card-header__banner a[href] {
+        SetupGradientText(600, "100px auto", true);
 		background: linear-gradient(to right, #ffa300, #ffea00, #ffa300);
 		animation: gradient-discord 1.5s linear infinite;
 	}
@@ -869,7 +869,27 @@
         .muted-segments-alert__content {
             border-color: #78787f45;
             border-radius: var(--border-radius-extra-large);
-            backdrop-filter: blur(6px) saturate(180%);
+            if (apply-blur) { backdrop-filter: blur(6px) saturate(180%); }
+        }
+        
+        .video-player__default-player .tw-loading-spinner {
+            .lbjVdM {
+                border-width: 3px;
+                color: hsl(264, 100%, 75%) !important;
+                animation: opacity-in 1.2s .3s backwards, epmXAj infinite 1s linear;
+            }
+            
+            .crawsG {
+                border-left: solid hsl(264, 100%, 75%);
+                animation: opacity-in 1.2s .3s backwards, epmXAj infinite 1s linear;
+            }
+        }
+        
+        .shell-loader__spinner {
+            border-left: solid #9147ff;
+            height: 28px;
+            width: 28px;
+            border-width: 2.5px;
         }
         
         .side-nav--expanded {
@@ -2073,6 +2093,7 @@
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
         .channel-info-content .home-header-sticky a[href]+p.gtJaaB { animation: swipe .55s .35s backwards }
 		.viewer-card-header__background, .support-panel .goal_widget_v2__container { animation: content-in .5s }
+        .shell-loader { animation: content-in .55s; transform-origin: top; }
 		.community-highlight [class="Layout-sc-1xcs6mc-0 fSfyIg"] { animation: community-highlight .3s }
 		[aria-label="Hide for yourself"] { animation: hide-button .45s }
 		.chat-line__message--emote { animation: emotes .5s }
@@ -2236,13 +2257,12 @@
 			.emote-card { border: none !important; }
 		}
         
-        .viewer-card-layer__draggable { // true viewer card
+        .viewer-card-layer__draggable:not(.kBKPhj) { // true viewer card
             $separators = "[class='Layout-sc-1xcs6mc-0 fPkGiP']", "[class='Layout-sc-1xcs6mc-0 dusfFk']";
             $separators = join(', ', $separators);
         
             width: 32rem;
             border-radius: 7px !important;
-            overflow: hidden;
             backdrop-filter: blur(15px) saturate(180%);
             
             button:is(.jHPwXq, .cikFpu) {
@@ -2931,6 +2951,7 @@
                     top: 14px;
                     animation: opacity-in .9s .15s backwards, reveal 2.9s .6s ease forwards;
                     padding-right: 1.5px;
+                    margin-left: 1.5px;
                 }
                 
                 &::after {
