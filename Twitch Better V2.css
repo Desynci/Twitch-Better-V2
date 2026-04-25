@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.4.0
+@version        4.4.2
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -139,11 +139,11 @@
 @var select nick-gradient "Nickname gradient:" {
     'None': "disabled",
 	'→ Discord #1': "discord linear-gradient(to right, #369876, #71ff9e, #369876) #369876",
-	'→ Discord #2*': "discord linear-gradient(to right, #ffa300, #ffea00, #ffa300) #ffa300",
+	'→ Discord #2': "discord linear-gradient(to right, #ffa300, #ffea00, #ffa300) #ffa300",
 	'→ Discord #3': "discord linear-gradient(to right, #a9c9ff, #ffbbec, #ffc3a0, #a9c9ff) #ffc3a0",
-    '→ Discord #4': "discord linear-gradient(to right, #9e6bff, #9fc1ff, #9e6bff) #9e6bff",
-    '→ Discord #5': "discord linear-gradient(to right, #826bc2, #b7a7f1, #826bc2) #826bc2",
-    '→ Discord #6': "discord linear-gradient(to right, #d3b65d, #9e8142, #d3b65d) #d3b65d",
+    '→ Discord #4*': "discord linear-gradient(to right, #d3b65d, #9e8142, #d3b65d) #d3b65d",
+    '→ Discord #5': "discord linear-gradient(to right, #9e6bff, #9fc1ff, #9e6bff) #9e6bff",
+    '→ Discord #6': "discord linear-gradient(to right, #826bc2, #b7a7f1, #826bc2) #826bc2",
     '→ 7TV Citrus': "7tv linear-gradient(90deg, #fff700 0%, #ffc400 20%, #ff8438 40%, #ff1f77 60%, #f0b 80%, #e0f 100%) #FF455F (drop-shadow(#e0f 0px 0px 0.1px))",
     '→ 7TV Evelone': "7tv url(\"https://cdn.7tv.app/paint/01KC2M1QNZ1Q1E47KPM14VSERH/layer/01KC2MMGYA4K0XE948FKRM307F/1x.webp\") #ec7600 (drop-shadow(rgb(236, 118, 0) 0px 0px 1.5px))",
     '→ 7TV Banger': "7tv repeating-linear-gradient(90deg, #feb820 0%, #ffc014 23%, #8c01fe 53%, #8c01fe 0%, #0fc 100%) #8c01fe (drop-shadow(#56caf0 0px 0px 1px))",
@@ -432,10 +432,9 @@
     if (night-mode-value > 0) {
         .video-player[data-a-player-type="site"] video { filter: brightness(100 - night-mode-value/1.1); }
         
-        __notify-width = ();
+        __notify-width = 114px;
         if (night-mode-value < 10%) { __notify-width = 106px; }
         else if (night-mode-value == 100%) { __notify-width = 121px; }
-        else { __notify-width = 114px; }
         
         .video-player[data-a-player-type="site"] .video-player__container::before {
             content: "Night mode: " + night-mode-value;
@@ -452,7 +451,7 @@
             width: __notify-width;
             text-wrap: nowrap;
             opacity: 0;
-            animation: nightmode-notify 5s 4s backwards;
+            animation: nightmode-notify 4.5s 2s backwards;
             will-change: transform;
             visibility: hidden;
             pointer-events: none;
@@ -467,6 +466,11 @@
                 top: 50px !important;
             }
         }
+        
+        __circle-pos-diff = 0px;
+        if (night-mode-value < 10%) { __circle-pos-diff = -5px; }
+        else if (night-mode-value > 15% && night-mode-value < 100%) { __circle-pos-diff = 1.5px; }
+        else if (night-mode-value == 100%) { __circle-pos-diff = 7.5px; }
         
         .video-player[data-a-player-type="site"] .tw-channel-status-text-indicator {
             &::before {
@@ -490,7 +494,7 @@
                 position: absolute;
                 border-radius: 50%;
                 background: greenyellow;
-                right: 135.5px;
+                right: 135.5px+__circle-pos-diff;
                 top: 28px;
                 width: 5px;
                 height: 5px;
@@ -508,7 +512,7 @@
             }
             
             &::after {
-                right: 45px !important;
+                right: 44px+__circle-pos-diff !important;
                 top: 34px !important;
             }
         }
@@ -525,7 +529,7 @@
                 }
                 
                 &::after {
-                    right: 154.5px !important;
+                    right: 154.5px+__circle-pos-diff !important;
                     top: 28px !important;
                 }
             }
@@ -1803,9 +1807,10 @@
     .streamer-card__balloon .ihBVuT .cfjChX { overflow: visible !important; }
 	
 		// -- 0.5s, 0.3s, 0.2s -- //
-	.notched-range--handle, .offline-recommendations-video-card [class^="offline-recommendations-video-card-border"] { transition: .5s }
-	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc, [data-a-target="follow-button"], [data-a-target="unfollow-button"] { transition: .3s }
-	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt,  { transition: .2s }
+	.notched-range--handle { transition: .5s }
+	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc, [data-a-target="follow-button"], [data-a-target="unfollow-button"], 
+    .offline-recommendations-video-card :is([class^="offline-recommendations-video-card-border"], .offline-recommendations-video-card-img) { transition: .3s }
+	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
@@ -2877,11 +2882,30 @@
                 label .config-value { animation: none; }
             }
             
+            __top-line = (nick=="nickname") ? "Welcome to" : "Good day,";
+            __bottom-line = (nick=="nickname") ? "Twitch Better" : "[" + nick + "]";
+            
+            if (nick-gradient[0] == "discord") {
+                .config-body::before {
+                    SetupGradientText('', "100px auto");
+                    content: __bottom-line;
+                    position: absolute;
+                    filter: blur(9px);
+                    background: nick-gradient[1];
+                    animation: gradient-discord 1.5s linear infinite, opacity-in .9s .15s backwards;
+                    pointer-events: none;
+                    font-family: "Inter" !important;
+                    font-size: 15.5px;
+                    left: 50%;
+                    top: 34px;
+                    transform: translate(-50%, -50%);
+                    text-wrap: nowrap;
+                    text-shadow: none !important;
+                }
+            }
+            
             #message-box-contents {
                 padding-top: 50px;
-                
-                __top-line = (nick=="nickname") ? "Welcome" : "Good day,";
-                __bottom-line = (nick=="nickname") ? "to Twitch Better" : "[" + nick + "]";
                 
                 &::before, &::after {
                     position: absolute;
@@ -2906,6 +2930,7 @@
                     font-style: italic;
                     top: 14px;
                     animation: opacity-in .9s .15s backwards, reveal 2.9s .6s ease forwards;
+                    padding-right: 1.5px;
                 }
                 
                 &::after {
