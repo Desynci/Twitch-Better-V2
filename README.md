@@ -1,7 +1,7 @@
 ##### Twitch Better V2: free theme for Stylus
 It's a custom CSS theme for Twitch that adds UI animations, new appearance, improved usability and a lot of settings.
 
-<img width="147,5" height="284" alt="Screenshot of the Twitch Better style settings" src="https://github.com/user-attachments/assets/377f5ecb-eb8a-4d3a-90b6-ff9c4e6bb756" />
+<img width="147,5" height="284" alt="Screenshot of the Twitch Better settings menu" src="https://github.com/user-attachments/assets/2e9befb5-e60c-4f50-8c37-1e668bcf410a" />
 
 #### How to use:
 1) Install [Stylus](https://github.com/openstyles/stylus?tab=readme-ov-file#releases) browser extention.
