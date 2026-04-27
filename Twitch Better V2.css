@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.4.7
+@version        4.4.8
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -1306,7 +1306,7 @@
     }
 	
     if (remove-gift) {
-        #live-channel-stream-information { 
+        #live-channel-stream-information {
             [data-a-target="gift-button"] { display: none; }
             [data-target="channel-header-right"] > .AoXTY:first-of-type { margin-right: -6px; }
         }
@@ -1541,6 +1541,7 @@
 					width: 100%;
 					border-radius: 4px;
                     pointer-events: none;
+                    animation: content-in .45s;
                 }
                 
 				&::before {
@@ -2168,7 +2169,7 @@
 			}
 		}
         
-        .channel-root__player .home-carousel-info+.fHdBNk .dIJXXT { // channel home mute button
+        .channel-root__player .home-carousel-info+.fHdBNk .dIJXXT { /* channel home mute button */
             background: #00000094 !important;
             backdrop-filter: blur(55px);
         }
@@ -2223,7 +2224,8 @@
         
         [aria-describedby="channel-points-reward-center-body"] {
             .reward-center__content {
-                background: #19191ad9 !important
+                background: #19191ad9 !important;
+                border-color: #53535f47 !important;
             }
                 
             .dduVcl {
@@ -2254,14 +2256,14 @@
             .checkout-form__modal-header, .jXtdkN {
                 background: none !important;
             }
-        } }
+        }
         
         .channel-root--home, .channel-root--home+.persistent-player {
             .video-player, .channel-page__video-player, .channel-page__video-player+.iHtxZC, .persistent-player {
                 border-radius: var(--border-radius-large);
                 overflow: hidden;
             }
-        }
+        } }
 		    // -- END of @CSS -- //
 		
 		{$player-settings} > div.goosYB:first-of-type {
@@ -3254,6 +3256,7 @@
                             animation: angle-gradient 4s linear infinite, opacity-in .55s .2s backwards;
                             margin-top: -3.5px;
                             border-radius: 12px;
+                            clip-path: path("M0 10.5 A 10.5 10.5 0 1 1 21 10.5 A 10.5 10.5 0 1 1 0 10.5 Z M 5 10.5 A 5.5 5.5 0 1 0 16 10.5 A 5.5 5.5 0 1 0 5 10.5 Z");
                         }
                         
                         else if (highlight-type=="cosmic") {
