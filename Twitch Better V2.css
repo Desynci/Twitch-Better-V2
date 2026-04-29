@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.4.8
+@version        4.4.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -241,8 +241,8 @@
     _Origin = dummy
     
     SetupHoverEffect(__remove-bg, __bg-hover, __bg-active, __border-radius, __scale, __inset = 0, __transform-origin = initial) {
-        if (__remove-bg) { &:hover, &:active { background: none !important; } }
-        if (__bg-active) { &:active::after { background-color: __bg-active; } }
+        if (__remove-bg) { &:hover, &:active, &:focus { background: none !important; } }
+        if (__bg-active) { &:active::after, &:focus::after { background-color: __bg-active; } }
         
         &:hover::after {
             transform: none;
@@ -271,9 +271,7 @@
     
     SetLanguage(__code, __content) {
         &:lang({__code}) {
-            &::before {
-                content: __content;
-            }
+            &::before { content: __content; }
         }
     }
     
@@ -282,10 +280,10 @@
         if (__hover) { &:hover::after { transition: unquote(__hover); } }
     }
     
-    border-right-radius(r) { border-top-right-radius: r !important; border-bottom-right-radius: r !important; }
-    border-left-radius(r) { border-top-left-radius: r !important; border-bottom-left-radius: r !important; }
     border-top-radius(r) { border-top-right-radius: r !important; border-top-left-radius: r !important; }
     border-bottom-radius(r) { border-bottom-right-radius: r !important; border-bottom-left-radius: r !important; }
+    border-left-radius(r) { border-top-left-radius: r !important; border-bottom-left-radius: r !important; }
+    border-right-radius(r) { border-top-right-radius: r !important; border-bottom-right-radius: r !important; }
     
 	.seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
@@ -370,7 +368,7 @@
 	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.9s cubic-bezier(0.76, 0, 0.24, 1) !important; }
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
 	
-		// Fix strange animation bug on closing popup
+		// Fix twitch animation bug on closing popup
 	.react-modal__overlay .tw-transition[aria-hidden="true"] { display: none; }
 	
 	.chat-line__message-body--highlighted {
@@ -382,7 +380,7 @@
 		font-variant-emoji: text;
 	}
 	
-	.chat-room__viewer-card .core-error__message-container p, .emote-card__display-name h4, .viewer-card-header__banner a[href] {
+	.chat-room__viewer-card .core-error__message-container p, .emote-card__display-name h4 {
         SetupGradientText(600, "100px auto", true);
 		background: linear-gradient(to right, #ffa300, #ffea00, #ffa300);
 		animation: gradient-discord 1.5s linear infinite;
@@ -1429,7 +1427,7 @@
             transform: translate3d(__sidebar-size+.15rem, 70.4px, 0px) !important;
         }
         
-        .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(175"]:is([style*="\, 50"], [style*="\, 49"]) { // collapse tooltip
+        .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(17"]:is([style*="\, 50"], [style*="\, 49"]) { // collapse tooltip
             transform: translate3d(253px, 11px, 0px) !important;
             
             .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
@@ -1443,7 +1441,7 @@
 			transform: translateX(-98%);
             opacity: 0;
             
-            @supports(-moz-appearance: none) { // apply only for firefox, otherwise it's blurry in chromium
+            @supports(-moz-appearance: none) { // apply only for firefox; blurry in chromium
                 will-change: transform, filter;
             }
             
