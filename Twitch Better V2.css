@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.4.9
+@version        4.5.0
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -2108,18 +2108,6 @@
             }
 		}
         
-        .channel-root--home.channel-root--live+.persistent-player {
-            position: fixed !important;
-            width: calc(100% - 10.5px) !important;
-            transform: none !important;
-            overflow: visible !important;
-            //max-height: 100% !important;
-        }
-        
-        #twilight-sticky-header-root+.root-scrollable__content {
-            overflow-x: hidden;
-        }
-        
 		if (!sidebar-hover-only) { .side-nav--expanded { animation: side-nav .3s ease } }
 		.vod-message .dQedsG { animation: pop-small .3s }
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
@@ -2175,25 +2163,6 @@
 		[aria-labelledby="active-settings-menu-header"] > div {
 			animation: blur-55-saturate 0.9s forwards !important;
 		}
-        
-        .channel-root__player .home-carousel-info {
-            animation: none !important;
-            backdrop-filter: blur(55px) saturate(180%);
-        }
-        
-        .channel-root__info {
-            transition: background .55s, transform .5s !important;
-        }
-        
-        .channel-root__info--home .channel-info-content {
-            background: #09090bf2 !important;
-			animation: blur-25-saturate .55s forwards;
-            
-            .home-header-sticky {
-                background: none;
-                position: static;
-            }
-        }
         
 		[data-popper-placement]:not([data-popper-placement="right-start"]):has(.dduVcl) {
 			background: #18181bb0 !important;
@@ -2263,6 +2232,36 @@
             }
         } }
 		    // -- END of @CSS -- //
+            
+        .channel-root__player .home-carousel-info {
+            animation: none !important;
+            backdrop-filter: blur(55px) saturate(180%);
+        }
+        
+        .channel-root__info .channel-info-content {
+            transition: background .55s;
+        }
+        
+        .channel-root__info--home .channel-info-content {
+            background: #09090bf2 !important;
+			animation: blur-25-saturate .55s forwards;
+            
+            .home-header-sticky {
+                background: none;
+                position: static;
+            }
+        }
+        
+        .channel-root--home.channel-root--live+.persistent-player {
+            position: fixed !important;
+            width: calc(100% - 10.5px) !important;
+            //transform: none !important;
+            //max-height: 100% !important;
+        }
+        
+        #twilight-sticky-header-root+.root-scrollable__content {
+            overflow-x: hidden;
+        }
 		
 		{$player-settings} > div.goosYB:first-of-type {
 			backdrop-filter: blur(15px);
