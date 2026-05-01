@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.2
+@version        4.5.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -861,6 +861,10 @@
 				background-color: #131316 !important;
 			}
 		}
+        
+        .chatCard--VU4fm { // clip card
+            background: #131316 !important;
+        }
 		
 		.chat-input-tray__open {
 			background: #131315b0 !important;
@@ -933,6 +937,10 @@
             height: 28px;
             width: 28px;
             border-width: 2.5px;
+        }
+        
+        .chatCard--VU4fm { // clip card
+            border-radius: var(--border-radius-large) !important;
         }
         
         .side-nav--expanded {
@@ -1854,11 +1862,22 @@
 	
 	.social-media-link__external-link-icon {
 		transition: .2s;
+        
 		.dVDUDh {
 			width: 1.7rem;
 			height: 1.7rem;
 		}
 	}
+    
+    .content-overlay-gate button.ckwgLc { // stream red error button
+        .tw-svg {
+            transition: .3s;
+        }
+        
+        &:focus .tw-svg {
+            transform: rotate(1turn);
+        }
+    }
 	
         // channel link underline animation
 	.metadata-layout__support .dMBVIY a[href], .streamer-card__balloon .gAaTpx, .home-header-sticky h1.tw-title {
@@ -1917,7 +1936,7 @@
 	
 		// -- 0.05s -- //
 	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"], 
-    .ckwgLc, .fQWTss, .MuiButtonBase-root { transition: .05s linear }
+    .ckwgLc, .fQWTss, .MuiButtonBase-root, .gFJWcf { transition: .05s linear }
     
         // -- !important -- //
     .rewardsLearnMoreExpandedViewDark--EoAxN { transition: .3s !important }
@@ -2184,7 +2203,7 @@
 	if (apply-blur) {
 			// -- @CSS literal -- //
 		@css {
-            :not([role="tooltip"]) > [data-popper-placement], .support-panel-container, .clip-editor-popup, .dJwphs.chat-input-tray__open, [aria-labelledby="active-settings-menu-header"] > div {
+            :not([role="tooltip"]) > [data-popper-placement], .support-panel-container, .clip-editor-popup, [aria-labelledby="active-settings-menu-header"] > div {
                 background: #00000094 !important;
                 animation: blur-55 0.9s forwards;
                 border-radius: var(--border-radius-large);
@@ -2202,6 +2221,37 @@
                 background: #00000094 !important;
                 backdrop-filter: blur(55px);
             }
+            
+            [aria-describedby="channel-points-reward-center-body"] .reward-center__content, .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl, .channel-root__player .home-carousel-info  {
+                background: #18181bb0 !important;
+                border-radius: var(--border-radius-large);
+                animation: blur-15 0.4s forwards;
+
+                .dduVcl, .iGvYpN {
+                    background: none !important;
+                }
+            }
+            
+            .dJwphs.chat-input-tray__open {
+                animation: blur-25-saturate .55s forwards, chat-tray 0.4s;
+                box-shadow: none !important;
+                
+                > div {
+                    border-left: 3px solid rgb(0, 255, 31);
+                }
+            }
+
+            [aria-describedby="channel-points-reward-center-body"] {
+                .reward-center__content {
+                    background: #18181bbd !important;
+                    border-color: #53535f47 !important;
+                    //animation: blur-25 0.4s forwards;
+                }
+
+                .dduVcl {
+                    background: none !important;
+                }
+            }
 
             [aria-labelledby="active-settings-menu-header"] > div {
                 animation: blur-55-saturate 0.9s forwards !important;
@@ -2213,10 +2263,10 @@
                 animation: blur-15 0.4s forwards;
                 box-shadow: var(--shadow-elevation-2) !important;
 
-                .dduVcl, .iGvYpN {
+                .dduVcl, .iGvYpN, .chat-settings__header, .chat-settings__content {
                     background: none !important;
                 }
-
+                
                 .dduVcl {
                     box-shadow: none !important;
                 }
@@ -2229,27 +2279,6 @@
                 border: 1px solid #4f4f4f30;
 
                 > div, > div > div {
-                    background: none !important;
-                }
-            }
-
-            [aria-describedby="channel-points-reward-center-body"] .reward-center__content, .hVLlmi, [class="Attached-sc-go6eno-0 gdnAaW"] div, .icXHzp, .dEvhpQ:not(.chat-input-tray__open--persistent), [aria-label="emote-picker"], .vod-message .dduVcl, .channel-root__player .home-carousel-info {
-                background: #18181bb0 !important;
-                border-radius: var(--border-radius-large);
-                animation: blur-15 0.4s forwards;
-
-                .dduVcl, .iGvYpN {
-                    background: none !important;
-                }
-            }
-
-            [aria-describedby="channel-points-reward-center-body"] {
-                .reward-center__content {
-                    background: #19191ad9 !important;
-                    border-color: #53535f47 !important;
-                }
-
-                .dduVcl {
                     background: none !important;
                 }
             }
@@ -2324,12 +2353,17 @@
         .channel-root--home.channel-root--live+.persistent-player {
             position: fixed !important;
             width: calc(100% - 10.5px) !important;
-            //transform: none !important;
+            transform: none !important;
+            overflow: visible !important;
             //max-height: 100% !important;
         }
         
         #twilight-sticky-header-root+.root-scrollable__content {
             overflow-x: hidden;
+        }
+        
+        .snackbar-list__container.undefined { // probably bugged container on "video" tab that causes bottom page gap
+            > .fxPZea { margin-block-start: 0 !important; } // still not sure if it's not needed for anything, so just remove padding, not the element itself
         }
 		
 		{$player-settings} > div.goosYB:first-of-type {
@@ -2938,6 +2972,8 @@
 
         @keyframes blur-15-decrease { 0% { backdrop-filter: blur(70px); } 
         to { backdrop-filter: blur(15px); } }
+
+        @keyframes blur-25 { to { backdrop-filter: blur(25px); } }
 
         @keyframes blur-25-saturate { to { backdrop-filter: blur(25px) saturate(180%); } }
 
