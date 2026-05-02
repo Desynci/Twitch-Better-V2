@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.3
+@version        4.5.4
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -28,6 +28,7 @@
 @var checkbox use-apple-emoji "Use Apple emoji font" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
 @var checkbox remove-clip-links "Hide chat clip links (show only cards)" 1
+@var checkbox restore-deleted-messages "Restore deleted chat messages (performance warning!)" 0
 @var select custom-chat-button "Customize chat button:" {
 	'None': "disabled",
 	'→ Yuji Itadori': "'https://i.postimg.cc/0NqrRwYX/asset3-ezgif-com-video-to-gif-converter.gif' content-in1 linear-gradient(90deg, transparent 0%, rgba(144, 0, 7, 0.08) 20%, rgba(144, 0, 7, 0.08) 50%, rgba(144, 0, 7, 0.2) 100%)",
@@ -75,6 +76,7 @@
     '→ Shoto Todoroki': "'https://cdn.discordapp.com/avatar-decoration-presets/a_9e815a5c371894d0ce5a15fba9cf999a.png'",
     '→ Star Tiara': "'https://cdn.discordapp.com/avatar-decoration-presets/a_55393fb776ecc721bc551823d4ea52df.png'"
 }
+
 @var range night-mode-value "Player night mode:" [0,0,100,5,"%"]
 @var color timeline_color "VOD timeline color:" #a970ff
 @var color thumb_color "VOD thumb color:" #ffffff
@@ -862,8 +864,8 @@
 			}
 		}
         
-        .chatCard--VU4fm { // clip card
-            background: #131316 !important;
+        .hfLCgr.chatCard--VU4fm { // clip card
+            background: #151519 !important;
         }
 		
 		.chat-input-tray__open {
@@ -1442,11 +1444,11 @@
     
 	if (sidebar-hover-only) {
         .tw-dialog-layer div[data-popper-placement="bottom"][style*="\, 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) { // channels list sorting popup 
-            transform: translate3d(__sidebar-size+.15rem, 70.4px, 0px) !important;
+            transform: translate3d(__sidebar-size, 70.4px, 0px) !important;
         }
         
         .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(17"]:is([style*="\, 50"], [style*="\, 49"]) { // collapse tooltip
-            transform: translate3d(253px, 11px, 0px) !important;
+            transform: translate3d(250px, 11px, 0px) !important;
             
             .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
         }
@@ -2235,17 +2237,13 @@
             .dJwphs.chat-input-tray__open {
                 animation: blur-25-saturate .55s forwards, chat-tray 0.4s;
                 box-shadow: none !important;
-                
-                > div {
-                    border-left: 3px solid rgb(0, 255, 31);
-                }
             }
 
             [aria-describedby="channel-points-reward-center-body"] {
                 .reward-center__content {
                     background: #18181bbd !important;
                     border-color: #53535f47 !important;
-                    //animation: blur-25 0.4s forwards;
+                    /* animation: blur-25 0.4s forwards; */
                 }
 
                 .dduVcl {
@@ -2288,9 +2286,9 @@
                 @starting-style { background-color: transparent !important; }
                 transition: background-color .45s cubic-bezier(0.76, 0, 0.24, 1);
 
-                //.modal-wrapper__content > div {
-                //    backdrop-filter: blur(15px) saturate(180%);
-                //}
+                /*.modal-wrapper__content > div {
+                    backdrop-filter: blur(15px) saturate(180%);
+                }*/
 
                 .kjWTWh, .HPVMB, .jChGcU, .checkout-form__animation-container, .reporting-modal__container, .boqpkL {
                     background: #0e0e10e0 !important;
@@ -2352,7 +2350,7 @@
         
         .channel-root--home.channel-root--live+.persistent-player {
             position: fixed !important;
-            width: calc(100% - 10.5px) !important;
+            width: calc(100% - 10.5px) !important; // 100% - scrollbar width
             transform: none !important;
             overflow: visible !important;
             //max-height: 100% !important;
@@ -2498,6 +2496,7 @@
 			background: #00000094 !important;
             backdrop-filter: blur(55px);
             box-shadow: var(--shadow-elevation-2);
+            border: 1px solid #53535f47;
             overflow: hidden;
             
             .hkTOFA {
@@ -2604,6 +2603,24 @@
 		} }
 	}
     
+    if (restore-deleted-messages) {
+        .chat-line__message:has(.chat-line__message--deleted-notice) {
+            background: #ff000029;
+            
+            &::after {
+                content: "— RESTORED DELETED MESSAGE — \A" attr(aria-label);
+                color: var(--color-text-alt-2);
+                font-style: italic;
+                white-space: break-spaces;
+            }
+            
+            .chat-line__message--deleted-notice {
+                font-size: 0;
+                visibility: hidden;
+            }
+        }
+    }
+    
     // function from Twitch.tv Compact Left Panel by pabli
     // credits: https://userstyles.world/style/3045
     filter-words(a) {
@@ -2646,7 +2663,7 @@
     }
     
     #chat-room-header-label {
-        transition: transform .55s .2s;
+        transition: transform .65s .2s;
         width: 250px;
         text-align: center;
         cursor: pointer;
@@ -2657,12 +2674,12 @@
             transform: translateX(-15px);
             
             &::after {
-                content: "[🛡️] [Chat Filter]"
+                content: "[🛡️] | Chat Filter"
                 position: absolute;
                 text-wrap: nowrap;
                 font-variant-emoji: text;
                 clip-path: inset(0 80px 0 -2% round 55px);
-                transition: .65s .25s;
+                transition: .7s .15s;
                 background: #c6c6d2;
                 background-clip: text;
                 color: transparent !important;
@@ -2670,12 +2687,11 @@
                 animation: opacity-in .25s .85s backwards;
             }
             
-            &:hover {
+            &:active {
                 transform: translateX(-45px);
-                transition-delay: .25s;
             }
             
-            &:hover::after {
+            &:active::after {
                 transform: translateX(-31px);
                 clip-path: inset(0 0 0 31px);
                 background: #d4d4de;
