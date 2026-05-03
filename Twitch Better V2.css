@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.5
+@version        4.5.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -3038,7 +3038,7 @@
 
 @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
     if (custom-theme) {
-        #stylus-popup:has(.config-select [value="YouTube Dark"]) {
+        #stylus-popup:has(.config-heading > [href*="Twitch-Better-V2"]) {
             scrollbar-color: rgba(255, 255, 255, .4) transparent;
             
             #message-box {
@@ -3208,6 +3208,11 @@
             .config-select select {
                 background-color: #292929;
                 border-radius: 5px;
+            }
+            
+            input:not([type]), input[type=number], input[type=search], input[type=text], input[type=url] {
+                background-color: #292929;
+                border-radius: 2px;
             }
             
             .config-color .config-value {
@@ -3486,6 +3491,64 @@
             .slider, .slider:focus {
                  box-shadow: inset 1px 1px 2px rgba(13, 38, 38, .5) !important; 
              }
+        }
+        
+        [data-ui-theme="light"] #stylus-popup:has(.config-heading > [href*="Twitch-Better-V2"]) { // light theme
+            #message-box {
+                background: rgba(0, 0, 0, .8);
+                
+                > div {
+                    background: rgba(0, 0, 0, .65);
+                }
+                
+                .config-body label:not(:first-child) {
+                    border-top: 1px dotted hsl(0, 0%, 24%);
+                }
+                
+                select {
+                    border: 1px solid #5e5e5e;
+                }
+                
+                .slider:not(:checked) {
+                    color: #242424;
+                    background: #80808099;
+                }
+                
+                .select-wrapper:after {
+                    color: #ccc;
+                }
+                
+                input:not([type]), input[type="number"], input[type="search"], input[type="text"], input[type="url"] {
+                    border: 1px solid #5e5e5e;
+                }
+                
+                button {
+                    background: linear-gradient(#3d3d3d, #343434);
+                    border: 1px solid #555;
+                    
+                    &:disabled {
+                        border-color: #3d3d3d;
+                    }
+                    
+                    &[data-cmd="default"] {
+                        color: #ccc;
+                    }
+                }
+                
+                input[type=checkbox]:not(.slider) {
+                    border: 1px solid #7f7f7f;
+                    color: #ccc !important;
+                    
+                    &:hover {
+                        background-color: #454545;
+                        border-color: #989898;
+                    }
+                }
+                
+                #config-autosave-wrapper {
+                    color: #ccc !important;
+                }
+            }
         }
         
         @font-face {
