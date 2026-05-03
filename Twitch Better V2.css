@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.4
+@version        4.5.5
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -309,6 +309,7 @@
     .dtLYnZ[aria-labelledby="channel-points-reward-center-header"] { margin-block-end: 38px; }
     .side-nav__scrollable_content { scrollbar-width: none; }
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf::after { background-color: #9d5cff; }
+    .chat-input-tray__open--web { margin-right: -2px; }
     
     @css { #CLIP_EDITOR_ALERT_BOX_ID .iTLuyA > .dJfBsr {
         .hctRiN {
@@ -882,26 +883,40 @@
 			&:hover { background-color: #781fff; }
 		}
 		
-		[data-test-selector="chat-private-callout-queue__callout-container"] .bTkUWo {
-			background-color: #18181b !important;
+		[data-test-selector="chat-private-callout-queue__callout-container"] > .bTkUWo {
+			background-color: #171617 !important;
+            box-shadow: none !important;
+            margin: 0 -1px;
 		}
 		
-		[data-a-target="chat-private-callout__primary-button"] {
-			background: linear-gradient(90deg, #9db2ff 0%, #de76f0 50%, #9db2ff 100%);
-			background-size: 200% 200%;
-			animation: gradient-custom 8s linear infinite;
+		/*[data-a-target="chat-private-callout__primary-button"] {
+		    background-color: #bf94ff !important;
+            color: #000;
 			
 			&:hover {
-				filter: brightness(0.9);
+				filter: brightness(0.85);
 			}
             
-            &:active {
-                filter: brightness(0.8);
+            &:active, &:focus {
+                filter: brightness(0.6);
             }
-		}
+		}*/
 	}
 	
 	if (new-design) {
+        button.euTJEC {
+            color: black !important;
+            background-color: #bf94ff !important;
+            
+            &:hover {
+				filter: brightness(0.85);
+			}
+            
+            &:active {
+                filter: brightness(0.7);
+            }
+        }
+        
         .persistent-player__border--mini {
             margin: 1rem 3rem 7rem !important;
             border-radius: 5px;
@@ -1963,20 +1978,20 @@
 			}
 		}
 		
-		/*.pinned-chat__highlight-card {
-			.highlight { 
-				.pinned-chat__scrollable-area {
-					transition: max-height .2s ease;
-					max-height: 50px;
-				}
-			}
-			
-			.highlight:not(.highlight__collapsed) { 
-				.pinned-chat__scrollable-area {
-					max-height: 20rem;
-				}
-			}
-		}*/
+            // -- Community highlight expand transition -- //
+        .kjWTWh > .community-highlight-stack__scroll-area--disable:not(* + .community-highlight-stack__scroll-area--disable) { // expanded highlight
+            max-height: 228px !important;
+        }
+        
+        .community-highlight-stack__scroll-area--disable:not(* + .community-highlight-stack__scroll-area--disable) { // highlight
+            max-height: 75px !important;
+            transition: max-height .35s ease;
+            overflow-y: hidden !important;
+        }
+        
+        .community-highlight [class="Layout-sc-1xcs6mc-0 fSfyIg"] { // sent by
+            margin-right: 1rem;
+        }
 		
 		if (animate-messages=="default") {
 			if (last-only) { .chat-scrollable-area__message-container > div:last-child { animation: messages .25s; } }
