@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.6
+@version        4.5.7
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -917,6 +917,23 @@
             }
         }
         
+            // colored chat reply list borders
+        .chat-replies-list {
+            border-inline-start: none;
+
+            > div {
+                border-inline-start: 4px solid var(--color-hinted-grey-7);
+            }
+
+            __color-list = (none #5E5C52 #6C6C9E #B3A66B #4646A4 hsl(64, 65%, 42%) #A86824 #B071BF #315E95 #984327 #918A6A)
+
+            for row in (1..10) {
+                > .Layout-sc-1xcs6mc-0:nth-of-type({row}) {
+                    border-inline-color: __color-list[row];
+                }
+            }
+        }
+        
         .persistent-player__border--mini {
             margin: 1rem 3rem 7rem !important;
             border-radius: 5px;
@@ -1096,7 +1113,7 @@
 		}
 		
 		.tw-tag {
-            color: #d3d3d9;
+            color: #d3d3d9 !important;
 			background-color: #34363c61 !important;
 		}
 		
@@ -1981,6 +1998,11 @@
             // -- Community highlight expand transition -- //
         .kjWTWh > .community-highlight-stack__scroll-area--disable:not(* + .community-highlight-stack__scroll-area--disable) { // expanded highlight
             max-height: 228px !important;
+        }
+        
+        [data-test-selector="expanded-content"] > .bfcPrD { // expanded content for predictions
+            max-height: 220px;
+            overflow-y: scroll;
         }
         
         .community-highlight-stack__scroll-area--disable:not(* + .community-highlight-stack__scroll-area--disable) { // highlight
