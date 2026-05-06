@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.5.8
+@version        4.5.9
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -919,7 +919,7 @@
             }
 		}*/
 	}
-	
+    
 	if (new-design) {
         [data-test-selector="chat-private-callout-queue__callout-container"] button.euTJEC {
             color: black !important;
@@ -934,6 +934,17 @@
             }
         }
         
+        GetCurrentBorderColor(iCurrent) {
+            __color-list = (#B3A66B #4646A4 #919727 #A86824 #6C6C9E #B071BF #315E95 #5E5C52 #984327 #918A6A)
+            _result = iCurrent - 1 // -1 cause array index starts at 0
+            
+            if (iCurrent > 10) {
+                _result = 20 - iCurrent - 1
+            }
+            
+            return __color-list[_result]
+        }
+        
             // colored chat reply list borders
         .chat-replies-list {
             border-inline-start: none;
@@ -942,13 +953,12 @@
                 border-inline-start: 4px solid var(--color-hinted-grey-7);
             }
 
-            __color-list = (none #5E5C52 #6C6C9E #B3A66B #4646A4 #919727 #A86824 #B071BF #315E95 #984327 #918A6A)
-
-            for row in (1..10) {
+            for row in (1..20) { // limit to 20 to not overbloat the output
                 > .Layout-sc-1xcs6mc-0:nth-of-type({row}) {
-                    border-inline-color: __color-list[row];
+                    border-inline-color: GetCurrentBorderColor(row);
                 }
             }
+            
         }
         
         .persistent-player__border--mini {
@@ -1970,23 +1980,28 @@
 	
 		// -- 0.5s, 0.3s, 0.2s -- //
 	.notched-range--handle { transition: .5s }
-	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc, [data-a-target="follow-button"], [data-a-target="unfollow-button"], 
-    .offline-recommendations-video-card :is([class^="offline-recommendations-video-card-border"], .offline-recommendations-video-card-img) { transition: .3s }
-	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz, .kzBqxU, .jJdyrt { transition: .2s }
+    
+	.hqIgGz, .emote-button__link img, .edit-appearance__badge-chooser, .kJMgAB, .dGVryc, [data-a-target="follow-button"],
+    [data-a-target="unfollow-button"], .offline-recommendations-video-card :is([class^="offline-recommendations-video-card-border"],
+    .offline-recommendations-video-card-img) { transition: .3s }
+        
+	.chat-line__username-container--hoverable, .kMwhRV, .jUiaVy, .fFIkct, .predictions-list-item__body, .jLHIWd, .cLEglz,
+    .kzBqxU, .jJdyrt { transition: .2s }
 	
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
 	.gxYeIp, .bZLSuF, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button, .dOkkBt, .iwMIba, .blixHj, .bmaSLQ,
     .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
-    [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi, 
-    .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF, 
+    [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi,
+    .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF,
     .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag, .tw-combo-input__button-icon, .MuiPickersCalendarHeader-label { transition: .15s }
 	
 		// -- 0.1s -- //
-	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN, .MuiPickersYear-yearButton  { transition: .1s }
+	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN,
+    .MuiPickersYear-yearButton, .tw-radio__label::before { transition: .1s }
 	
 		// -- 0.05s -- //
-	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"], 
+	.chat-line__message-highlight, .chat-line__icon, .kZmtcH, .gcA-DkW, .highlight__progress-bar [data-a-target="tw-progress-bar-animation"],
     .ckwgLc, .fQWTss, .MuiButtonBase-root, .gFJWcf { transition: .05s linear }
     
         // -- !important -- //
@@ -2023,7 +2038,7 @@
         }
         
         .community-highlight-stack__scroll-area--disable:not(* + .community-highlight-stack__scroll-area--disable) { // highlight
-            max-height: 75px !important;
+            max-height: 100px !important;
             transition: max-height .25s ease;
             overflow-y: hidden !important;
         }
