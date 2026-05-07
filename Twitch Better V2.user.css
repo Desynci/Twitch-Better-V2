@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.6.0
+@version        4.6.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -233,7 +233,7 @@
 	__PLAYER-SETTINGS = "[data-a-target='player-settings-menu']"
 	__CHAT-CUSTOMIZATION = ".chat-input__badge-carousel [class='Attached-sc-go6eno-0 cJkJNl']"
     
-    __dummy($Value) { return $Value }
+    __dummy($Value) { return $Value; }
     
     _Inset = __dummy
     _BorderRadius = __dummy
@@ -297,15 +297,15 @@
 	.chat-scrollable-area__message-container--paused { padding-bottom: 1rem; }
 	.whispers-threads-box__header, .whispers-threads-box__header+.gxOWjV, .jmERFg { border-bottom: none !important; }
 	.kpgZBi { border-radius: 12px !important; }
-    .home-carousel-info+.fHdBNk button { border-radius: var(--border-radius-small); } // stream mute button hover fix
+    .home-carousel-info+.fHdBNk button { border-radius: var(--border-radius-small); } // Stream mute button hover fix
 	.chat-wysiwyg-input-box, .fFIkct, .ixHVAF { box-shadow: inset 0 0 0 var(--input-border-width-small) #636363f2; }
 	[data-a-target="share-button"] { display: none; }
     [data-a-target="unfollow-button"] .kxAWvZ { margin-inline: 4px !important; }
-    .cLEglz, .kzBqxU, .jJdyrt { visibility: visible !important; opacity: 0; } // to enable opacity transitions
+    .cLEglz, .kzBqxU, .jJdyrt { visibility: visible !important; opacity: 0; } // To allow opacity transitions
     .dtLYnZ[aria-labelledby="channel-points-reward-center-header"] { margin-block-end: 38px; }
     .side-nav__scrollable_content { scrollbar-width: none; }
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf::after { background-color: #9d5cff; }
-    .chat-input-tray__open--web { margin-right: -2px; } // fix asymmetric margin for chat tray
+    .chat-input-tray__open--web { margin-right: -2px; } // Fix asymmetric margin for chat tray
     if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
     
@@ -434,8 +434,8 @@
     }
     
     .chat-replies-list > .AoXTY:hover .chat-line__message-highlight {
-        background: rgba(86, 20, 184, .5)
-        transition: .15s
+        background: rgba(86, 20, 184, .5);
+        transition: .15s;
     }
     
     .chat-replies-list__reply-line--flash-animation-dark {
@@ -619,7 +619,7 @@
     
         // YouTube controls
 	if (player-controls!="default") {
-		_VOLUME-CONTAINER = "[class='Layout-sc-1xcs6mc-0 kvrzxX']";
+		__VOLUME-CONTAINER = "[class='Layout-sc-1xcs6mc-0 kvrzxX']";
         
 		__light-bg = rgba(83, 83, 95, .478);
 		__dark-bg = rgba(2, 2, 3, .478);
@@ -678,7 +678,7 @@
 		
 		// -- VOLUME BUTTON & SLIDER -- //
 		
-		.player-controls__left-control-group {_VOLUME-CONTAINER} {
+		.player-controls__left-control-group {__VOLUME-CONTAINER} {
 			position: relative;
 			border-radius: 55px !important;
 			padding-right: 9.2px;
@@ -708,7 +708,8 @@
             SetupHoverEffect(false, __bg-inset-on-hover, '', _BorderRadius(55px), scale(0.8), _Inset(2px));
             Transition(".15s");
             
-			[data-a-target="player-mute-unmute-button"] { // mute button on volume container
+                // Mute button on volume container
+			[data-a-target="player-mute-unmute-button"] {
 				SetupHoverEffect(false, __bg-inset-on-hover, __bg-inset-on-active, _BorderRadius(55px), scale(0.3), _Inset(2.5px));
                 Transition(".15s");
 			}
@@ -778,7 +779,7 @@
                 Transition(".15s");
             }
             
-            > div:is(.cofMAX, .resize-detector, .kYtUcc)::after { // can't apply SetupHoverEffect directly on selector with :not
+            > div:is(.cofMAX, .resize-detector, .kYtUcc)::after { // Can't apply SetupHoverEffect directly on selector with :not
                 content: initial;                                // so use workaround to remove pseudoclass from not needed elements
             }
             
@@ -813,11 +814,13 @@
 					height: __button-size;
 				}
 				
+                    // Clip button
 				&[aria-label*="(alt+x)"] {
 					height: __button-size;
 				}
 				
-				&[aria-label].yezmM:disabled { // disabled clip button
+                    // Disabled clip button
+				&[aria-label].yezmM:disabled {
 					background-color: #000 !important;
 					border-right-radius: 0;
 					
@@ -968,7 +971,7 @@
                 border-inline-start: 4px solid var(--color-hinted-grey-7);
             }
             
-            for row in (1..20) { // limit to 20 to not overbloat the output
+            for row in (1..20) { // Limit to 20 to not overbloat the output
                 > .Layout-sc-1xcs6mc-0:nth-of-type({row}) {
                     border-inline-color: GetCurrentBorderColor(row);
                 }
@@ -1098,11 +1101,11 @@
                 visibility: hidden;
             }
             
-            .gwKDQz { // text
+            .gwKDQz { // Text
                 padding-inline: 1.5rem !important;
             }
             
-            .jfyitl { // button
+            .jfyitl { // Button
                 margin: 0 auto;
             }
         }
@@ -1137,6 +1140,7 @@
 			&:hover { background-color: #786090; }
 		}
 		
+            // Unavailable VOD chat icon animation
 		.video-chat__message-list-wrapper .jyLLNw > .jLggkh {
 			&::before {
 				content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path fill='red' d='m19.613 2-1.912.585.584 1.912 1.913-.584L19.613 2Zm-5.737 1.754 1.912-.585.585 1.913-1.913.585-.584-1.913Zm-1.913.585-1.913.585.585 1.912 1.913-.584-.585-1.913ZM8.138 5.508l-1.913.585.585 1.913 1.912-.585-.584-1.913Zm-3.825 1.17L2.4 7.263l.585 1.912 1.912-.584-.584-1.913ZM5 11H3v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9h-2v9H5v-9ZM9 11H7v2h2v-2Zm2 0h2v2h-2v-2Zm6 0h-2v2h2v-2Z'/></svg>");
@@ -1407,7 +1411,7 @@
         }
     }
 	
-        // Removers
+        // Removers functions
     if (remove-gift) {
         #live-channel-stream-information {
             [data-a-target="gift-button"] { display: none; }
@@ -1458,14 +1462,16 @@
 	}
 	if (remove-turbo) {
         @css {
+                /* small button */
             .top-nav__menu .bZYcrx [class="Layout-sc-1xcs6mc-0 VxLcr"] > [class="Layout-sc-1xcs6mc-0"] > [class="Layout-sc-1xcs6mc-0"] > .iDMNUO {
-                .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0[aria-label] { /* small button */
+                .ScCoreButton-sc-ocjdkq-0.glPhvE.ScButtonIcon-sc-9yap0r-0[aria-label] {
                     display: none;
                     
                     &+.tw-new-item-indicator__container { display: none; }
                 }
                 
-                button[class="ScCoreButton-sc-ocjdkq-0 yezmM"] { /* large button */
+                    /* large button */
+                button[class="ScCoreButton-sc-ocjdkq-0 yezmM"] {
                     display: none;
                     
                     &+.tw-new-item-indicator__container { display: none; }
@@ -1486,7 +1492,8 @@
             }
         }
         
-        .chat-line__no-background > .dtoOxd { // fix short preview cards
+            // Fix short preview cards
+        .chat-line__no-background > .dtoOxd {
             width: 100%;
         }
     }
@@ -1528,11 +1535,13 @@
 	if (sidebar-hover-only) {
         __side-nav-bg = transparentify(#1d1d20, #fff, 0.8)
         
-        .tw-dialog-layer div[data-popper-placement="bottom"][style*="\, 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) { // channels list sorting popup 
+            // Channels list sorting popup 
+        .tw-dialog-layer div[data-popper-placement="bottom"][style*="\, 70"]:is([style*="translate3d(10"], [style*="translate3d(9"]) {
             transform: translate3d(__sidebar-size, 70.4px, 0px) !important;
         }
         
-        .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(17"]:is([style*="\, 50"], [style*="\, 49"]) { // collapse tooltip
+            // Collapse tooltip
+        .tw-tooltip-layer div[data-popper-placement="bottom"][style*="translate3d(17"]:is([style*="\, 50"], [style*="\, 49"]) {
             transform: translate3d(250px, 11px, 0px) !important;
             
             .tw-tooltip-popper-arrow { left: -3px !important; top: 0px !important; transform: translate3d(0px, 12.9px, 0px) !important; }
@@ -1546,7 +1555,8 @@
 			transform: translateX(-98%);
             opacity: 0;
             
-            @supports(-moz-appearance: none) { // apply only for firefox; blurry in chromium
+                // Apply will-change only for firefox; blurs in chromium
+            @supports(-moz-appearance: none) {
                 will-change: transform, filter;
             }
             
@@ -1596,7 +1606,7 @@
         }
 	}
 	
-        // Show only following in sidebar
+        // Show sidebar following only
 	if (only-following) {
 		.side-nav-section:not(:nth-of-type(2)) { display: none !important; }
 	}
@@ -1618,7 +1628,7 @@
             }
 		}
         
-        if (highlight-type=="eclipse") { // error throw on "else if", ggs; use "if" instead
+        if (highlight-type=="eclipse") { // Error throw on "else if"; use "if" instead
 			.chat-line__message[data-a-user={nick} i] {
 				.chat-line__message-container { background: var(--color-background-body); margin: 1rem -0.4rem; padding: .5rem .4rem; border-radius: var(--border-radius-medium); }
 				.chat-line__icons { top: -0.9rem; }
@@ -1928,6 +1938,7 @@
             transform: scaleX(0.930) !important;
         }
         
+            // Pause icon
         &::before {
             content: '';
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10 4H5v16h5V4Zm9 0h-5v16h5V4Z' fill='white'/></svg>");
@@ -1940,6 +1951,7 @@
             z-index: 1;
         }
         
+            // Down arrow on hower 
         &:hover::before {
             background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='m11 13.586-2.293-2.293-1.414 1.414L12 17.414l4.707-4.707-1.414-1.414L13 13.586V6h-2v7.586Z' fill='white'/></svg>");
             transform: scale(1.6);
@@ -2283,7 +2295,7 @@
 		}
         
         {__CHAT-CUSTOMIZATION} {
-			animation: chat-custom .5s;
+			animation: chat-customization .5s;
 			margin-block-end: 0;
     		margin-inline-end: 0;
     		right: 200%;
@@ -2316,17 +2328,23 @@
 		.viewer-card-layer__draggable { animation: swipe .45s .2s backwards }
         .channel-info-content .home-header-sticky a[href]+p.gtJaaB { animation: swipe .55s .35s backwards }
 		.viewer-card-header__background, .support-panel .goal_widget_v2__container { animation: content-in .5s }
-        .shell-loader { animation: content-in .55s; transform-origin: top; }
+        .shell-loader { animation: content-in .55s; transform-origin: top }
 		.community-highlight [class="Layout-sc-1xcs6mc-0 fSfyIg"] { animation: community-highlight .3s }
 		[aria-label="Hide for yourself"] { animation: hide-button .45s }
-        [aria-describedby="chapter-select-popover-body"], .preview-card-game-balloon .kCsLVM { animation: chat-tray .3s; }
         .chat-line__message--emote { animation: emotes .5s }
+        [aria-describedby="chapter-select-popover-body"], .preview-card-game-balloon .kCsLVM {
+            animation: chat-tray .3s;
+            
+            if (apply-blur) {
+                animation: chat-tray .3s, blur-55 0.9s forwards !important;
+            }
+        }
 		
-            // Player settings cog icon animation on open
+            // Player settings cog open animation
 		[data-a-target="player-settings-button"] .tw-svg { transition: .3s; }
 		.player-controls__right-control-group:has(> .resize-detector) { [data-a-target="player-settings-button"] .tw-svg { transform: rotate(0.15turn) } }
 		
-            // Stream banner animation on hover
+            // Stream banner hover animation
 		.default-panel {
 			&>a>img { transition: .3s; transform: scale(1); }
             
@@ -2463,10 +2481,6 @@
             }
         }
 		    // -- END of @CSS -- //
-            
-        [aria-describedby="chapter-select-popover-body"], .preview-card-game-balloon .kCsLVM {
-            if (enable-animations) { animation: chat-tray .3s, blur-55 0.9s forwards !important; }
-		}
         
             // Channel home root blur
         .channel-root__player .home-carousel-info {
@@ -2714,7 +2728,7 @@
 			backdrop-filter: blur(10px);
 		}
 		
-			// not needed?
+			// Not needed?
 		.fJgKVb, .NjUUT { background-color: transparent !important; }
 	}
 	
@@ -2863,7 +2877,8 @@
             }
         }
         
-         .cSLwaV+.kvrzxX > #chat-room-header-label { // shared (collaboration) chat
+            // Shared collaboration chat
+         .cSLwaV+.kvrzxX > #chat-room-header-label {
             &::after {
                 content: "[🛡️]"
                 background: #c6c6d2;
@@ -2890,7 +2905,7 @@
             words = join("\,", words)
             words2 = join("\,", words2)
             
-            if (remove-mode!="blur") { // message answer line
+            if (remove-mode!="blur") { // Message answer line
                 .chat-line__message:not([data-a-user={nick} i]) .iQDCwh p:is({words2}) span:last-of-type { 
                     visibility: hidden;
 
@@ -2907,7 +2922,7 @@
                     display: none;
                 }
                 
-                    // do not hide message fully for the reply menu        
+                    // Do not hide message fully for the reply menu        
                 .chat-input-tray__open .chat-line__message:not([data-a-user={nick} i]):is({words}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
@@ -2972,7 +2987,7 @@
                     display: none;
                 }
                 
-                    // do not hide message fully for the reply menu
+                    // Do not hide message fully for the reply menu
                 .chat-input-tray__open .chat-line__message:is({users}) [data-a-target="chat-line-message-body"] {
                     visibility: hidden;
                     
@@ -3107,7 +3122,7 @@
 
         @keyframes messages-right { from { transform: translateX(50%); opacity: 0; } }
 
-        @keyframes chat-custom { from { transform: translateY(40%); opacity: 0; } }
+        @keyframes chat-customization { from { transform: translateY(40%); opacity: 0; } }
 
         @keyframes custom-element { from { transform: translateY(-100%); opacity: 0; } }
 
@@ -3176,16 +3191,18 @@
     }
 }
 
+    // Clips create page tweaks
 @-moz-document url("https://clips.twitch.tv/create") {
 	.clips-root__main {
 		padding-inline: 23px !important;
         
 		.bLuwEe { max-width: unset !important; }
 		.kNocWT { width: 100% !important; }
-		.kvrzxX .tw-transition[aria-hidden] { opacity: 1 !important; } // volume slider
+		.kvrzxX .tw-transition[aria-hidden] { opacity: 1 !important; } // Volume slider
 	}
 }
 
+    // Stylus menu theme
 @-moz-document url("moz-extension://3f89921d-1dab-4094-b849-611cb32a35bc/popup.html"), url("chrome-extension://clngdbkpkpeebahjckkjfobafhncgmne/popup.html") {
     if (custom-theme) {
         #stylus-popup:has(.config-heading > [href*="Twitch-Better-V2"]) {
@@ -3223,28 +3240,6 @@
                 &::before {
                     display: none;
                 }
-            }
-            
-            .config-body::after {
-                content: "Author: idesync.\A More info & help are available on GitHub below.";
-                text-align: center;
-                width: 100%;
-                display: inline-block;
-                padding-top: 15px;
-                white-space: pre;
-                text-wrap: auto;
-                font-weight: bold;
-            }
-            
-            for row in (1..20) {
-                .config-body > label:nth-of-type({row}) .config-value {
-                    animation: checkboxes .35s backwards;
-                    animation-delay: round(42ms*(row/1.8));
-                }
-            }
-            
-            @media (prefers-reduced-motion: reduce) {
-                label .config-value { animation: none; }
             }
             
             __top-line = (nick=="nickname") ? "Welcome to" : "Good day,"
@@ -3325,6 +3320,28 @@
                 }
             }
             
+            .config-body::after {
+                content: "Author: idesync.\A More info & help are available on GitHub below.";
+                text-align: center;
+                width: 100%;
+                display: inline-block;
+                padding-top: 15px;
+                white-space: pre;
+                text-wrap: auto;
+                font-weight: bold;
+            }
+            
+            for row in (1..20) {
+                .config-body > label:nth-of-type({row}) .config-value {
+                    animation: checkboxes .35s backwards;
+                    animation-delay: round(42ms*(row/1.8));
+                }
+            }
+            
+            @media (prefers-reduced-motion: reduce) {
+                label .config-value { animation: none; }
+            }
+            
             #message-box-buttons {
                 position: static;
                 background-color: #363636c4;
@@ -3338,6 +3355,19 @@
                 font-size: 19px;
             }
             
+            .config-body {
+                color: #e6e6e6;
+                text-shadow: 0 0 3px #000000, 0 0 3px #000000ad, 0 0 3px #000000ad;
+            }
+            
+            input[type="text"], select {
+                 color: #e6e6e6;
+            }
+            
+            input[type=range] {
+                accent-color: #575757;
+            }
+            
             .slider {
                 transition: .25s;
                 
@@ -3345,6 +3375,11 @@
                     color: #9752ff;
                     background-color: currentColor;
                 }
+            }
+            
+            .config-color .config-value {
+                border-radius: 5px;
+                overflow: hidden;
             }
             
             .config-value {
@@ -3363,12 +3398,7 @@
             
             input:not([type]), input[type=number], input[type=search], input[type=text], input[type=url] {
                 background-color: #292929;
-                border-radius: 2px;
-            }
-            
-            .config-color .config-value {
-                border-radius: 5px;
-                overflow: hidden;
+                border-radius: 2.5px;
             }
             
             .config-heading {
@@ -3393,25 +3423,14 @@
                 min-width: auto;
             }
             
-            .config-body {
-                color: #e6e6e6;
-                text-shadow: 0 0 3px #000000, 0 0 3px #000000ad, 0 0 3px #000000ad;
-            }
-            
-            input[type="text"], select {
-                 color: #e6e6e6;
-            }
-            
-            input[type=range] {
-                accent-color: #575757;
-            }
-            
-            .config-select:has([value^="#"]) { // separators
+                // Separators
+            .config-select:has([value^="#"]) {
                 .select-wrapper { display: none !important; }
                 .config-name { text-align: center; margin: 8px 0; }
             }
             
-            .config-select:has([value="#5"])+.config-checkbox+.config-text { // nickname input field
+                // Nickname input field
+            .config-select:has([value="#5"])+.config-checkbox+.config-text {
                 .config-name { transition: color .3s; }
                 &:not(.nondefault) .config-name { color: #ff3c3c; }
             }
@@ -3420,7 +3439,8 @@
                 transition: color .25s;
             }
             
-            .config-select:has([value="#2"])+.config-checkbox { // animations section
+                // Animations section hide on disable
+            .config-select:has([value="#2"])+.config-checkbox {
                 &.nondefault {
                     color: #dfdfdfc4 !important;
                     
@@ -3434,7 +3454,8 @@
                 }
             }
             
-            .config-select:has([value="#3"])+.config-checkbox { // sidebar show on hover only checkbox
+                // Sidebar show on hover only checkbox
+            .config-select:has([value="#3"])+.config-checkbox {
                 &.nondefault+.config-checkbox {
                     display: none;
                 }
@@ -3444,7 +3465,8 @@
                 }
             }
             
-            .config-select:has([value="#5"])+.config-checkbox.nondefault { // message highlight section
+                // Message highlight section
+            .config-select:has([value="#5"])+.config-checkbox.nondefault {
                 color: #dfdfdfc4 !important;
                 
                 &+*, &+*+*, &+*+*+*, &+*+*+*+* {
@@ -3453,7 +3475,8 @@
                 }
             }
             
-            .config-select:has([value="#6"]) { // chat filter input fields
+                // Chat filter input fields
+            .config-select:has([value="#6"]) {
                 &+*+.config-text, &+*+*+*+.config-text, &+*+*+*+*+.config-text {
                     flex-wrap: wrap;
                     padding-bottom: 10px;
@@ -3469,7 +3492,8 @@
                 }
             }
             
-            .config-select:has([value="#6"])+*+*+*+*+*+.config-text { // death note input field
+                // Death note input field
+            .config-select:has([value="#6"])+*+*+*+*+*+.config-text {
                 flex-wrap: wrap;
                 padding-top: 10px;
                 
@@ -3487,7 +3511,8 @@
                 }
             }
             
-            .config-select:has([value="#6"]) { // message highlight section
+                // Message highlight section
+            .config-select:has([value="#6"]) {
                 &+.config-checkbox:not(.nondefault), &+*+*+.config-checkbox:not(.nondefault) {
                     &+* {
                         color: #dfdfdfde !important;
@@ -3496,12 +3521,13 @@
                 }
             }
             
+                // custom chat button preview
             .config-select {
                 &:has([value$="Discord #1"], [value$="Hornet"]) .select-wrapper { max-width: 101px !important; }
                 &:has([value$="Nevermore"]) .select-wrapper { max-width: 90px !important; }
             }
             
-            .config-select:has([value$="Nevermore"]):not(:has([value$="Cosmic Abyss"])) .config-name { // custom chat button preview
+            .config-select:has([value$="Nevermore"]):not(:has([value$="Cosmic Abyss"])) .config-name {
                 transition: padding-left .45s;
                 
                 if (custom-chat-button!="disabled") {
@@ -3525,7 +3551,8 @@
                 }
             }
             
-            .config-select:has([value$="Cosmic Abyss"]) .config-name { // highlight type preview
+                // Highlight type preview
+            .config-select:has([value$="Cosmic Abyss"]) .config-name {
                 transition: padding-left .45s;
                 
                 if (enable-highlight && highlight-type!="disabled") {
@@ -3574,7 +3601,8 @@
                 }
             }
             
-            .config-select:has([value$="Hornet"]) .config-name { // badge changer preview
+                // Badge changer preview
+            .config-select:has([value$="Hornet"]) .config-name {
                 transition: padding-left .35s;
                 
                 if (enable-highlight && __custom-badge!="disabled") {
@@ -3592,7 +3620,8 @@
                 }
             }
             
-            if (nick-gradient!="disabled") { // nick decoration preview
+                // Nick decoration preview
+            if (nick-gradient!="disabled") {
                 if (nick-gradient[0] == "discord") {
                     .config-select:has([value$="Discord #1"]) .config-name {
                         SetupGradientText(600, "100px auto");
@@ -3623,6 +3652,7 @@
                 }
 		    }
             
+                // Github link icon
             [class=".external-support"] {
                 display: inline-flex;
                 color: transparent;
@@ -3644,7 +3674,8 @@
              }
         }
         
-        [data-ui-theme="light"] #stylus-popup:has(.config-heading > [href*="Twitch-Better-V2"]) { // light theme
+            // Light stylus theme tweaks
+        [data-ui-theme="light"] #stylus-popup:has(.config-heading > [href*="Twitch-Better-V2"]) {
             #message-box {
                 background: rgba(0, 0, 0, .8);
                 
@@ -3702,6 +3733,7 @@
             }
         }
         
+            // Menu font
         @font-face {
             font-family: Inter;
             src: url("https://assets.twitch.tv/assets/inter-latin-variable-wghtOnly-normal-a05a0d687a088c4efed3.woff2") format("woff2-variations"), url("https://assets.twitch.tv/assets/inter-latin-400-normal-a05a0d687a088c4efed3.woff2") format("woff2");
@@ -3720,6 +3752,7 @@
             unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         
+            // Menu animation keyframes
         @keyframes reveal { 0% { mask-position: 0 100%; }
         to { mask-position: 0 0%; } }
         
