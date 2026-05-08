@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.6.2
+@version        4.6.3
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -24,7 +24,11 @@
 @var checkbox new-design "Apply design tweaks" 1
 @var checkbox new-searchbox "Use new search design" 1
 @var checkbox dark-chat "Use dark chat mode" 1
-@var checkbox use-glow "Add glow effect to buttons" 1
+@var select use-glow "Add glow effect:" {
+    'Disabled': "disabled",
+	'Buttons*': "buttons",
+	'Extended': "extended"
+}
 @var checkbox use-apple-emoji "Use Apple emoji font" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
 @var checkbox remove-clip-links "Hide chat clip links (show only cards)" 1
@@ -1271,7 +1275,27 @@
         }
     }
 	
-	if (use-glow) {
+	if (use-glow!="disabled") {
+        if (use-glow=="extended") {
+            __nickname-check = (enable-highlight && nick-gradient!="disabled") ? (':not([data-a-user="' + nick + '" i])') : '';
+            
+            .chat-author__display-name{__nickname-check} {
+                position: relative;
+                
+                &::before {
+                    content: attr(data-a-user);
+                    position: absolute;
+                    z-index: -1;
+                    pointer-events: none;
+                    filter: blur(4px) brightness(.6);
+                    max-height: 14px;
+                    overflow: hidden;
+                    inset: 0;
+                    text-align: center;
+                }
+            }
+        }
+        
 		.community-points-summary .hqIgGz {
 			__points-color = (dark-chat) ? #00800096 : #00a70085;
 			__points-color-hover = (dark-chat) ? #008000cc : #00c70085;
@@ -1293,20 +1317,6 @@
                 box-shadow: none !important;
             }
 		}
-        
-        [aria-label="ChatBadgeCarousel"]:not(:hover) > .lnTwMD::before {
-            content: '';
-            filter: blur(3px);
-            background-image: url(__custom-badge);
-            background-repeat: no-repeat;
-            background-size: 2rem;
-            height: 6em;
-            width: 6rem;
-            display: block;
-            position: absolute;
-            pointer-events: none;
-            opacity: .7;
-        }
 	}
 	
         // Custom animated chat button
@@ -1794,65 +1804,62 @@
 				}
 			}
             
-            {__CHAT-CUSTOMIZATION} {
-                div > .hyBNWd:first-of-type  > [class="Layout-sc-1xcs6mc-0"]:first-of-type {
-                        // Badge image blur
-                    &::before {
+            {__CHAT-CUSTOMIZATION} { --custom-badge: url(__custom-badge); }
+            
+            @css {
+                .chat-input__badge-carousel [class='Attached-sc-go6eno-0 cJkJNl'] /* {__CHAT-CUSTOMIZATION} */ div > .hyBNWd:first-of-type  > [class="Layout-sc-1xcs6mc-0"]:first-of-type {
+                        /* Badge */
+                    &::before, > .liFZLV[role="radiogroup"]::before {
                         content: '';
                         position: absolute;
                         width: 100%;
                         height: 18px;
-                        background-image: url(__custom-badge);
+                        background-image: var(--custom-badge);
                         background-repeat: no-repeat;
-                        background-position: 182px;
                         background-size: 18px;
                         top: 251px;
+                    }
+
+                    &::before {
+                        background-position: 182px;
                         filter: blur(4px);
-                        animation: badge-blur 2s infinite;
+                        animation: badge-blur 2s infinite, hide-button .85s .6s backwards;
                     }
                     
-                        // Text blur
-                    &::after {
+                    > .liFZLV[role="radiogroup"]::before {
+                        background-position: 178px;
+                        animation: hide-button .85s .6s backwards;
+                    }
+                    
+                        /* Text */
+                    &::after, > .liFZLV[role="radiogroup"]::after {
                         content: "Badge changer is active! [\00a0\00a0\00a0\00a0\00a0\00a0\00a0]";
-                        position: absolute;
                         width: 100%;
-                        SetupGradientText(600, "100px auto", true);
+                        background-clip: text !important;
+                        color: transparent !important;
+                        background-size: 100px auto !important;
+                        font-weight: 600;
                         background: linear-gradient(to right, #ffa300, #ffea00, #ffa300);
-                        animation: gradient-discord 1.5s linear infinite;
+                        animation: gradient-discord 1.5s linear infinite, hide-button .85s .6s backwards;
+                    }
+                    
+                    &::after {
+                        position: absolute;
                         top: 250px;
                         margin-left: 4px;
                         filter: blur(7px);
-                        opacity: .75;
+                        opacity: .8;
                     }
                     
-                    > .liFZLV[role="radiogroup"] {
-                            // Badge image
-                        &::before {
-                            content: '';
-                            position: absolute;
-                            background-image: url(__custom-badge);
-                            background-repeat: no-repeat;
-                            background-position: 178px;
-                            background-size: 18px;
-                            top: 251px;
-                            width: 100%;
-                            height: 18px;
-                        }
-                        
-                             // Text
-                        &::after {
-                            content: "Badge changer is active! [\00a0\00a0\00a0\00a0\00a0\00a0\00a0]";
-                            width: 100%;
-                            margin-top: 5px;
-                            padding-top: 10px;
-                            border-top: 1px solid #2C2C31;
-                            SetupGradientText(600, "100px auto", true);
-                            background: linear-gradient(to right, #ffa300, #ffea00, #ffa300);
-                            animation: gradient-discord 1.5s linear infinite;
-                        }
+                    > .liFZLV[role="radiogroup"]::after {
+                        margin-top: 5px;
+                        padding-top: 10px;
+                        border-top: 1px solid #2C2C31;
+                        @starting-style { border-top-color: rgba(0, 0, 0, .7) !important; }
+                        transition: border-color 2s .6s;
                     }
                 }
-            }
+            }  
 		}
 	}
 	
