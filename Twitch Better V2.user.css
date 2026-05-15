@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.6.3
+@version        4.6.6
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -24,11 +24,7 @@
 @var checkbox new-design "Apply design tweaks" 1
 @var checkbox new-searchbox "Use new search design" 1
 @var checkbox dark-chat "Use dark chat mode" 1
-@var select use-glow "Add glow effect:" {
-    'Disabled': "disabled",
-	'Buttons*': "buttons",
-	'Extended': "extended"
-}
+@var checkbox use-glow "Add glow effect to buttons" 1
 @var checkbox use-apple-emoji "Use Apple emoji font" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
 @var checkbox remove-clip-links "Hide chat clip links (show only cards)" 1
@@ -200,8 +196,10 @@
 	'→ WOT HO\'26': "'https://static-cdn.jtvnw.net/badges/v1/fe0814c3-87f9-40cb-95b5-d1e7453f289d/2'",
 	'→ Hunt Crosses': "'https://static-cdn.jtvnw.net/badges/v1/b1e77273-2fc0-4d36-873a-67a7c1647efe/2'",
 	'→ Arc Raiders': "'https://static-cdn.jtvnw.net/badges/v1/d4aa495f-a0e4-4ab4-b3eb-7c2ea573b03f/2'",
-	'→ Rainbow Six X': "'https://static-cdn.jtvnw.net/badges/v1/00fc50e1-dea9-47a4-9db5-ff087e91dd0d/2'",
+	'→ R6 X': "'https://static-cdn.jtvnw.net/badges/v1/00fc50e1-dea9-47a4-9db5-ff087e91dd0d/2'",
+    '→ R6 Unicorn Tachanka': "'https://static-cdn.jtvnw.net/badges/v1/dc23d5e0-b9ec-4729-9d53-ca1a8328add0/2'",
 	'→ Lol Worlds \'25': "'https://static-cdn.jtvnw.net/badges/v1/4545b0b5-c825-487e-8958-ce5512eb6f84/2'",
+    '→ Lol Mid Season \'25': "'https://static-cdn.jtvnw.net/badges/v1/0a99ba23-5e1a-46b7-8ff2-efbb9a6ea54c/2'",
 	'→ Chrome Star': "'https://static-cdn.jtvnw.net/badges/v1/d139bccf-8184-4fec-a970-cd8d81a7f51a/2'",
 	'→ Golden clown': "'https://static-cdn.jtvnw.net/badges/v1/d98418bb-e4cf-43e3-9c25-c182e13de6fe/2'",
     '→ 7TV Admin': "'https://cdn.7tv.app/badge/01GAFAKCYG000E8VNG1S1RMTBH/2x.avif'",
@@ -290,6 +288,11 @@
     border-left-radius(r) { border-top-left-radius: r !important; border-bottom-left-radius: r !important; }
     border-right-radius(r) { border-top-right-radius: r !important; border-bottom-right-radius: r !important; }
     
+    :root {
+        --cubic-custom: cubic-bezier(0.76, 0, 0.24, 1)
+        --cubic-circ: cubic-bezier(0.79, 0.14, 0.15, 0.86)
+    }
+    
     .seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
     .side-nav--expanded { width: __sidebar-size; }
@@ -333,7 +336,7 @@
             backdrop-filter: blur(15px) saturate(180%);
             text-align: center;
             box-shadow: var(--shadow-elevation-4), var(--shadow-elevation-5), var(--shadow-elevation-5), var(--shadow-elevation-5);
-            animation: notification .9s cubic-bezier(0.76, 0, 0.24, 1);
+            animation: notification .9s var(--cubic-custom);
         }
         
         &::after {
@@ -356,7 +359,7 @@
 		// Notifications tweaks
 	.onsite-notification-toast__action.dhbGUE { display: none !important; }
 	.onsite-notification-toast__action-wrapper { width: unset; border-left: none !important; }
-	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.9s cubic-bezier(0.76, 0, 0.24, 1) !important; }
+	.onsite-notifications-toast-manager .tw-animation { animation: notification 1.9s var(--cubic-custom) !important; }
 	.onsite-notification-toast { border-radius: var(--border-radius-extra-large) !important; }
         
         // Fix continue button clip 
@@ -405,7 +408,7 @@
 		}
 		
 		&[aria-expanded="true"] {
-			transition: .25s cubic-bezier(0.76, 0, 0.24, 1);
+			transition: .25s var(--cubic-custom);
 			box-shadow: 0px 0px 0 3px var(--color-twitch-purple-10);
 		}
 		
@@ -499,7 +502,7 @@
                 color: transparent;
                 opacity: 1;
                 word-spacing: 0;
-                transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: .5s .05s, clip-path .65s .05s, word-spacing .6s .05s var(--cubic-custom);
             }
         } }
 	}
@@ -957,7 +960,7 @@
         }
         
         GetCurrentBorderColor($iCurrent) {
-            __color-list = (#B3A66B #4646A4 #919727 #A86824 #6C6C9E #B071BF #315E95 #5E5C52 #984327 #918A6A)
+            __color-list = (#B3A66B #4646A4 #A86824 #6C6C9E #B071BF #919727 #315E95 #5E5C52 #984327 #918A6A)
             __result = $iCurrent - 1 // -1 cause array index starts at 0, but :nth-of-type at 1 
             
             if ($iCurrent > 10) {
@@ -968,7 +971,7 @@
         }
         
             // Colored chat reply list borders
-        .chat-replies-list {
+        .chat-replies-border {
             border-inline-start: none;
             
             > div {
@@ -1021,6 +1024,14 @@
             border-width: 2.5px;
         }
         
+        .edit-appearance__badge-chooser, .edit-appearance__static-badge {
+            border-radius: 5px !important;
+        }
+        
+        .featured-content-carousel :is(.video-player__container, .video-player, [data-test-selector="featured-item-image"]) {
+            border-radius: 11px;
+        }
+        
         .chatCard--VU4fm { // Clip card
             border-radius: var(--border-radius-large) !important;
         }
@@ -1068,10 +1079,6 @@
         
         .side-nav {
             background: #18181b !important;
-        }
-        
-        .featured-content-carousel :is(.video-player__container, .video-player, [data-test-selector="featured-item-image"]) {
-            border-radius: 11px;
         }
         
         .tw-root--theme-dark .carousel-metadata {
@@ -1275,27 +1282,7 @@
         }
     }
 	
-	if (use-glow!="disabled") {
-        if (use-glow=="extended") {
-            __nickname-check = (enable-highlight && nick-gradient!="disabled") ? (':not([data-a-user="' + nick + '" i])') : '';
-            
-            .chat-author__display-name{__nickname-check} {
-                position: relative;
-                
-                &::before {
-                    content: attr(data-a-user);
-                    position: absolute;
-                    z-index: -1;
-                    pointer-events: none;
-                    filter: blur(4px) brightness(.6);
-                    max-height: 14px;
-                    overflow: hidden;
-                    inset: 0;
-                    text-align: center;
-                }
-            }
-        }
-        
+	if (use-glow) {
 		.community-points-summary .hqIgGz {
 			__points-color = (dark-chat) ? #00800096 : #00a70085;
 			__points-color-hover = (dark-chat) ? #008000cc : #00c70085;
@@ -1591,7 +1578,7 @@
 		}
 		
 		.side-nav--expanded {
-            transition: transform .28s cubic-bezier(0.76, 0, 0.24, 1), opacity .4s cubic-bezier(0.76, 0, 0.24, 1), filter .4s;
+            transition: transform .28s var(--cubic-custom), opacity .4s var(--cubic-custom), filter .4s;
             filter: blur(3px);
             
             &:hover {
@@ -1600,7 +1587,7 @@
 			}
             
             @media (prefers-reduced-motion: reduce) {
-                transition: transform 0s .2s, opacity .2s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: transform 0s .2s, opacity .2s var(--cubic-custom);
                 filter: none;
                 
                 &:hover {
@@ -1609,7 +1596,7 @@
             }
             
             if (sidebar-reduce-motion) {
-                transition: transform 0s .3s, opacity .3s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: transform 0s .3s, opacity .3s var(--cubic-custom);
                 filter: none;
                 
                 &:hover {
@@ -1796,7 +1783,7 @@
 				img { content: url(__custom-badge); max-height: 2rem; max-width: 2rem; }
 				
 				&:hover {
-					img { animation: reveal-badge-carousel .3s forwards cubic-bezier(0.76, 0, 0.24, 1); }
+					img { animation: reveal-badge-carousel .3s forwards var(--cubic-custom); }
 				}
 				
 				&:not(:hover) {
@@ -2155,14 +2142,14 @@
         
             // Max-height transitions
 		{__NOTIFICATIONS-POPUP} {
-			.scrollable-area { max-height: 46px; transition: max-height .6s ease; overflow-y: scroll; }
+			.scrollable-area { max-height: 46px; transition: max-height 0.6s var(--cubic-circ); overflow-y: scroll; }
 			.scrollable-area:not(.center-window__short-scrollable-area) { max-height: 400px; }
 			.scrollable-area.center-window__short-scrollable-area:not(:has(.tw-loading-spinner)) { max-height: 300px; }
 		}
 		
 		{__WHISPERS-POPUP} {
 			.whispers-threads-box__scrollable-area {
-				transition: max-height .5s ease;
+				transition: max-height 0.6s var(--cubic-circ);
 				max-height: 200px;
 				
 				@css { @starting-style { max-height: 20px !important; } }
@@ -2245,7 +2232,7 @@
         
             // Home page carousel animation
         .featured-content-carousel > .featured-content-carousel__item-container {
-            animation: carousel 1.8s cubic-bezier(0.76, 0, 0.24, 1);
+            animation: carousel 1.8s var(--cubic-custom);
         }
         [data-test-selector="featured-content-carousel-placeholder"] {
             animation: opacity-off 1.2s forwards ubic-bezier(0.76, 0, 0.24, 1) !important;
@@ -2358,7 +2345,7 @@
 		for row in (1..26) { [data-popper-placement="bottom-start"] .kvjacc > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.4)); } }
 		
 		.user-menu-dropdown__main-menu {
-			animation: user-menu .6s; will-change: transform, clip-path;
+			animation: user-menu .6s, overflow-control .6s; will-change: transform;
 			[class="Layout-sc-1xcs6mc-0"], .kvjacc { > div { animation: panel-element .3s backwards; will-change: transform; } }
 			for row in (1..19) { [class="Layout-sc-1xcs6mc-0"] > div:nth-of-type({row}) { animation-delay: round(60ms*(row/1.5)); } }
 			for row in (2..6) { .kvjacc > div:nth-of-type({row}) { animation-delay: round(40ms*(row/1.5)+750ms); } }
@@ -2522,7 +2509,7 @@
             .modal__backdrop {
                 background-color: rgba(0, 0, 0, .7) !important;
                 @starting-style { background-color: transparent !important; }
-                transition: background-color .45s cubic-bezier(0.76, 0, 0.24, 1);
+                transition: background-color .45s var(--cubic-custom);
 
                 /*.modal-wrapper__content > div {
                     backdrop-filter: blur(15px) saturate(180%);
@@ -2638,7 +2625,7 @@
         
             // Notifications blur
 		.onsite-notifications-toast-manager .tw-animation {
-			animation: notification .9s cubic-bezier(0.76, 0, 0.24, 1), blur-55 0.8s forwards !important;
+			animation: notification .9s var(--cubic-custom), blur-55 0.8s forwards !important;
     		overflow: hidden;
 			border-radius: var(--border-radius-extra-large) !important;
 		}
@@ -3155,8 +3142,8 @@
 
         @keyframes pop-small { from { transform: translateY(15px); } }
 
-        @keyframes user-menu { 0% { clip-path: inset(0 0 100% 0); transform: scaleY(0); transform-origin: top; }
-        to { clip-path: inset(-5%); transform-origin: top; } }
+        @keyframes user-menu { 0% { transform: scaleY(0); transform-origin: top; max-height: 400px; }
+        to { transform-origin: top; max-height: 650px; } }
 
         @keyframes overlays { 0% { transform: scale(50%); opacity: 0; }
         60% { opacity: 1; } }
@@ -3414,7 +3401,7 @@
                 font-weight: bold;
             }
             
-            for row in (1..20) {
+            for row in (1..21) {
                 .config-body > label:nth-of-type({row}) .config-value {
                     animation: checkboxes .35s backwards;
                     animation-delay: round(42ms*(row/1.8));
@@ -3482,13 +3469,6 @@
             input:not([type]), input[type=number], input[type=search], input[type=text], input[type=url] {
                 background-color: #292929;
                 border-radius: 2.5px;
-            }
-            
-            .config-heading {
-                position: fixed;
-                text-wrap: nowrap;
-                top: 49.75em;
-                left: 134px;
             }
             
             .config-body {
@@ -3736,6 +3716,13 @@
 		    }
             
                 // Github link icon
+            .config-heading {
+                position: fixed;
+                text-wrap: nowrap;
+                top: 570px;
+                left: 134px;
+            }
+            
             [class=".external-support"] {
                 display: inline-flex;
                 color: transparent;
