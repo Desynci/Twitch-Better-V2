@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Twitch Better V2
 @namespace      1337
-@version        4.6.8
+@version        4.7.1
 @author         idesync
 @description 	Twitch Better adds animations, new look, improved usability and more for twitch.tv!
 @supportURL 	https://github.com/Desynci/Twitch-Better-V2/
@@ -12,7 +12,7 @@
     '#1': "holder-1"
 }
 @var checkbox welcome "Twitch Better logo" 1
-@var checkbox pause-anywhere "Pause anywhere (breaks stream extensions!)" 1
+@var checkbox pause-anywhere "Pause anywhere \n Warning: breaks an interaction with most stream extentions" 1
 @var checkbox apply-blur "Apply blur on menu" 1
 @var select player-controls "Player controls:" {
     'Default': "default",
@@ -25,10 +25,10 @@
 @var checkbox new-searchbox "Use new search design" 1
 @var checkbox dark-chat "Use dark chat mode" 1
 @var checkbox use-glow "Add glow effect to buttons" 1
-@var checkbox use-apple-emoji "Use Apple emoji font" 0
+@var checkbox use-apple-emoji "Use Apple emoji font \n Doesn't work in some browsers, including Firefox" 0
 @var checkbox hide-chat-scroller "Hide chat scrollbar" 0
-@var checkbox remove-clip-links "Hide chat clip links (show only cards)" 1
-@var checkbox restore-deleted-messages "Restore deleted chat messages (performance warning!)" 0
+@var checkbox remove-clip-links "Hide chat clip links (show only cards) \n Removes clip links text and shows only their preview cards" 1
+@var checkbox restore-deleted-messages "Restore deleted chat messages \n Warning: text of restored messages also may appear wrong – hover over the message to fix it. May impact performance (CPU usage)" 0
 @var select custom-chat-button "Customize chat button:" {
 	'None': "disabled",
 	'→ Yuji Itadori': "'https://i.postimg.cc/0NqrRwYX/asset3-ezgif-com-video-to-gif-converter.gif' content-in1 linear-gradient(90deg, transparent 0%, rgba(144, 0, 7, 0.08) 20%, rgba(144, 0, 7, 0.08) 50%, rgba(144, 0, 7, 0.2) 100%)",
@@ -84,7 +84,7 @@
 @var select holder-2 "— 🎭 Animations —" {
     '#2': "holder-2"
 }
-@var checkbox enable-animations "Enabled" 1
+@var checkbox enable-animations "Enabled \n Enables all new animations, not just the options listed in this sections" 1
 @var checkbox animate-badge "Animate chat badges" 1
 @var checkbox rainbow-effect "Rainbow nicknames appear" 1
 @var select animate-messages "Messages animation:" {
@@ -93,13 +93,13 @@
 	'→ №2': "opacity",
 	'→ №3*': "from-right"
 }
-@var checkbox last-only "Animate only one message" 0
+@var checkbox last-only "Animate only last message" 0
 
 @var select holder-3 "— 🍫 Sidebar tweaks —" {
     '#3': "holder-3"
 }
-@var checkbox sidebar-hover-only "Show only on hover" 1
-@var checkbox sidebar-reduce-motion "Reduce motion on hover" 0
+@var checkbox sidebar-hover-only "Show only on hover \n Hides channels sidebar to the left screen edge: hover the edge to open it" 1
+@var checkbox sidebar-reduce-motion "Reduce motion on hover \n Sets hover animation with less motion for the sidebar" 0
 @var checkbox only-following "Following section only" 0
 @var checkbox sidebar-counter "Add channels counter" 1
 @var range __sidebar-size "Width:" [24,13,28,0.5,"rem"]
@@ -107,9 +107,9 @@
 @var select holder-4 "— 🍂 Removers —" {
     '#4': "holder-4"
 }
-@var checkbox remove-ads "Ads" 1
-@var checkbox remove-banners "Twitch promo banners" 0
-@var checkbox remove-combo "Combo" 1
+@var checkbox remove-ads "Ads \n Removes some popup banners with the ads; doesn't remove ads completely" 1
+@var checkbox remove-banners "Twitch promo banners \n Removes banners like subscription discounts" 0
+@var checkbox remove-combo "Combo \n Removes all buttons related to Twitch Combo" 1
 @var checkbox remove-combo-overlay "Combo in fullscreen" 0
 @var checkbox remove-vods-muted-alert "VODs muted segments alert" 0
 @var checkbox remove-disclosure "Intended content notice" 0
@@ -117,14 +117,15 @@
 @var checkbox remove-turbo "Turbo promotion" 1
 @var checkbox remove-gift "Gift button" 0
 @var checkbox remove-subscription "Subscription button" 0
-@var checkbox remove-bits "Bits buttons" 0
-@var checkbox remove-powerups "Rewards list power ups" 0
+@var checkbox remove-bits "Bits buttons \n Removes all buttons with options that related to Bits" 0
+@var checkbox remove-powerups "Rewards list Bits power ups" 0
+@var checkbox remove-drops-button "Chat drops button" 0
 
 @var select holder-5 "— 🌌 Message highlight —" {
     '#5': "holder-5"
 }
-@var checkbox enable-highlight "Enabled" 1
-@var text nick "[REQUIRED] Enter your exact nickname:" nickname
+@var checkbox enable-highlight "Enabled \n Most of the options in this section require your Twitch nickname to be specified in the field below to work" 1
+@var text nick "Enter your exact nickname: \n Enter your exact nickname, including capital letters if you have them" nickname
 @var select highlight-type "Highlight type:" {
 	'None': "disabled",
     '→ Cosmic Abyss': "cosmic",
@@ -215,10 +216,10 @@
 @var select holder-6 "— 🤬 Chat filtering —" {
     '#6': "holder-6"
 }
-@var checkbox enable-banwords "Hide messages with listed banwords:" 0
+@var checkbox enable-banwords "Hide messages with listed banwords: \n May not work as you expect: visit GitHub page below to find more info" 0
 @var text __ban-words "List:" "'banana, cat, chair'"
 
-@var checkbox enable-blacklist "Hide messages from listed users:" 0
+@var checkbox enable-blacklist "Hide messages from listed users: \n May not work as you expect: visit GitHub page below to find more info" 0
 @var text __black-list "List:" "'idiot1, clown2'"
 
 @var select remove-mode "Censore mode:" {
@@ -227,7 +228,7 @@
     'Blur (show on hover)': "blur"
 }
 
-@var text __deathnote "Death Note (scratch these nicknames):" "'Lawliet, Light'"
+@var text __deathnote "Death Note fot listed users: \n Does nothing but adds a line-through decoration for entered nicknames" "'Lawliet, Light'"
 ==/UserStyle== */
 
 @-moz-document domain("twitch.tv") {
@@ -299,7 +300,10 @@
     :root {
         --cubic-custom: cubic-bezier(0.76, 0, 0.24, 1)
         --cubic-circ: cubic-bezier(0.79, 0.14, 0.15, 0.86)
+        --cubic-sc: cubic-bezier(0.13, 1.07, 0.5, 1.01)
     }
+    
+    // mask-image: linear-gradient(180deg,#18181b calc(100% - 3rem),transparent);
     
     .seekbar-bar > [style*="rgb(169"] { background-color: timeline_color !important; }
 	.seekbar-thumb { background-color: thumb_color !important; }
@@ -322,6 +326,7 @@
     .side-nav__scrollable_content { scrollbar-width: none; }
 	.ScToggleInput-sc-iguyno-1:checked:hover + .fWQStf::after { background-color: #9d5cff; }
     .chat-input-tray__open--web { margin-right: -2px; } // Fix asymmetric margin for chat tray
+    {__CHAT-CALLOUT} > .bTkUWo { margin: 0 -1px; } // Fix asymmetric margin for chat callout
     .chat-private-callout__header-segment .fNANlM { -webkit-line-clamp: none; }
     if (hide-chat-scroller) { .chat-room__content [data-a-target="chat-scroller"] { scrollbar-width: none; } }
 	if (transparent-player) { .player-controls, .top-bar { background: none; } }
@@ -918,10 +923,6 @@
 		.chat-wysiwyg-input-box, .announcement-line, .announcement-line .jmdYJS {
 			background-color: #131315b0 !important;
 		}
-        
-        .chat-input-tray__open {
-            background: #232327b0 !important;
-        }
 		
 		.chat-scrollable-area__message-container {
 			.ikqKEy, .imeDWF {
@@ -946,11 +947,12 @@
 			background-color: #6200f5;
 			&:hover { background-color: #781fff; }
 		}
-		
-        {__CHAT-CALLOUT} > .bTkUWo {
-			background-color: #171617 !important;
+        
+        {__CHAT-CALLOUT} > .bTkUWo, .cardPaddingTop--XnWA3 {
+			background-color: #18181bb0 !important;
             box-shadow: none !important;
-            margin: 0 -1px;
+            
+            border-bottom: none;
 		}
 	}
     
@@ -1009,7 +1011,7 @@
         .video-player__default-player .tw-loading-spinner {
             .lbjVdM {
                 border-width: 3px;
-                color: #a060ff !important;
+                color: white !important;
                 animation: opacity-in 1.2s .3s backwards, epmXAj infinite 1s linear;
             }
             
@@ -1024,6 +1026,10 @@
             height: 28px;
             width: 28px;
             border-width: 2.5px;
+        }
+        
+        .stream-chat-header[style^="background: linear-gradient"] {
+            background: linear-gradient(0deg, #0009, #0009), linear-gradient(90deg, #9146ff, #0016c7) !important;
         }
         
         .edit-appearance__badge-chooser, .edit-appearance__static-badge {
@@ -1331,7 +1337,8 @@
             if (custom-chat-button!="disabled") {
                 /*box-shadow: 0px 0px 7px #9f9f9f26 !important;
                 &:hover { box-shadow: 0px 0px 10px #9f9f9f2b !important; }*/
-                box-shadow: none !important;
+                box-shadow: 0px 0px 7px #9f9f9f26 !important;
+                
             }
 		}
 	}
@@ -1459,6 +1466,7 @@
             [data-target="channel-header-right"] > .AoXTY:first-of-type { margin-right: -6px; }
         }
     }
+    if (remove-drops-button) { .chat-input__buttons-container :is(button[data-a-target="drops-button"], button[data-a-target="drops-button"]+.indicatorPosition--za_Zb) { display: none; } }
 	if (remove-subscription) { #live-channel-stream-information [data-a-target="subscribe-button"] { display: none !important; } }
 	if (remove-ads) { .stream-display-ad__wrapper, .top-nav__menu .top-nav__prime { display: none !important; } }
 	if (remove-vods-muted-alert) { .muted-segments-alert__position-wrapper { display: none !important; } }
@@ -1870,8 +1878,9 @@
                     
                     > .liFZLV[role="radiogroup"]::after {
                         margin-top: 5px;
-                        padding-top: 10px;
-                        border-top: 1px solid #2C2C31;
+                        padding-top: 8px;
+                        padding-bottom: 2px;
+                        border-top: 1px solid hsla(240, 0%, 0%, .478);
                         @starting-style { border-top-color: rgba(0, 0, 0, .7) !important; }
                         transition: border-color 2s .6s;
                     }
@@ -2077,10 +2086,10 @@
 		// -- 0.15s -- //
 	.dcNXJO, .kzYOur, .kXuCmW, .jUkMRL, .kccyMt, .hovRjt, .dCFkna, .cAajJv, a.navigation-link, .hWTXlR, .kMwhRV, .dEeZDR,
 	.gxYeIp, .bZLSuF, .bNByMh, .kLgTJj, .eCrblY, .ldMHo, .fvWwI, .fixed-prediction-button, .dOkkBt, .iwMIba, .blixHj, .bmaSLQ,
-    .hQMzBR, .extensions-dock-card__image, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj,
-    [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .jojgZI, .Oagqd, .ePlDqi,
-    .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .cJndVk, .zaYfm, .ixHVAF,
-    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag, .tw-combo-input__button-icon, .MuiPickersCalendarHeader-label { transition: .15s }
+    .hQMzBR, .media-row__info-description, .converter-preview-player-controls--gradient, .iJmEhj, .jojgZI, .Oagqd, .ePlDqi,
+    [data-a-target="tw-progress-bar-animation"], .media-row__image-play-overlay, .eoyBQj, .hblncz, .cJndVk, .zaYfm, .ixHVAF,
+    .iOIbVE, .gJTAoW, .yezmM, .juFuqW, .cikFpu, .jHPwXq, .cAjrcA, .jwwIFW, .euTJEC, .fbfimN, .lncOkr, .tw-combo-input__button-icon,
+    .cpQXQS, .bMCdEc, .dgVYJo, .huqecI, .tw-tag, .MuiPickersCalendarHeader-label { transition: .15s }
 	
 		// -- 0.1s -- //
 	.hYdssb, button.blixHj, .hlLhUC, .bQjtjF, .ccSgUF, .kHNPzv::before, .fWQStf, .fWQStf::after, .YHGY, .hjSMIN,
@@ -2092,7 +2101,7 @@
     
         // -- !important -- //
     .rewardsLearnMoreExpandedViewDark--EoAxN { transition: .3s !important }
-	.rewardsLearnMoreHeadersDark--HAOZi { transition: .15s !important }
+	.rewardsLearnMoreHeadersDark--HAOZi, .extensions-dock-card__image { transition: .15s !important }
         
     {__CHAT-CALLOUT} [data-a-target="tw-progress-bar-animation"] { transition: none; }
     
@@ -2271,13 +2280,12 @@
             // Stream page info carousel animation
         .home-live-player-overlay--contents > .ifuFKn {
             > .home-carousel-info {
-                animation: info-carousel .7s backwards !important;
-                animation-delay: .1s;
+                animation: info-carousel .75s !important;
             }
             
             > .fHdBNk {
-                animation: info-carousel .7s backwards;
-                animation-delay: .15s;
+                animation: info-carousel .75s backwards;
+                animation-delay: .1s;
             }
         }
 		
@@ -2680,8 +2688,8 @@
         
         .onsite-notification-toast {
             border-color: #78787f45 !important;
-    		background: #18181bb0 !important;
-			box-shadow: none !important;
+            background: linear-gradient(145deg, #181818c2 20%, #0f1b34c2 100%) !important;
+			box-shadow: 0px 0px 6px #528bffd4 !important;
 			margin-block-end: 0 !important;
 		}
 		
@@ -2891,7 +2899,7 @@
             background: #0e0e10;
             display: block;
             padding: 7px;
-            animation: chat-tray .5s;
+            animation: chat-tray .25s;
             border-radius: 6px;
 		} }
 	}
@@ -2959,23 +2967,26 @@
     
         // Chat filter indicator
     #chat-room-header-label {
-        transition: transform .65s .2s;
-        width: 250px;
+        transition: transform .8s .2s;
         text-align: center;
-        cursor: pointer;
+    }
+    
+    :not(.cSLwaV+.kvrzxX) > #chat-room-header-label {
+        width: 250px;
     }
     
     if (enable-banwords || enable-blacklist) {
         :not(.cSLwaV+.kvrzxX) > #chat-room-header-label {
-            transform: translateX(-15px);
+            transform: translateX(-12px);
+            cursor: pointer;
             
             &::after {
-                content: "[🛡️] | Chat Filter"
+                content: "[🛡️] | Chat Filter 🛡️"
                 position: absolute;
                 text-wrap: nowrap;
                 font-variant-emoji: text;
-                clip-path: inset(0 80px 0 -2% round 55px);
-                transition: .7s .15s;
+                clip-path: inset(0 103px 0 -2% round 55px);
+                transition: .65s .15s;
                 background: #c6c6d2;
                 background-clip: text;
                 color: transparent !important;
@@ -2984,7 +2995,7 @@
             }
             
             &:active {
-                transform: translateX(-45px);
+                transform: translateX(-55px);
             }
             
             &:active::after {
@@ -2996,7 +3007,7 @@
         }
         
             // Shared collaboration chat
-         .cSLwaV+.kvrzxX > #chat-room-header-label {
+        .cSLwaV+.kvrzxX > #chat-room-header-label {
             &::after {
                 content: "[🛡️]"
                 background: #c6c6d2;
